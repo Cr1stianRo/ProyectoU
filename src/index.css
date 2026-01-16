@@ -1,0 +1,225 @@
+/* ===========================
+   FUENTE PROFESIONAL
+   =========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+html, body{
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===========================
+   PALETA / VARIABLES
+   =========================== */
+:root{
+  --cafe:#8C6A4A;            /* primario cálido */
+  --cafe-oscuro:#5b4636;     /* texto principal */
+  --arena:#E8D8C8;           /* acentos suaves */
+  --bs-primary: var(--cafe);
+  --bs-primary-rgb: 140,106,74;
+  --bs-secondary: var(--arena);
+  --bs-body-bg: #ffffff;
+  --text-base: var(--cafe-oscuro);
+}
+
+html, body { background: var(--bs-body-bg); color: var(--text-base); }
+a { color: var(--cafe); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===========================
+   NAVBAR TRANSPARENTE + SCROLL
+   =========================== */
+.navbar.nav-transparent{
+  background: transparent !important;
+  transition: background .25s ease, box-shadow .25s ease;
+}
+
+/* Un solo color de texto en estado transparente (blanco) */
+.navbar.nav-transparent .navbar-brand,
+.navbar.nav-transparent .nav-link{
+  color: #fff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.55); /* contraste sobre foto */
+}
+
+.navbar.nav-transparent .nav-link.active,
+.navbar.nav-transparent .nav-link:focus,
+.navbar.nav-transparent .nav-link:hover{
+  color: #fff !important;                    /* misma tonalidad para que no “cambie” */
+  opacity: .9;                               /* sutil feedback */
+  text-decoration: underline;                /* feedback accesible */
+}
+
+/* Toggler en café */
+.navbar.nav-transparent .navbar-toggler{
+  border-color: rgba(140,106,74,.45);
+}
+.navbar.nav-transparent .navbar-toggler-icon{
+  background-image:
+  url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(255,255,255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Estado con scroll (fondo claro y texto café consistente) */
+.navbar.scrolled{
+  background: rgba(255,255,255,.9) !important;
+  backdrop-filter: blur(8px) saturate(140%);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+.navbar.scrolled .navbar-brand,
+.navbar.scrolled .nav-link{
+  color: var(--cafe-oscuro) !important;
+}
+.navbar.scrolled .nav-link:hover,
+.navbar.scrolled .nav-link:focus{
+  color: var(--cafe-oscuro) !important;
+  text-decoration: underline;
+}
+
+/* ===========================
+   HERO / CAROUSEL (IMAGEN NÍTIDA)
+   =========================== */
+.hero-wrapper{ position:relative; min-height:85vh; }
+.carousel { --bs-carousel-transition-duration: .9s; }
+.carousel-item{ position:relative; overflow:hidden; height:85vh; }
+@media (max-width: 992px){ .carousel-item{ height:70vh; } }
+
+/* Imagen de fondo real, sin filtros para NO perder calidad */
+.hero-picture,
+.hero-img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+}
+.hero-img{
+  object-fit:cover;
+  object-position:center;
+  filter:none !important;
+  image-rendering:auto;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+/* (por si algún slide usa background CSS) */
+.hero-slide{
+  position:absolute; inset:0;
+  background-size: cover; background-position: center;
+  filter: contrast(1.04) saturate(1.03) brightness(.99);
+}
+
+/* Contenido centrado */
+.hero-overlay{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  text-align:center;
+}
+
+/* Degradado sutil y cálido para legibilidad (sin negro duro) */
+.hero-overlay::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0) 0%,
+    rgba(140,106,74,.06) 40%,
+    rgba(140,106,74,.18) 100%
+  );
+}
+
+/* Tarjeta “glass” profesional */
+.glass{
+  position:relative; z-index:2;
+  max-width:min(920px, 98%);
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 4vw, 2.5rem);
+  border-radius: 22px;
+  color: var(--cafe-oscuro);
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.92) 0%, rgba(255,255,255,.78) 100%);
+  border: 1px solid rgba(140,106,74,.18);
+  box-shadow: 0 18px 60px rgba(0,0,0,.14);
+  backdrop-filter: blur(8px) saturate(130%);
+}
+
+/* Título más profesional */
+.hero-title{
+  margin:0 0 .75rem 0;
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--cafe);
+  letter-spacing: .3px;                 /* limpieza visual */
+  text-wrap: balance;
+}
+.glass p{ color: var(--cafe-oscuro); font-size:1.125rem; }
+.glass .btn{ margin:.4rem; }
+
+/* Pastillas destacadas en el hero */
+.hero-pills{
+  position:relative; z-index:2;
+  display:flex; justify-content:center; flex-wrap:wrap; gap:.5rem;
+  margin-top: .75rem;
+}
+.hero-pills .pill{
+  background:#fff;
+  border:1px solid rgba(140,106,74,.25);
+  color: var(--cafe-oscuro);
+  border-radius:999px;
+  padding:.5rem .85rem;
+  font-weight:600; font-size:.95rem;
+}
+
+/* ===========================
+   BOTONES / CARDS / FOOTER
+   =========================== */
+.btn-primary{
+  --bs-btn-bg: var(--cafe);
+  --bs-btn-border-color: var(--cafe);
+  --bs-btn-hover-bg: #7a573b;
+  --bs-btn-hover-border-color: #7a573b;
+}
+
+/* Outline café reutilizable (incluye botones WhatsApp de tarjetas) */
+.btn-outline-cafe{
+  color: var(--cafe-oscuro) !important;
+  border-color: rgba(140,106,74,.55) !important;
+  background: transparent !important;
+}
+.btn-outline-cafe:hover{
+  color:#fff !important;
+  background: var(--cafe) !important;
+  border-color: var(--cafe) !important;
+}
+
+/* Botón WhatsApp con hover verde oficial */
+.btn-whatsapp{
+  position: relative;
+}
+.btn-whatsapp:hover,
+.btn-whatsapp:focus,
+.btn-whatsapp:active{
+  background: #25D366 !important;
+  border-color: #25D366 !important;
+  color: #fff !important;
+}
+.btn-whatsapp:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 .25rem rgba(37,211,102,.25) !important;
+}
+
+.card-feature{
+  border: 1px solid rgba(140,106,74,.15);
+  border-radius: 1rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,.06);
+}
+
+footer{ background:#2a2623; }
+
+/* ===========================
+   UTILIDADES
+   =========================== */
+.fw-black{ font-weight:800; }
+.brand-gradient{
+  background: linear-gradient(90deg,#7a573b,#c79f74,#e8c9a6);
+  -webkit-background-clip:text; background-clip:text; color: transparent;
+}
+
+/* En móviles, baja un poco el blur del overlay */
+@media (max-width: 576px){
+  .glass{ backdrop-filter: blur(5px) saturate(125%); }
+}

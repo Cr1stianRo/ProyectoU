@@ -1,0 +1,13 @@
+/* App.css - reset básico para que Bootstrap mande */
+
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: initial;
+}
+
+/* Opcional: mejora base */
+body {
+  margin: 0;
+}
