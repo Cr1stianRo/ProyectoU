@@ -241,7 +241,7 @@ export default function Home() {
                   </div>
 
                   <p className="text-muted mb-3">
-                    Programa diurno para mantener actividad física, mental y social, con
+                    Super Programa diurno para mantener actividad física, mental y social, con
                     alimentación y acompañamiento profesional en un entorno seguro.
                   </p>
 
