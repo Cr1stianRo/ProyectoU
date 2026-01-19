@@ -218,7 +218,7 @@ export default function Home() {
         <div className="container">
           <div className="text-center mb-4">
             <h2 className="fw-bold" style={{ color: "#5b4636" }}>
-              Servicios
+              Servicios y comodidades
             </h2>
             <p className="text-muted">Modalidades claras para las necesidades de tu familia.</p>
           </div>
