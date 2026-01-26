@@ -1,4 +1,4 @@
-import HomeConfig from "../models/HomeConfig.js";
+import HomeConfig from "../../models/Home/HomeConfig.js";
 
 export const getHomeConfig = async (req, res) => {
   try {

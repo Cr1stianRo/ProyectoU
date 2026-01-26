@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getHomeConfig, updateHomeConfig } from "../controllers/homeConfigController.js";
+import { getHomeConfig, updateHomeConfig } from "../controllers/Home/homeConfigController.js";
 
-import { getBloquePrincipal,updateBloquePrincipal } from "../controllers/BloquePrincipalController.js";
+import { getBloquePrincipal,updateBloquePrincipal } from "../controllers/Home/BloquePrincipalController.js";
 
 const router = Router();
 

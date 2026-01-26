@@ -1,5 +1,5 @@
 // backend/src/controllers/bloquePrincipalController.js
-import BloquePrincipal from "../models/BloquePrincipal.js";
+import BloquePrincipal from "../../models/Home/BloquePrincipal.js";
 
 /**
  * GET /api/bloque-principal
