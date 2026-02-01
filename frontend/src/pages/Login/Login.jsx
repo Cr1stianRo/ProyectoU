@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";   // ← (1) Agregado
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {   // ← (2) Convertido a async
     e.preventDefault();
@@ -19,6 +21,8 @@ function Login() {
 
       alert("Inicio de sesión exitoso");
       console.log("Token guardado:", res.data.token);
+
+      navigate("/");
 
     } catch (error) {
       console.error(error);
