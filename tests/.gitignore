@@ -1,0 +1,39 @@
+# Dependencias
+node_modules/
+
+# Resultados de tests
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Screenshots y videos
+screenshots/
+videos/
+
+# Traces
+traces/
+trace.zip
+
+# Archivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporal
+*.tmp
+.cache/
