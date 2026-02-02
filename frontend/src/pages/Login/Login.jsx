@@ -32,7 +32,7 @@ function Login() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Login</h1>
+      <h1>Inicio de sesión</h1>
 
       <form onSubmit={handleSubmit}>
 
