@@ -4,6 +4,7 @@ import Register from "./pages/Login/Register.jsx";
 import Home from "./pages/Home.jsx"
 import CuidadoBloque from "./pages/ModulosEdición/Home/CuidadoBloque.jsx"
 import Bloque1Config from "./pages/ModulosEdición/Home/Bloque1Config.jsx"
+import Carrusel from "./pages/ModulosEdición/Home/Carrusel.jsx"
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Route path="/Home" element={<Home />} />
       <Route path="/Bloque1Config" element={<Bloque1Config />} />
       <Route path="/CuidadoBloque" element={<CuidadoBloque />} />
+      <Route path="/Carrusel" element={<Carrusel />} />
     </Routes>
   );
 }

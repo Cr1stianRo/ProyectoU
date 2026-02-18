@@ -43,7 +43,7 @@ export default function CuidadoDiaConfig() {
         {/* IZQUIERDA: editor */}
         <div className="col-lg-5">
           <div className="d-flex align-items-center justify-content-between mb-3">
-            <h2 className="mb-0">Cuidado Día</h2>
+            <h2 className="mb-0"><i className="bi bi-sunrise me-2"></i>CUIDADO DIA</h2>
           </div>
 
           {error && <div className="alert alert-danger py-2">{error}</div>}
@@ -57,26 +57,26 @@ export default function CuidadoDiaConfig() {
                 onChange={(e) => setField("iconClass", e.target.value)}
               >
                 <option value="">-- Seleccionar ícono --</option>
-                <option value="bi bi-sunrise">☀️ Amanecer (bi-sunrise)</option>
-                <option value="bi bi-moon-stars">🌙 Luna y estrellas (bi-moon-stars)</option>
-                <option value="bi bi-heart-pulse">💗 Corazón con pulso (bi-heart-pulse)</option>
-                <option value="bi bi-hospital">🏥 Hospital (bi-hospital)</option>
-                <option value="bi bi-person-wheelchair">♿ Persona en silla de ruedas (bi-person-wheelchair)</option>
-                <option value="bi bi-capsule">💊 Cápsula (bi-capsule)</option>
-                <option value="bi bi-shield-check">🛡️ Escudo verificado (bi-shield-check)</option>
-                <option value="bi bi-house-heart">🏠 Casa con corazón (bi-house-heart)</option>
-                <option value="bi bi-calendar-heart">📅 Calendario corazón (bi-calendar-heart)</option>
-                <option value="bi bi-people">👥 Personas (bi-people)</option>
-                <option value="bi bi-stars">⭐ Estrellas (bi-stars)</option>
-                <option value="bi bi-flower1">🌸 Flor (bi-flower1)</option>
-                <option value="bi bi-tree">🌳 Árbol (bi-tree)</option>
-                <option value="bi bi-bandaid">🩹 Curita (bi-bandaid)</option>
-                <option value="bi bi-clipboard2-pulse">📋 Clipboard médico (bi-clipboard2-pulse)</option>
-                <option value="bi bi-activity">📊 Actividad (bi-activity)</option>
-                <option value="bi bi-thermometer-half">🌡️ Termómetro (bi-thermometer-half)</option>
-                <option value="bi bi-chat-heart">💬 Chat corazón (bi-chat-heart)</option>
-                <option value="bi bi-balloon-heart">🎈 Globo corazón (bi-balloon-heart)</option>
-                <option value="bi bi-suit-heart">❤️ Corazón (bi-suit-heart)</option>
+                <option value="bi bi-sunrise">☀️ Amanecer </option>
+                <option value="bi bi-moon-stars">🌙 Luna y estrellas</option>
+                <option value="bi bi-heart-pulse">💗 Corazón con pulso</option>
+                <option value="bi bi-hospital">🏥 Hospital</option>
+                <option value="bi bi-person-wheelchair">♿ Persona en silla de ruedas</option>
+                <option value="bi bi-capsule">💊 Cápsula</option>
+                <option value="bi bi-shield-check">🛡️ Escudo verificado</option>
+                <option value="bi bi-house-heart">🏠 Casa con corazón</option>
+                <option value="bi bi-calendar-heart">📅 Calendario corazón</option>
+                <option value="bi bi-people">👥 Personas</option>
+                <option value="bi bi-stars">⭐ Estrellas</option>
+                <option value="bi bi-flower1">🌸 Flor</option>
+                <option value="bi bi-tree">🌳 Árbol</option>
+                <option value="bi bi-bandaid">🩹 Curita</option>
+                <option value="bi bi-clipboard2-pulse">📋 Clipboard médico</option>
+                <option value="bi bi-activity">📊 Actividad</option>
+                <option value="bi bi-thermometer-half">🌡️ Termómetro</option>
+                <option value="bi bi-chat-heart">💬 Chat corazón</option>
+                <option value="bi bi-balloon-heart">🎈 Globo corazón</option>
+                <option value="bi bi-suit-heart">❤️ Corazón</option>
               </select>
               
               {form.iconClass && (
