@@ -48,3 +48,6 @@ pnpm-lock.yaml
 /blob-report/
 /playwright/.cache/
 tests-examples/
+
+# Carpeta de cambios (documentación local, no se sube al repo)
+/cambios/
