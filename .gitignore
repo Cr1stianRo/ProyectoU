@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+#nul
+
+nul
+
 # Dependency lock files
 package-lock.json
 frontend/package-lock.json
