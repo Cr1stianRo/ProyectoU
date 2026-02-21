@@ -4,6 +4,7 @@ import { getBloquePrincipal, updateBloquePrincipal } from "../controllers/Home/b
 import { getCuidadoDia, updateCuidadoDia } from "../controllers/Home/cuidadoBloqueController.js";
 import { getCarrusel, updateCarrusel } from "../controllers/Home/carruselController.js";
 import { getPage, updatePage } from "../controllers/Home/pageConfigController.js";
+import { getMapa, updateMapa } from "../controllers/Home/mapaController.js";
 
 const router = Router();
 
@@ -21,5 +22,8 @@ router.put("/cuidadod", updateCuidadoDia);
 
 router.get("/carrusel", getCarrusel);
 router.put("/carrusel", updateCarrusel);
+
+router.get("/mapa", getMapa);
+router.put("/mapa", updateMapa);
 
 export default router;
