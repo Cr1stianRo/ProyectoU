@@ -1,0 +1,15 @@
+Analiza la app, estamos trabajando por módulos. En el frontend tenemos
+  src/pages/modulosedicion/home/ donde está Bloque1Config que tiene backend
+  completo (api).
+
+  Lee los cambios en /cambios para entender la arquitectura. Cuando entiendas
+  todo, hazme otro módulo:
+
+  haz el modulo neustro valores y toma de referencia la de esta pagina 
+
+
+  Puedes hacer webscraping a https://casadecampoeleden.com/nosotros para obtener datos.
+
+  ¡Así de simple! 🎯
+
+  

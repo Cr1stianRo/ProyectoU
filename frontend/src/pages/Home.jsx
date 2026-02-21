@@ -367,6 +367,65 @@ export default function Home() {
           </section>
         );
 
+      case "valores":
+        return (
+          <section key={id} className="py-5" style={{ background: "#f8f5f1" }}>
+            <div className="container">
+              {/* Misión y Visión */}
+              <div className="row g-4 mb-5">
+                <div className="col-md-6">
+                  <div className="card border-0 shadow-sm rounded-4 h-100">
+                    <div className="card-body p-4">
+                      <h5 className="fw-bold mb-3" style={{ color: "#8C6A4A" }}>
+                        <i className="bi bi-bullseye me-2"></i>Misión
+                      </h5>
+                      <p className="text-muted mb-0">
+                        {config.mision || "Sin misión configurada."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="card border-0 shadow-sm rounded-4 h-100">
+                    <div className="card-body p-4">
+                      <h5 className="fw-bold mb-3" style={{ color: "#8C6A4A" }}>
+                        <i className="bi bi-eye-fill me-2"></i>Visión
+                      </h5>
+                      <p className="text-muted mb-0">
+                        {config.vision || "Sin visión configurada."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Valores */}
+              <h3 className="fw-bold text-center mb-4" style={{ color: "#5b4636" }}>
+                {config.sectionTitle || "Nuestros valores"}
+              </h3>
+              <div className="row g-4 justify-content-center">
+                {(config.valores || []).map((valor, idx) => (
+                  <div key={idx} className="col-6 col-md-4 col-lg">
+                    <div className="card border-0 shadow-sm rounded-4 text-center h-100">
+                      <div className="card-body p-4">
+                        <div className="fs-1 mb-3" style={{ color: "#8C6A4A" }}>
+                          <i className={valor.icon || "bi bi-heart-fill"}></i>
+                        </div>
+                        <h6 className="fw-bold" style={{ color: "#5b4636" }}>
+                          {valor.title}
+                        </h6>
+                        <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
+                          {valor.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+
       default:
         return null;
     }
@@ -520,143 +579,7 @@ export default function Home() {
         .filter((s) => s.type !== "bloquep")
         .map((section) => renderSection(section))}
 
-<<<<<<< HEAD
-          {/* Por ahora lo dejas tal cual (luego lo pasamos a config) */}
-          <div className="row g-4">
-            <div className="col-md-6">
-              <div className="card h-100 border-0 shadow-sm rounded-4 text-center">
-                <div className="card-body p-4 d-flex flex-column align-items-center justify-content-between">
-                  <div>
-                    <div className="mb-3" style={{ color: "#8C6A4A" }}>
-                      <i className="bi bi-sunrise fs-1"></i>
-                    </div>
-                    <h5 className="fw-bold mb-1" style={{ color: "#5b4636" }}>
-                      Cuidado Día
-                    </h5>
-                    <small className="text-muted d-block mb-3">
-                      8:00–17:00 • sin contrato • pago por día
-                    </small>
-                  </div>
-
-                  <p className="text-muted mb-3">
-                    Super Programa diurno para mantener actividad física, mental y social, con
-                    alimentación y acompañamiento profesional en un entorno seguro.
-                  </p>
-
-                  <div className="d-flex gap-2 justify-content-center">
-                    <Link to="/servicios/cuidado-dia" className="btn btn-primary">
-                      Ver detalle
-                    </Link>
-                    <a
-                      href="#"
-                      className="btn btn-outline-cafe btn-whatsapp disabled"
-                      aria-disabled="true"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="bi bi-whatsapp me-1"></i> WhatsApp
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-6">
-              <div className="card h-100 border-0 shadow-sm rounded-4 text-center">
-                <div className="card-body p-4 d-flex flex-column align-items-center justify-content-between">
-                  <div>
-                    <div className="mb-3" style={{ color: "#8C6A4A" }}>
-                      <i className="bi bi-house-heart fs-1"></i>
-                    </div>
-                    <h5 className="fw-bold mb-1" style={{ color: "#5b4636" }}>
-                      Cuidado Permanente
-                    </h5>
-                    <small className="text-muted d-block mb-3">
-                      Residencia completa • 5 tiempos de comida
-                    </small>
-                  </div>
-
-                  <p className="text-muted mb-3">
-                    Hogar geriátrico interno con cuidado integral 24/7, habitaciones confortables,
-                    supervisión continua y actividades para una vida tranquila y acompañada.
-                  </p>
-
-                  <div className="d-flex gap-2 justify-content-center">
-                    <Link to="/servicios/cuidado-permanente" className="btn btn-primary">
-                      Ver detalle
-                    </Link>
-                    <a
-                      href="#"
-                      className="btn btn-outline-cafe btn-whatsapp disabled"
-                      aria-disabled="true"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="bi bi-whatsapp me-1"></i> WhatsApp
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Mini franja de confianza */}
-          <div className="row g-4 mt-4 justify-content-center text-center">
-            <div className="col-md-4">
-              <div className="card card-feature h-100">
-                <div className="card-body">
-                  <h6 className="text-uppercase fw-bold mb-2" style={{ color: "#8C6A4A" }}>
-                    Diferencial
-                  </h6>
-                  <h5 className="card-title" style={{ color: "#5b4636" }}>
-                    Envejecimiento activo
-                  </h5>
-                  <p className="card-text">
-                    Fisioterapia y deportología (2×/sem), psicología (1×/sem) y apoyo universitario.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card card-feature h-100">
-                <div className="card-body">
-                  <h6 className="text-uppercase fw-bold mb-2" style={{ color: "#8C6A4A" }}>
-                    Respeto
-                  </h6>
-                  <h5 className="card-title" style={{ color: "#5b4636" }}>
-                    Cuidado con dignidad
-                  </h5>
-                  <p className="card-text">
-                    Lenguaje profesional y trato humano. Adultos mayores, nunca diminutivos.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card card-feature h-100">
-                <div className="card-body">
-                  <h6 className="text-uppercase fw-bold mb-2" style={{ color: "#8C6A4A" }}>
-                    Cercanía
-                  </h6>
-                  <h5 className="card-title" style={{ color: "#5b4636" }}>
-                    Comunicación diaria
-                  </h5>
-                  <p className="card-text">
-                    Fotos y videos reales para las familias vía WhatsApp institucional.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================
-          GALERÍA (FUTURO)
-      ========================= */}
-=======
-      {/* GALERÍA (HARDCODEADA - PENDIENTE DE MÓDULO) */}
->>>>>>> feature/cristian
+      {/* GALERÍA */}
       <section className="py-5">
         <div className="container">
           <div className="text-center mb-4">
