@@ -7,6 +7,7 @@ import CuidadoBloque from "./pages/ModulosEdición/Home/CuidadoBloque.jsx"
 import Bloque1Config from "./pages/ModulosEdición/Home/Bloque1Config.jsx"
 import Carrusel from "./pages/ModulosEdición/Home/Carrusel.jsx"
 import MapaConfig from "./pages/ModulosEdición/Home/MapaConfig.jsx"
+import ValoresConfig from "./pages/ModulosEdición/Home/ValoresConfig.jsx"
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
       <Route path="/CuidadoBloque" element={<CuidadoBloque />} />
       <Route path="/Carrusel" element={<Carrusel />} />
       <Route path="/MapaConfig" element={<MapaConfig />} />
+      <Route path="/ValoresConfig" element={<ValoresConfig />} />
     </Routes>
   );
 }
