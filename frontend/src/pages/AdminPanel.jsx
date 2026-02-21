@@ -42,6 +42,16 @@ export default function AdminPanel() {
       route: "/MapaConfig",
       purpose: "Facilitar la ubicación y navegación al lugar",
     },
+    {
+      id: "valores",
+      title: "Nuestros Valores",
+      description:
+        "Administra la sección de misión, visión y valores institucionales. Configura cada valor con su título, descripción e ícono. Esta sección muestra la identidad y filosofía del hogar geriátrico.",
+      icon: "bi bi-heart-fill",
+      color: "#e74c3c",
+      route: "/ValoresConfig",
+      purpose: "Mostrar misión, visión y valores institucionales",
+    },
   ];
 
   return (
@@ -155,7 +165,7 @@ export default function AdminPanel() {
               <div className="fs-1 mb-2" style={{ color: "#8C6A4A" }}>
                 <i className="bi bi-box-seam"></i>
               </div>
-              <h6 className="mb-0 fw-bold">4 Módulos</h6>
+              <h6 className="mb-0 fw-bold">5 Módulos</h6>
               <small className="text-muted">Activos</small>
             </div>
           </div>

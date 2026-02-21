@@ -5,6 +5,7 @@ import { getCuidadoDia, updateCuidadoDia } from "../controllers/Home/cuidadoBloq
 import { getCarrusel, updateCarrusel } from "../controllers/Home/carruselController.js";
 import { getPage, updatePage } from "../controllers/Home/pageConfigController.js";
 import { getMapa, updateMapa } from "../controllers/Home/mapaController.js";
+import { getValores, updateValores } from "../controllers/Home/valoresController.js";
 
 const router = Router();
 
@@ -25,5 +26,8 @@ router.put("/carrusel", updateCarrusel);
 
 router.get("/mapa", getMapa);
 router.put("/mapa", updateMapa);
+
+router.get("/valores", getValores);
+router.put("/valores", updateValores);
 
 export default router;
