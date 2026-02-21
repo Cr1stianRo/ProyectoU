@@ -367,6 +367,65 @@ export default function Home() {
           </section>
         );
 
+      case "valores":
+        return (
+          <section key={id} className="py-5" style={{ background: "#f8f5f1" }}>
+            <div className="container">
+              {/* Misión y Visión */}
+              <div className="row g-4 mb-5">
+                <div className="col-md-6">
+                  <div className="card border-0 shadow-sm rounded-4 h-100">
+                    <div className="card-body p-4">
+                      <h5 className="fw-bold mb-3" style={{ color: "#8C6A4A" }}>
+                        <i className="bi bi-bullseye me-2"></i>Misión
+                      </h5>
+                      <p className="text-muted mb-0">
+                        {config.mision || "Sin misión configurada."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="card border-0 shadow-sm rounded-4 h-100">
+                    <div className="card-body p-4">
+                      <h5 className="fw-bold mb-3" style={{ color: "#8C6A4A" }}>
+                        <i className="bi bi-eye-fill me-2"></i>Visión
+                      </h5>
+                      <p className="text-muted mb-0">
+                        {config.vision || "Sin visión configurada."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Valores */}
+              <h3 className="fw-bold text-center mb-4" style={{ color: "#5b4636" }}>
+                {config.sectionTitle || "Nuestros valores"}
+              </h3>
+              <div className="row g-4 justify-content-center">
+                {(config.valores || []).map((valor, idx) => (
+                  <div key={idx} className="col-6 col-md-4 col-lg">
+                    <div className="card border-0 shadow-sm rounded-4 text-center h-100">
+                      <div className="card-body p-4">
+                        <div className="fs-1 mb-3" style={{ color: "#8C6A4A" }}>
+                          <i className={valor.icon || "bi bi-heart-fill"}></i>
+                        </div>
+                        <h6 className="fw-bold" style={{ color: "#5b4636" }}>
+                          {valor.title}
+                        </h6>
+                        <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
+                          {valor.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+
       default:
         return null;
     }
@@ -520,7 +579,7 @@ export default function Home() {
         .filter((s) => s.type !== "bloquep")
         .map((section) => renderSection(section))}
 
-      {/* GALERÍA (HARDCODEADA - PENDIENTE DE MÓDULO) */}
+      {/* GALERÍA */}
       <section className="py-5">
         <div className="container">
           <div className="text-center mb-4">
