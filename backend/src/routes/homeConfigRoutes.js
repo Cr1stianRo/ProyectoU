@@ -8,6 +8,7 @@ import { getMapa, updateMapa } from "../controllers/Home/mapaController.js";
 import { getValores, updateValores } from "../controllers/Home/valoresController.js";
 import { getGaleriaHogar, updateGaleriaHogar } from "../controllers/Home/galeriaHogarController.js";
 import { getServicios, updateServicios } from "../controllers/Home/serviciosController.js";
+import { getDiseno, updateDiseno } from "../controllers/Home/disenoController.js";
 
 const router = Router();
 
@@ -37,5 +38,8 @@ router.put("/galeriahogar", updateGaleriaHogar);
 
 router.get("/servicios", getServicios);
 router.put("/servicios", updateServicios);
+
+router.get("/diseno", getDiseno);
+router.put("/diseno", updateDiseno);
 
 export default router;

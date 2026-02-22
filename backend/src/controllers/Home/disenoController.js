@@ -1,0 +1,73 @@
+import PageConfig from "../../models/Home/PageConfig.js";
+
+const TYPE = "diseno";
+
+const DEFAULT_CONFIG = {
+  primaryColor: "#8C6A4A",
+  darkColor: "#5b4636",
+  accentColor: "#E8D8C8",
+  bgColor: "#ffffff",
+  sectionBg: "#f8f5f1",
+  font: "Poppins",
+  borderRadius: "22",
+};
+
+const getOrCreate = async () => {
+  let doc = await PageConfig.findOne();
+  if (!doc) doc = await PageConfig.create({ sections: [] });
+  return doc;
+};
+
+/** GET /api/home-config/diseno */
+export const getDiseno = async (req, res) => {
+  try {
+    const doc = await getOrCreate();
+    const section = doc.sections.find((s) => s.type === TYPE);
+    return res.status(200).json(section?.config ?? DEFAULT_CONFIG);
+  } catch (error) {
+    console.error("getDiseno error:", error);
+    return res.status(500).json({ message: "Error obteniendo Diseño" });
+  }
+};
+
+/** PUT /api/home-config/diseno */
+export const updateDiseno = async (req, res) => {
+  try {
+    const {
+      primaryColor = DEFAULT_CONFIG.primaryColor,
+      darkColor = DEFAULT_CONFIG.darkColor,
+      accentColor = DEFAULT_CONFIG.accentColor,
+      bgColor = DEFAULT_CONFIG.bgColor,
+      sectionBg = DEFAULT_CONFIG.sectionBg,
+      font = DEFAULT_CONFIG.font,
+      borderRadius = DEFAULT_CONFIG.borderRadius,
+    } = req.body || {};
+
+    const config = {
+      primaryColor: String(primaryColor).trim(),
+      darkColor: String(darkColor).trim(),
+      accentColor: String(accentColor).trim(),
+      bgColor: String(bgColor).trim(),
+      sectionBg: String(sectionBg).trim(),
+      font: String(font).trim(),
+      borderRadius: String(borderRadius).trim(),
+    };
+
+    const doc = await getOrCreate();
+    const idx = doc.sections.findIndex((s) => s.type === TYPE);
+
+    if (idx >= 0) {
+      doc.sections[idx].config = config;
+    } else {
+      doc.sections.push({ id: `${TYPE}-1`, type: TYPE, order: 99, config });
+    }
+
+    doc.markModified("sections");
+    await doc.save();
+
+    return res.status(200).json(config);
+  } catch (error) {
+    console.error("updateDiseno error:", error);
+    return res.status(500).json({ message: "Error guardando Diseño" });
+  }
+};
