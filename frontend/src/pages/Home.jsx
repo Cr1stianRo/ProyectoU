@@ -42,6 +42,15 @@ export default function Home() {
       : [];
   }, [bloquepConfig.pills]);
 
+  const heroImages = useMemo(() => {
+    return Array.isArray(bloquepConfig.heroImages) && bloquepConfig.heroImages.length > 0
+      ? bloquepConfig.heroImages.filter((img) => img.url)
+      : [
+          { url: `${URLROOT}web/ancianato_inicio-1280.webp`, alt: "Hogar geriátrico: vista principal" },
+          { url: `${URLROOT}web/quienes-somos-1280.webp`, alt: "Familias y residentes compartiendo" },
+        ];
+  }, [bloquepConfig.heroImages]);
+
   // Función para renderizar cada sección según su tipo
   const renderSection = (section) => {
     const { type, config, id } = section;
@@ -426,6 +435,64 @@ export default function Home() {
           </section>
         );
 
+      case "galeriahogar":
+        return (
+          <section key={id} className="py-5">
+            <div className="container">
+              <div className="text-center mb-4">
+                <h2 className="fw-bold" style={{ color: "#5b4636" }}>
+                  {config.title || "Así es nuestro hogar"}
+                </h2>
+                <p className="text-muted">
+                  {config.subtitle || "Imágenes reales de actividades e instalaciones."}
+                </p>
+              </div>
+
+              {config.images && config.images.length > 0 ? (
+                <div className="row g-3">
+                  {config.images.map((img, idx) => (
+                    <div className="col-6 col-lg-3" key={idx}>
+                      <div className="position-relative rounded overflow-hidden shadow-sm"
+                        style={{ aspectRatio: "3/2" }}>
+                        <img
+                          className="w-100 h-100"
+                          src={img.url}
+                          alt={img.alt || "Galería"}
+                          loading="lazy"
+                          style={{ objectFit: "cover", display: "block" }}
+                        />
+                        {img.caption && (
+                          <div className="position-absolute bottom-0 start-0 end-0 text-white text-center py-1"
+                            style={{
+                              background: "linear-gradient(transparent, rgba(0,0,0,.6))",
+                              fontSize: "0.75rem",
+                              fontWeight: 600,
+                            }}>
+                            {img.caption}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted text-center">No hay imágenes disponibles</p>
+              )}
+
+              {config.buttonText && (
+                <div className="text-center mt-4">
+                  <Link
+                    to={config.buttonLink || "/actividades"}
+                    className="btn btn-outline-primary"
+                  >
+                    {config.buttonText}
+                  </Link>
+                </div>
+              )}
+            </div>
+          </section>
+        );
+
       default:
         return null;
     }
@@ -449,57 +516,35 @@ export default function Home() {
           data-bs-pause="hover"
           aria-label="Galería principal"
         >
-          <div className="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#heroCarousel"
-              data-bs-slide-to="0"
-              className="active"
-              aria-current="true"
-              aria-label="Imagen 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#heroCarousel"
-              data-bs-slide-to="1"
-              aria-label="Imagen 2"
-            ></button>
-          </div>
+          {heroImages.length > 1 && (
+            <div className="carousel-indicators">
+              {heroImages.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to={idx}
+                  className={idx === 0 ? "active" : ""}
+                  aria-current={idx === 0 ? "true" : undefined}
+                  aria-label={`Imagen ${idx + 1}`}
+                ></button>
+              ))}
+            </div>
+          )}
 
           <div className="carousel-inner">
-            <div className="carousel-item active">
-              <picture className="hero-picture">
-                <source
-                  type="image/webp"
-                  srcSet={`${URLROOT}web/ancianato_inicio-1280.webp`}
-                />
+            {heroImages.map((img, idx) => (
+              <div key={idx} className={`carousel-item ${idx === 0 ? "active" : ""}`}>
                 <img
                   className="hero-img"
-                  src={`${URLROOT}web/ancianato_inicio-1280.webp`}
-                  alt="Hogar geriátrico: vista principal"
-                  loading="eager"
-                  fetchPriority="high"
+                  src={img.url}
+                  alt={img.alt || `Hero ${idx + 1}`}
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  fetchPriority={idx === 0 ? "high" : undefined}
                   decoding="async"
                 />
-              </picture>
-            </div>
-
-            <div className="carousel-item">
-              <picture className="hero-picture">
-                <source
-                  type="image/webp"
-                  srcSet={`${URLROOT}web/quienes-somos-1280.webp`}
-                />
-                <img
-                  className="hero-img"
-                  src={`${URLROOT}web/quienes-somos-1280.webp`}
-                  alt="Familias y residentes compartiendo"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </picture>
-            </div>
+              </div>
+            ))}
           </div>
 
           <button
@@ -579,40 +624,7 @@ export default function Home() {
         .filter((s) => s.type !== "bloquep")
         .map((section) => renderSection(section))}
 
-      {/* GALERÍA */}
-      <section className="py-5">
-        <div className="container">
-          <div className="text-center mb-4">
-            <h2 className="fw-bold" style={{ color: "#5b4636" }}>
-              Así es nuestro hogar
-            </h2>
-            <p className="text-muted">
-              Imágenes reales de actividades e instalaciones.
-            </p>
-          </div>
-
-          <div className="row g-3">
-            {["galeria1.webp", "galeria2.webp", "galeria3.webp", "galeria4.webp"].map(
-              (img) => (
-                <div className="col-6 col-lg-3" key={img}>
-                  <img
-                    className="img-fluid rounded shadow-sm"
-                    src={`${URLROOT}web/${img}`}
-                    alt="Galería"
-                    loading="lazy"
-                  />
-                </div>
-              )
-            )}
-          </div>
-
-          <div className="text-center mt-4">
-            <Link to="/actividades" className="btn btn-outline-primary">
-              Ver más actividades
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* GALERÍA "Así es nuestro hogar" — ahora se renderiza dinámicamente desde el módulo galeriahogar */}
 
       {/* CTA FINAL (HARDCODEADA - PENDIENTE DE MÓDULO) */}
       <section className="py-5" style={{ background: "#8C6A4A" }}>
@@ -648,6 +660,35 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Botón flotante para ir al Admin */}
+      <Link
+        to="/admin"
+        className="btn shadow-lg d-flex align-items-center justify-content-center"
+        title="Panel de administración"
+        style={{
+          position: "fixed",
+          bottom: "2rem",
+          right: "2rem",
+          width: "56px",
+          height: "56px",
+          borderRadius: "50%",
+          backgroundColor: "#5b4636",
+          color: "#fff",
+          fontSize: "1.5rem",
+          zIndex: 1050,
+          transition: "transform 0.2s, background-color 0.2s",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.backgroundColor = "#8C6A4A";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.backgroundColor = "#5b4636";
+        }}
+      >
+        <i className="bi bi-gear-fill"></i>
+      </Link>
     </>
   );
 }

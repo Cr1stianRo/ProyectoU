@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const API_URL = "http://localhost:4000/api/home-config/carrusel";
@@ -13,11 +14,14 @@ export default function CarruselConfig() {
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const onSave = async () => {
     try {
       await axios.put(API_URL, form);
-      alert("Guardado ✅");
+      setShowSuccess(true);
+      setTimeout(() => navigate("/admin"), 2000);
     } catch (e) {
       alert("No se pudo guardar ❌");
     }
@@ -66,9 +70,56 @@ export default function CarruselConfig() {
     setActiveIndex((prev) => prev + direction);
   };
 
+  const [uploading, setUploading] = useState(null); // index of slide being uploaded
+
+  const handleFileUpload = async (index, file) => {
+    if (!file) return;
+    setUploading(index);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const res = await axios.post("http://localhost:4000/api/upload", formData);
+      setSlideField(index, "imageUrl", res.data.url);
+    } catch (err) {
+      const msg = err.response?.data?.error || "Error al subir la imagen";
+      alert(msg);
+    } finally {
+      setUploading(null);
+    }
+  };
+
   const validSlides = (form.slides || []).filter((s) => s.imageUrl);
 
   return (
+    <>
+    {showSuccess && (
+      <div style={{
+        position: "fixed", inset: 0, zIndex: 9999,
+        background: "rgba(0,0,0,.45)", backdropFilter: "blur(4px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        animation: "fadeIn .3s ease",
+      }}>
+        <div style={{
+          background: "#fff", borderRadius: "1.5rem", padding: "2.5rem 3rem",
+          textAlign: "center", boxShadow: "0 20px 60px rgba(0,0,0,.2)",
+          animation: "scaleIn .4s ease",
+        }}>
+          <div style={{
+            width: 80, height: 80, borderRadius: "50%", background: "#d4edda",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            margin: "0 auto 1.2rem",
+          }}>
+            <i className="bi bi-check-lg" style={{ fontSize: "2.5rem", color: "#198754" }}></i>
+          </div>
+          <h3 className="fw-bold mb-2" style={{ color: "#5b4636" }}>Guardado exitoso</h3>
+          <p className="text-muted mb-0">Redirigiendo al panel de administración...</p>
+        </div>
+      </div>
+    )}
+    <style>{`
+      @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+      @keyframes scaleIn { from { opacity:0; transform:scale(.8) } to { opacity:1; transform:scale(1) } }
+    `}</style>
     <div className="container py-4">
       <div className="row g-4 align-items-start">
         {/* IZQUIERDA: editor */}
@@ -138,14 +189,32 @@ export default function CarruselConfig() {
                     </div>
                   </div>
 
-                  <label className="form-label">URL de la imagen</label>
-                  <input
-                    className="form-control mb-2"
-                    value={slide.imageUrl || ""}
-                    onChange={(e) => setSlideField(idx, "imageUrl", e.target.value)}
-                    placeholder="https://ejemplo.com/imagen.jpg"
-                    onClick={(e) => e.stopPropagation()}
-                  />
+                  <label className="form-label">Imagen</label>
+                  <div className="d-flex gap-2 mb-2" onClick={(e) => e.stopPropagation()}>
+                    <input
+                      className="form-control"
+                      value={slide.imageUrl || ""}
+                      onChange={(e) => setSlideField(idx, "imageUrl", e.target.value)}
+                      placeholder="URL o sube desde tu dispositivo"
+                    />
+                    <label
+                      className="btn btn-outline-secondary d-flex align-items-center gap-1 flex-shrink-0"
+                      style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+                    >
+                      <i className="bi bi-upload"></i>
+                      {uploading === idx ? "Subiendo..." : "Subir"}
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,image/gif"
+                        className="d-none"
+                        onChange={(e) => {
+                          handleFileUpload(idx, e.target.files[0]);
+                          e.target.value = "";
+                        }}
+                        disabled={uploading === idx}
+                      />
+                    </label>
+                  </div>
 
                   {slide.imageUrl && (
                     <div
@@ -338,5 +407,6 @@ export default function CarruselConfig() {
         </div>
       </div>
     </div>
+    </>
   );
 }

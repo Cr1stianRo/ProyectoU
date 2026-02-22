@@ -6,6 +6,7 @@ import { getCarrusel, updateCarrusel } from "../controllers/Home/carruselControl
 import { getPage, updatePage } from "../controllers/Home/pageConfigController.js";
 import { getMapa, updateMapa } from "../controllers/Home/mapaController.js";
 import { getValores, updateValores } from "../controllers/Home/valoresController.js";
+import { getGaleriaHogar, updateGaleriaHogar } from "../controllers/Home/galeriaHogarController.js";
 
 const router = Router();
 
@@ -29,5 +30,8 @@ router.put("/mapa", updateMapa);
 
 router.get("/valores", getValores);
 router.put("/valores", updateValores);
+
+router.get("/galeriahogar", getGaleriaHogar);
+router.put("/galeriahogar", updateGaleriaHogar);
 
 export default router;
