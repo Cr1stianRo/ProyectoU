@@ -1,17 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 
 const URLROOT = "/";
-const API_URL = "http://localhost:4000/api/home-config/page";
 
 export default function Home() {
   const [sections, setSections] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios
-      .get(API_URL)
+    api
+      .get("/home-config/page")
       .then((res) => {
         const sortedSections = (res.data.sections || []).sort(
           (a, b) => a.order - b.order

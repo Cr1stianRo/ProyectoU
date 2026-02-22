@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 
-const API_URL = "http://localhost:4000/api/home-config/diseno";
+const API_URL = "/home-config/diseno";
 
 // Default admin colors (always used outside Home)
 const ADMIN_DEFAULTS = {
@@ -39,7 +39,7 @@ export default function ThemeProvider({ children }) {
   // Reload theme from DB every time we enter Home
   useEffect(() => {
     if (isHome) {
-      axios
+      api
         .get(API_URL)
         .then((res) => setTheme(res.data))
         .catch(() => {});

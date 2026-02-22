@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:4000/api/home-config/bloquep";
+const API_URL = "/home-config/bloquep";
 
 const initialForm = {
   badgeText: "",
@@ -27,7 +27,7 @@ export default function HomeSettings() {
 
   const onSave = async () => {
   try {
-    await axios.put(API_URL, form);
+    await api.put(API_URL, form);
     setShowSuccess(true);
     setTimeout(() => navigate("/admin"), 2000);
   } catch (e) {
@@ -37,7 +37,7 @@ export default function HomeSettings() {
 
 
   useEffect(() => {
-    axios
+    api
       .get(API_URL)
       .then((res) => setForm((prev) => ({ ...prev, ...res.data })))
       .catch(() => setError("No se pudo cargar la configuración"));
@@ -97,7 +97,7 @@ export default function HomeSettings() {
     try {
       const fd = new FormData();
       fd.append("image", file);
-      const res = await axios.post("http://localhost:4000/api/upload", fd);
+      const res = await api.post("/upload", fd);
       setHeroImageField(index, "url", res.data.url);
     } catch {
       alert("Error al subir la imagen");

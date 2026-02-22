@@ -33,16 +33,16 @@ const DEFAULT_CONFIG = {
   ],
 };
 
-const getOrCreate = async () => {
-  let doc = await PageConfig.findOne();
-  if (!doc) doc = await PageConfig.create({ sections: [] });
+const getOrCreate = async (userId) => {
+  let doc = await PageConfig.findOne({ userId });
+  if (!doc) doc = await PageConfig.create({ userId, sections: [] });
   return doc;
 };
 
-/** GET /api/home-config/sobrenosotros */
 export const getSobreNosotros = async (req, res) => {
   try {
-    const doc = await getOrCreate();
+    if (!req.userId) return res.json(DEFAULT_CONFIG);
+    const doc = await getOrCreate(req.userId);
     const section = doc.sections.find((s) => s.type === TYPE);
     return res.status(200).json(section?.config ?? DEFAULT_CONFIG);
   } catch (error) {
@@ -51,7 +51,6 @@ export const getSobreNosotros = async (req, res) => {
   }
 };
 
-/** PUT /api/home-config/sobrenosotros */
 export const updateSobreNosotros = async (req, res) => {
   try {
     const {
@@ -84,7 +83,7 @@ export const updateSobreNosotros = async (req, res) => {
       pillars: cleanPillars,
     };
 
-    const doc = await getOrCreate();
+    const doc = await getOrCreate(req.userId);
     const idx = doc.sections.findIndex((s) => s.type === TYPE);
 
     if (idx >= 0) {

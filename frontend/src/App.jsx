@@ -1,8 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Login/Register.jsx";
+import Welcome from "./pages/Welcome.jsx";
 import Home from "./pages/Home.jsx"
 import AdminPanel from "./pages/AdminPanel.jsx"
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ServiciosConfig from "./pages/ModulosEdición/Home/ServiciosConfig.jsx"
 import Bloque1Config from "./pages/ModulosEdición/Home/Bloque1Config.jsx"
 import Carrusel from "./pages/ModulosEdición/Home/Carrusel.jsx"
@@ -18,20 +20,21 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/Home" element={<Home />} />
+      <Route path="/welcome" element={<Welcome />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/Home" element={<Home />} />
-      <Route path="/admin" element={<AdminPanel />} />
-      <Route path="/Bloque1Config" element={<Bloque1Config />} />
-      <Route path="/ServiciosConfig" element={<ServiciosConfig />} />
-      <Route path="/Carrusel" element={<Carrusel />} />
-      <Route path="/MapaConfig" element={<MapaConfig />} />
-      <Route path="/ValoresConfig" element={<ValoresConfig />} />
-      <Route path="/GaleriaHogarConfig" element={<GaleriaHogarConfig />} />
-      <Route path="/DisenoConfig" element={<DisenoConfig />} />
-      <Route path="/SobreNosotrosConfig" element={<SobreNosotrosConfig />} />
-      <Route path="/EquipoConfig" element={<EquipoConfig />} />
-      <Route path="/VideoConfig" element={<VideoConfig />} />
+      <Route path="/admin" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+      <Route path="/Bloque1Config" element={<ProtectedRoute><Bloque1Config /></ProtectedRoute>} />
+      <Route path="/ServiciosConfig" element={<ProtectedRoute><ServiciosConfig /></ProtectedRoute>} />
+      <Route path="/Carrusel" element={<ProtectedRoute><Carrusel /></ProtectedRoute>} />
+      <Route path="/MapaConfig" element={<ProtectedRoute><MapaConfig /></ProtectedRoute>} />
+      <Route path="/ValoresConfig" element={<ProtectedRoute><ValoresConfig /></ProtectedRoute>} />
+      <Route path="/GaleriaHogarConfig" element={<ProtectedRoute><GaleriaHogarConfig /></ProtectedRoute>} />
+      <Route path="/DisenoConfig" element={<ProtectedRoute><DisenoConfig /></ProtectedRoute>} />
+      <Route path="/SobreNosotrosConfig" element={<ProtectedRoute><SobreNosotrosConfig /></ProtectedRoute>} />
+      <Route path="/EquipoConfig" element={<ProtectedRoute><EquipoConfig /></ProtectedRoute>} />
+      <Route path="/VideoConfig" element={<ProtectedRoute><VideoConfig /></ProtectedRoute>} />
     </Routes>
   );
 }

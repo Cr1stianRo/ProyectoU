@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { verifyToken, optionalAuth } from "../middleware/authMiddleware.js";
 import { getHomeConfig, updateHomeConfig } from "../controllers/Home/homeConfigController.js";
 import { getBloquePrincipal, updateBloquePrincipal } from "../controllers/Home/bloquePrincipalController.js";
 import { getCuidadoDia, updateCuidadoDia } from "../controllers/Home/cuidadoBloqueController.js";
@@ -15,43 +16,46 @@ import { getVideo, updateVideo } from "../controllers/Home/videoController.js";
 
 const router = Router();
 
-router.get("/", getHomeConfig);
-router.put("/", updateHomeConfig);
+// GET routes use optionalAuth (public access with ?userId= or JWT)
+// PUT routes require verifyToken (authenticated only)
 
-router.get("/page", getPage);
-router.put("/page", updatePage);
+router.get("/", optionalAuth, getHomeConfig);
+router.put("/", verifyToken, updateHomeConfig);
 
-router.get("/bloquep", getBloquePrincipal);
-router.put("/bloquep", updateBloquePrincipal);
+router.get("/page", optionalAuth, getPage);
+router.put("/page", verifyToken, updatePage);
 
-router.get("/cuidadod", getCuidadoDia);
-router.put("/cuidadod", updateCuidadoDia);
+router.get("/bloquep", optionalAuth, getBloquePrincipal);
+router.put("/bloquep", verifyToken, updateBloquePrincipal);
 
-router.get("/carrusel", getCarrusel);
-router.put("/carrusel", updateCarrusel);
+router.get("/cuidadod", optionalAuth, getCuidadoDia);
+router.put("/cuidadod", verifyToken, updateCuidadoDia);
 
-router.get("/mapa", getMapa);
-router.put("/mapa", updateMapa);
+router.get("/carrusel", optionalAuth, getCarrusel);
+router.put("/carrusel", verifyToken, updateCarrusel);
 
-router.get("/valores", getValores);
-router.put("/valores", updateValores);
+router.get("/mapa", optionalAuth, getMapa);
+router.put("/mapa", verifyToken, updateMapa);
 
-router.get("/galeriahogar", getGaleriaHogar);
-router.put("/galeriahogar", updateGaleriaHogar);
+router.get("/valores", optionalAuth, getValores);
+router.put("/valores", verifyToken, updateValores);
 
-router.get("/servicios", getServicios);
-router.put("/servicios", updateServicios);
+router.get("/galeriahogar", optionalAuth, getGaleriaHogar);
+router.put("/galeriahogar", verifyToken, updateGaleriaHogar);
 
-router.get("/diseno", getDiseno);
-router.put("/diseno", updateDiseno);
+router.get("/servicios", optionalAuth, getServicios);
+router.put("/servicios", verifyToken, updateServicios);
 
-router.get("/sobrenosotros", getSobreNosotros);
-router.put("/sobrenosotros", updateSobreNosotros);
+router.get("/diseno", optionalAuth, getDiseno);
+router.put("/diseno", verifyToken, updateDiseno);
 
-router.get("/equipo", getEquipo);
-router.put("/equipo", updateEquipo);
+router.get("/sobrenosotros", optionalAuth, getSobreNosotros);
+router.put("/sobrenosotros", verifyToken, updateSobreNosotros);
 
-router.get("/video", getVideo);
-router.put("/video", updateVideo);
+router.get("/equipo", optionalAuth, getEquipo);
+router.put("/equipo", verifyToken, updateEquipo);
+
+router.get("/video", optionalAuth, getVideo);
+router.put("/video", verifyToken, updateVideo);
 
 export default router;

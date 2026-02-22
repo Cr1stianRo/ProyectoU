@@ -1,6 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function AdminPanel() {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
   const modules = [
     {
       id: "bloquep",
@@ -118,10 +126,17 @@ export default function AdminPanel() {
                 Gestiona los módulos editables de la página Home
               </p>
             </div>
-            <Link to="/" className="btn btn-outline-secondary">
-              <i className="bi bi-arrow-left me-2"></i>
-              Volver al sitio
-            </Link>
+            <div className="d-flex gap-2 align-items-center">
+              {user && <span className="text-muted me-2">{user.name}</span>}
+              <Link to="/" className="btn btn-outline-secondary">
+                <i className="bi bi-arrow-left me-2"></i>
+                Volver al sitio
+              </Link>
+              <button onClick={handleLogout} className="btn btn-outline-danger">
+                <i className="bi bi-box-arrow-right me-2"></i>
+                Cerrar sesión
+              </button>
+            </div>
           </div>
         </div>
       </div>

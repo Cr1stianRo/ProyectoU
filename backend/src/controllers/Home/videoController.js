@@ -9,16 +9,16 @@ const DEFAULT_CONFIG = {
   youtubeUrl: "",
 };
 
-const getOrCreate = async () => {
-  let doc = await PageConfig.findOne();
-  if (!doc) doc = await PageConfig.create({ sections: [] });
+const getOrCreate = async (userId) => {
+  let doc = await PageConfig.findOne({ userId });
+  if (!doc) doc = await PageConfig.create({ userId, sections: [] });
   return doc;
 };
 
-/** GET /api/home-config/video */
 export const getVideo = async (req, res) => {
   try {
-    const doc = await getOrCreate();
+    if (!req.userId) return res.json(DEFAULT_CONFIG);
+    const doc = await getOrCreate(req.userId);
     const section = doc.sections.find((s) => s.type === TYPE);
     return res.status(200).json(section?.config ?? DEFAULT_CONFIG);
   } catch (error) {
@@ -27,7 +27,6 @@ export const getVideo = async (req, res) => {
   }
 };
 
-/** PUT /api/home-config/video */
 export const updateVideo = async (req, res) => {
   try {
     const {
@@ -42,7 +41,7 @@ export const updateVideo = async (req, res) => {
       youtubeUrl: String(youtubeUrl).trim(),
     };
 
-    const doc = await getOrCreate();
+    const doc = await getOrCreate(req.userId);
     const idx = doc.sections.findIndex((s) => s.type === TYPE);
 
     if (idx >= 0) {

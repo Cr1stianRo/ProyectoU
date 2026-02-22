@@ -1,67 +1,87 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";   // ← (1) Agregado
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import api from "../../api/axios";
+import "./Auth.css";
 
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
 
-  const handleSubmit = async (e) => {   // ← (2) Convertido a async
+  const successMsg = location.state?.success || "";
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
+    if (!email || !password) {
+      setError("Completa todos los campos.");
+      return;
+    }
+
+    setLoading(true);
     try {
-      const res = await axios.post("http://localhost:4000/api/auth/login", {
-        email,
-        password,
-      });
+      const res = await api.post("/auth/login", { email, password });
+      const { token, user } = res.data;
 
-      console.log("Login exitoso:", res.data);
-      localStorage.setItem("token", res.data.token);
+      login(user, token);
 
-      alert("Inicio de sesión exitoso");
-      console.log("Token guardado:", res.data.token);
-
-      navigate("/");
-
-    } catch (error) {
-      console.error(error);
-      alert("Credenciales inválidas");    // ← (4) Cambiado
+      const lastRoute = user.preferences?.lastVisitedRoute || "/admin";
+      navigate(lastRoute, { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.msg || "Error al iniciar sesión.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Inicio de sesión</h1>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Iniciar Sesión</h2>
+        <p className="auth-subtitle">Accede al panel de administración</p>
 
-      <form onSubmit={handleSubmit}>
+        {successMsg && <div className="auth-success">{successMsg}</div>}
+        {error && <div className="auth-error">{error}</div>}
 
-        <div>
-          <label>Email:</label> <br />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Correo electrónico</label>
+            <input
+              type="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="tu@email.com"
+            />
+          </div>
 
-        <br />
+          <div className="mb-3">
+            <label className="form-label">Contraseña</label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+            />
+          </div>
 
-        <div>
-          <label>Password:</label> <br />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+          <button type="submit" className="btn-auth mb-3" disabled={loading}>
+            {loading ? "Ingresando..." : "Ingresar"}
+          </button>
+        </form>
 
-        <br />
-
-        <button type="submit">Entrar</button>
-      </form>
+        <p className="text-center mb-0" style={{ fontSize: "0.9rem" }}>
+          ¿No tienes cuenta?{" "}
+          <Link to="/register" className="auth-link">Crear cuenta</Link>
+        </p>
+      </div>
     </div>
   );
 }
-
-export default Login;

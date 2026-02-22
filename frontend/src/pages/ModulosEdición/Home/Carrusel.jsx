@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../../api/axios";
 
-const API_URL = "http://localhost:4000/api/home-config/carrusel";
+const API_URL = "/home-config/carrusel";
 
 const initialSlide = () => ({ imageUrl: "", title: "", subtitle: "", altText: "" });
 
@@ -19,7 +19,7 @@ export default function CarruselConfig() {
 
   const onSave = async () => {
     try {
-      await axios.put(API_URL, form);
+      await api.put(API_URL, form);
       setShowSuccess(true);
       setTimeout(() => navigate("/admin"), 2000);
     } catch (e) {
@@ -28,7 +28,7 @@ export default function CarruselConfig() {
   };
 
   useEffect(() => {
-    axios
+    api
       .get(API_URL)
       .then((res) => setForm((prev) => ({ ...prev, ...res.data })))
       .catch(() => setError("No se pudo cargar la configuración"));
@@ -78,7 +78,7 @@ export default function CarruselConfig() {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      const res = await axios.post("http://localhost:4000/api/upload", formData);
+      const res = await api.post("/upload", formData);
       setSlideField(index, "imageUrl", res.data.url);
     } catch (err) {
       const msg = err.response?.data?.error || "Error al subir la imagen";
