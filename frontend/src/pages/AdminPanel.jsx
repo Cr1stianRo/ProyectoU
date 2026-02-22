@@ -23,14 +23,14 @@ export default function AdminPanel() {
       purpose: "Mostrar imágenes de instalaciones y actividades",
     },
     {
-      id: "cuidadod",
-      title: "Cuidado Día",
+      id: "servicios",
+      title: "Servicios y comodidades",
       description:
-        "Configura la tarjeta del servicio 'Cuidado Día'. Personaliza el ícono, colores, título, subtítulo y descripción del servicio. Esta sección aparece en el bloque de servicios destacados.",
-      icon: "bi bi-sunrise",
+        "Administra todos los servicios del hogar (Cuidado Día, Cuidado Permanente, etc.) y la franja de diferenciales. Agrega, edita o elimina servicios con sus íconos, descripciones y botones.",
+      icon: "bi bi-grid-1x2-fill",
       color: "#FF8C00",
-      route: "/CuidadoBloque",
-      purpose: "Presentar el servicio de cuidado diurno",
+      route: "/ServiciosConfig",
+      purpose: "Presentar servicios y diferenciales del hogar",
     },
     {
       id: "mapa",
