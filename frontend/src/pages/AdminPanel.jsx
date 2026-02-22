@@ -53,6 +53,16 @@ export default function AdminPanel() {
       purpose: "Mostrar misión, visión y valores institucionales",
     },
     {
+      id: "diseno",
+      title: "Colores y Diseño",
+      description:
+        "Personaliza la apariencia de todo el sitio. Elige entre paletas predefinidas o crea tu combinación de colores. Cambia la fuente y el redondeo de las tarjetas. Vista previa en tiempo real.",
+      icon: "bi bi-palette-fill",
+      color: "#9B59B6",
+      route: "/DisenoConfig",
+      purpose: "Personalizar colores, fuente y estilo del sitio",
+    },
+    {
       id: "galeriahogar",
       title: "Así es nuestro hogar",
       description:
@@ -175,7 +185,7 @@ export default function AdminPanel() {
               <div className="fs-1 mb-2" style={{ color: "#8C6A4A" }}>
                 <i className="bi bi-box-seam"></i>
               </div>
-              <h6 className="mb-0 fw-bold">6 Módulos</h6>
+              <h6 className="mb-0 fw-bold">7 Módulos</h6>
               <small className="text-muted">Activos</small>
             </div>
           </div>
