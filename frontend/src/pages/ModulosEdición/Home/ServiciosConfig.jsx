@@ -262,25 +262,6 @@ export default function ServiciosConfig() {
                             onChange={(e) => setServiceField(idx, "description", e.target.value)}
                           />
 
-                          <div className="row g-2">
-                            <div className="col-6">
-                              <label className="form-label">Texto botón</label>
-                              <input
-                                className="form-control"
-                                value={svc.buttonText || ""}
-                                onChange={(e) => setServiceField(idx, "buttonText", e.target.value)}
-                              />
-                            </div>
-                            <div className="col-6">
-                              <label className="form-label">Enlace botón</label>
-                              <input
-                                className="form-control"
-                                value={svc.buttonLink || ""}
-                                onChange={(e) => setServiceField(idx, "buttonLink", e.target.value)}
-                                placeholder="/servicios/..."
-                              />
-                            </div>
-                          </div>
                         </div>
                       ))}
                     </div>
@@ -385,11 +366,6 @@ export default function ServiciosConfig() {
                           <p className="text-muted small mb-2" style={{ fontSize: "0.85rem" }}>
                             {svc.description || ""}
                           </p>
-                          {svc.buttonText && (
-                            <span className="btn btn-sm btn-primary mt-auto">
-                              {svc.buttonText}
-                            </span>
-                          )}
                         </div>
                       </div>
                     </div>

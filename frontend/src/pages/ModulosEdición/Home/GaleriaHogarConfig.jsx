@@ -167,27 +167,6 @@ export default function GaleriaHogarConfig() {
                   placeholder="Ej: Imágenes reales de actividades..."
                 />
 
-                <div className="row g-2 mb-3">
-                  <div className="col-6">
-                    <label className="form-label">Texto del botón</label>
-                    <input
-                      className="form-control"
-                      value={form.buttonText || ""}
-                      onChange={(e) => setField("buttonText", e.target.value)}
-                      placeholder="Ej: Ver más actividades"
-                    />
-                  </div>
-                  <div className="col-6">
-                    <label className="form-label">Enlace del botón</label>
-                    <input
-                      className="form-control"
-                      value={form.buttonLink || ""}
-                      onChange={(e) => setField("buttonLink", e.target.value)}
-                      placeholder="Ej: /actividades"
-                    />
-                  </div>
-                </div>
-
                 <hr className="my-3" />
 
                 {/* IMÁGENES */}
@@ -400,13 +379,6 @@ export default function GaleriaHogarConfig() {
                   </div>
                 )}
 
-                {form.buttonText && (
-                  <div className="text-center mt-4">
-                    <span className="btn btn-outline-primary">
-                      {form.buttonText}
-                    </span>
-                  </div>
-                )}
               </div>
             </div>
 

@@ -175,11 +175,6 @@ export default function Home() {
                         <p className="text-muted mb-3">{svc.description}</p>
 
                         <div className="d-flex gap-2 justify-content-center">
-                          {svc.buttonText && (
-                            <Link to={svc.buttonLink || "#"} className="btn btn-primary">
-                              {svc.buttonText}
-                            </Link>
-                          )}
                           <a
                             href={whatsappHref}
                             className={`btn btn-outline-cafe btn-whatsapp ${
@@ -388,16 +383,6 @@ export default function Home() {
                 <p className="text-muted text-center">No hay imágenes disponibles</p>
               )}
 
-              {config.buttonText && (
-                <div className="text-center mt-4">
-                  <Link
-                    to={config.buttonLink || "/actividades"}
-                    className="btn btn-outline-primary"
-                  >
-                    {config.buttonText}
-                  </Link>
-                </div>
-              )}
             </div>
           </section>
         );
