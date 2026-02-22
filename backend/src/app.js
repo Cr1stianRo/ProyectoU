@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import authRoutes from "./routes/authRoutes.js";
 import homeConfigRoutes from "./routes/homeConfigRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -15,5 +16,6 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/api/home-config", homeConfigRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/user", userRoutes);
 
 export default app;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../../api/axios";
 
-const API_URL = "http://localhost:4000/api/home-config/mapa";
+const API_URL = "/home-config/mapa";
 
 const initialForm = {
   title: "",
@@ -22,7 +22,7 @@ export default function MapaConfig() {
 
   const onSave = async () => {
     try {
-      await axios.put(API_URL, form);
+      await api.put(API_URL, form);
       setShowSuccess(true);
       setTimeout(() => navigate("/admin"), 2000);
     } catch (e) {
@@ -31,7 +31,7 @@ export default function MapaConfig() {
   };
 
   useEffect(() => {
-    axios
+    api
       .get(API_URL)
       .then((res) => setForm((prev) => ({ ...prev, ...res.data })))
       .catch(() => setError("No se pudo cargar la configuración"));

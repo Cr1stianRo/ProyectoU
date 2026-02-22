@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  preferences: {
+    lastVisitedRoute: { type: String, default: "/admin" },
+    lastEditedAt: { type: Date, default: null }
   }
 }, { timestamps: true });
 

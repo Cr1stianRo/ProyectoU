@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../../api/axios";
 
-const API_URL = "http://localhost:4000/api/home-config/sobrenosotros";
-const UPLOAD_URL = "http://localhost:4000/api/upload";
+const API_URL = "/home-config/sobrenosotros";
+const UPLOAD_URL = "/upload";
 
 const initialForm = {
   sectionTitle: "Sobre nosotros",
@@ -22,7 +22,7 @@ export default function SobreNosotrosConfig() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
+    api
       .get(API_URL)
       .then((res) => setForm((prev) => ({ ...prev, ...res.data })))
       .catch(() => setError("No se pudo cargar la configuración"));
@@ -51,7 +51,7 @@ export default function SobreNosotrosConfig() {
     const fd = new FormData();
     fd.append("image", file);
     try {
-      const res = await axios.post(UPLOAD_URL, fd);
+      const res = await api.post(UPLOAD_URL, fd);
       setField("imageUrl", res.data.url);
     } catch {
       alert("Error al subir la imagen");
@@ -60,7 +60,7 @@ export default function SobreNosotrosConfig() {
 
   const onSave = async () => {
     try {
-      await axios.put(API_URL, form);
+      await api.put(API_URL, form);
       setShowSuccess(true);
       setTimeout(() => navigate("/admin"), 2000);
     } catch {
