@@ -10,6 +10,9 @@ import MapaConfig from "./pages/ModulosEdición/Home/MapaConfig.jsx"
 import ValoresConfig from "./pages/ModulosEdición/Home/ValoresConfig.jsx"
 import GaleriaHogarConfig from "./pages/ModulosEdición/Home/GaleriaHogarConfig.jsx"
 import DisenoConfig from "./pages/ModulosEdición/Home/DisenoConfig.jsx"
+import SobreNosotrosConfig from "./pages/ModulosEdición/Home/SobreNosotrosConfig.jsx"
+import EquipoConfig from "./pages/ModulosEdición/Home/EquipoConfig.jsx"
+import VideoConfig from "./pages/ModulosEdición/Home/VideoConfig.jsx"
 
 export default function App() {
   return (
@@ -26,6 +29,9 @@ export default function App() {
       <Route path="/ValoresConfig" element={<ValoresConfig />} />
       <Route path="/GaleriaHogarConfig" element={<GaleriaHogarConfig />} />
       <Route path="/DisenoConfig" element={<DisenoConfig />} />
+      <Route path="/SobreNosotrosConfig" element={<SobreNosotrosConfig />} />
+      <Route path="/EquipoConfig" element={<EquipoConfig />} />
+      <Route path="/VideoConfig" element={<VideoConfig />} />
     </Routes>
   );
 }

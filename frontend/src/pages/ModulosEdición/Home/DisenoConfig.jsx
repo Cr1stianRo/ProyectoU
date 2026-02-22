@@ -104,14 +104,6 @@ export default function DisenoConfig() {
   const onSave = async () => {
     try {
       await axios.put(API_URL, form);
-      // Apply to current page immediately
-      const root = document.documentElement;
-      root.style.setProperty("--cafe", form.primaryColor);
-      root.style.setProperty("--cafe-oscuro", form.darkColor);
-      root.style.setProperty("--arena", form.accentColor);
-      root.style.setProperty("--bs-primary", form.primaryColor);
-      root.style.setProperty("--bs-body-bg", form.bgColor);
-      root.style.setProperty("--text-base", form.darkColor);
       setShowSuccess(true);
       setTimeout(() => navigate("/admin"), 2000);
     } catch {
@@ -126,8 +118,7 @@ export default function DisenoConfig() {
       .catch(() => setError("No se pudo cargar la configuración"));
   }, []);
 
-  const setField = (name, value) =>
-    setForm((prev) => ({ ...prev, [name]: value }));
+  const setField = (name, value) => setForm((prev) => ({ ...prev, [name]: value }));
 
   const applyPalette = (palette, idx) => {
     setActivePalette(idx);
@@ -216,91 +207,6 @@ export default function DisenoConfig() {
 
                 <hr className="my-3" />
 
-                {/* Custom colors */}
-                <label className="form-label fw-bold">Colores personalizados</label>
-
-                <div className="row g-2 mb-3">
-                  <div className="col-6">
-                    <label className="form-label small">Color primario</label>
-                    <div className="d-flex gap-2 align-items-center">
-                      <input
-                        type="color"
-                        className="form-control form-control-color"
-                        value={form.primaryColor}
-                        onChange={(e) => { setField("primaryColor", e.target.value); setActivePalette(null); }}
-                      />
-                      <code className="small">{form.primaryColor}</code>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <label className="form-label small">Color oscuro (textos)</label>
-                    <div className="d-flex gap-2 align-items-center">
-                      <input
-                        type="color"
-                        className="form-control form-control-color"
-                        value={form.darkColor}
-                        onChange={(e) => { setField("darkColor", e.target.value); setActivePalette(null); }}
-                      />
-                      <code className="small">{form.darkColor}</code>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row g-2 mb-3">
-                  <div className="col-6">
-                    <label className="form-label small">Color acento</label>
-                    <div className="d-flex gap-2 align-items-center">
-                      <input
-                        type="color"
-                        className="form-control form-control-color"
-                        value={form.accentColor}
-                        onChange={(e) => { setField("accentColor", e.target.value); setActivePalette(null); }}
-                      />
-                      <code className="small">{form.accentColor}</code>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <label className="form-label small">Fondo general</label>
-                    <div className="d-flex gap-2 align-items-center">
-                      <input
-                        type="color"
-                        className="form-control form-control-color"
-                        value={form.bgColor}
-                        onChange={(e) => { setField("bgColor", e.target.value); setActivePalette(null); }}
-                      />
-                      <code className="small">{form.bgColor}</code>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row g-2 mb-3">
-                  <div className="col-6">
-                    <label className="form-label small">Fondo secciones</label>
-                    <div className="d-flex gap-2 align-items-center">
-                      <input
-                        type="color"
-                        className="form-control form-control-color"
-                        value={form.sectionBg}
-                        onChange={(e) => { setField("sectionBg", e.target.value); setActivePalette(null); }}
-                      />
-                      <code className="small">{form.sectionBg}</code>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <label className="form-label small">Redondeo (px)</label>
-                    <input
-                      type="range"
-                      className="form-range"
-                      min="0" max="40" step="2"
-                      value={form.borderRadius}
-                      onChange={(e) => setField("borderRadius", e.target.value)}
-                    />
-                    <small className="text-muted">{form.borderRadius}px</small>
-                  </div>
-                </div>
-
-                <hr className="my-3" />
-
                 <label className="form-label fw-bold">Fuente</label>
                 <select
                   className="form-select mb-3"
@@ -353,7 +259,7 @@ export default function DisenoConfig() {
                 <div className="d-inline-block p-3 mb-2"
                   style={{
                     background: "rgba(255,255,255,.85)",
-                    borderRadius: `${form.borderRadius}px`,
+                    borderRadius: `22px`,
                     backdropFilter: "blur(8px)",
                   }}>
                   <span className="badge mb-1" style={{ background: form.accentColor, color: form.darkColor, fontSize: "0.6rem" }}>
@@ -366,7 +272,7 @@ export default function DisenoConfig() {
                     Cuidado con amor y profesionalismo
                   </p>
                   <button className="btn btn-sm text-white"
-                    style={{ background: form.primaryColor, fontSize: "0.65rem", borderRadius: `${form.borderRadius / 2}px` }}>
+                    style={{ background: form.primaryColor, fontSize: "0.65rem", borderRadius: `11px` }}>
                     <i className="bi bi-whatsapp me-1"></i>WhatsApp
                   </button>
                 </div>
@@ -379,14 +285,14 @@ export default function DisenoConfig() {
                 </h6>
                 <div className="row g-2">
                   <div className="col-6">
-                    <div className="bg-white rounded-3 p-2 text-center shadow-sm" style={{ borderRadius: `${form.borderRadius}px` }}>
+                    <div className="bg-white rounded-3 p-2 text-center shadow-sm" style={{ borderRadius: `22px` }}>
                       <i className="bi bi-sunrise" style={{ color: form.primaryColor, fontSize: "1.2rem" }}></i>
                       <p className="fw-bold mb-0 mt-1" style={{ color: form.darkColor, fontSize: "0.7rem" }}>Cuidado Día</p>
                       <small className="text-muted" style={{ fontSize: "0.6rem" }}>8:00–17:00</small>
                     </div>
                   </div>
                   <div className="col-6">
-                    <div className="bg-white rounded-3 p-2 text-center shadow-sm" style={{ borderRadius: `${form.borderRadius}px` }}>
+                    <div className="bg-white rounded-3 p-2 text-center shadow-sm" style={{ borderRadius: `22px` }}>
                       <i className="bi bi-house-heart" style={{ color: form.primaryColor, fontSize: "1.2rem" }}></i>
                       <p className="fw-bold mb-0 mt-1" style={{ color: form.darkColor, fontSize: "0.7rem" }}>Permanente</p>
                       <small className="text-muted" style={{ fontSize: "0.6rem" }}>24/7</small>
@@ -403,7 +309,7 @@ export default function DisenoConfig() {
                 <div className="d-flex gap-2 justify-content-center">
                   {["Dignidad", "Amor", "Compromiso"].map((v) => (
                     <div key={v} className="bg-white rounded-3 p-2 text-center shadow-sm flex-fill"
-                      style={{ borderRadius: `${form.borderRadius}px` }}>
+                      style={{ borderRadius: `22px` }}>
                       <i className="bi bi-heart-fill" style={{ color: form.primaryColor, fontSize: "0.9rem" }}></i>
                       <p className="fw-bold mb-0" style={{ color: form.darkColor, fontSize: "0.65rem" }}>{v}</p>
                     </div>
