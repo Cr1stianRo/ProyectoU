@@ -63,6 +63,36 @@ export default function AdminPanel() {
       purpose: "Personalizar colores, fuente y estilo del sitio",
     },
     {
+      id: "sobrenosotros",
+      title: "Sobre Nosotros",
+      description:
+        "Administra la sección 'Sobre nosotros'. Edita la descripción de la organización, imagen representativa, filosofía institucional y los pilares fundamentales del hogar.",
+      icon: "bi bi-info-circle-fill",
+      color: "#3498db",
+      route: "/SobreNosotrosConfig",
+      purpose: "Describir la función y filosofía de la organización",
+    },
+    {
+      id: "equipo",
+      title: "Nuestro Equipo Humano",
+      description:
+        "Administra la sección del equipo de trabajo. Agrega miembros con su foto, nombre y cargo profesional. Se muestra en un grid de tarjetas con fotos circulares.",
+      icon: "bi bi-people-fill",
+      color: "#1abc9c",
+      route: "/EquipoConfig",
+      purpose: "Mostrar el equipo interdisciplinario del hogar",
+    },
+    {
+      id: "video",
+      title: "Conoce más sobre nosotros",
+      description:
+        "Administra la sección de video institucional. Pega un link de YouTube y se mostrará embebido en la página. Ideal para mostrar instalaciones, actividades y testimonios.",
+      icon: "bi bi-play-btn-fill",
+      color: "#e67e22",
+      route: "/VideoConfig",
+      purpose: "Video institucional de YouTube",
+    },
+    {
       id: "galeriahogar",
       title: "Así es nuestro hogar",
       description:
@@ -185,7 +215,7 @@ export default function AdminPanel() {
               <div className="fs-1 mb-2" style={{ color: "#8C6A4A" }}>
                 <i className="bi bi-box-seam"></i>
               </div>
-              <h6 className="mb-0 fw-bold">7 Módulos</h6>
+              <h6 className="mb-0 fw-bold">10 Módulos</h6>
               <small className="text-muted">Activos</small>
             </div>
           </div>
