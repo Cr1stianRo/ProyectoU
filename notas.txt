@@ -5,11 +5,74 @@ Analiza la app, estamos trabajando por módulos. En el frontend tenemos
   Lee los cambios en /cambios para entender la arquitectura. Cuando entiendas
   todo, hazme otro módulo:
 
-  haz el modulo neustro valores y toma de referencia la de esta pagina 
+  haz el modulo  de Cuidado Permanente, borra la que esta en este momento en home del fronted para que quede como un modulo
+  y toma de referencia la de esta pagina 
 
 
-  Puedes hacer webscraping a https://casadecampoeleden.com/nosotros para obtener datos.
+  Puedes hacer webscraping a https://casadecampoeleden.com/ para obtener datos.
+  haz webscraping con /mcp instalado anteriormente, realiza los cambios en la rama mia (feature/rodas)
 
   ¡Así de simple! 🎯
 
   
+  .-------------------------------------.
+
+  Analiza la app, estamos trabajando por módulos. En el frontend tenemos
+  src/pages/modulosedicion/home/ donde está Bloque1Config que tiene backend
+  completo (api).
+
+  Lee los cambios en /cambios para entender la arquitectura. Cuando entiendas
+  todo, hazme otro módulo:
+
+  haz el modulo  de Servicios y comodidades, borra la que esta en este momento en home del fronted y el modulo de cuidado dia debidoa 
+  a que la idea es que sea un solo modulo y que las personas puedan crear los servicios que quiera pero que se vea asi de esa forma y para que quede como un modulo
+  y toma de referencia la de esta pagina 
+
+
+  Puedes hacer webscraping a https://casadecampoeleden.com/ para obtener datos.
+  haz webscraping con /mcp instalado anteriormente, realiza los cambios en la rama mia (feature/rodas)
+
+
+  .-------------------------------------.
+
+  Analiza la app, estamos trabajando por módulos. En el frontend tenemos
+  src/pages/modulosedicion/home/ donde está Bloque1Config que tiene backend
+  completo (api).
+
+  Lee los cambios en /cambios para entender la arquitectura. Cuando entiendas
+  todo, hazme otro módulo:
+
+  haz el modulo  de colores y diseño, este modulo se encrgara de ponerle color a la pagina ,
+  se mostrar a un lado como se veria la pagina con una seleccion de colores y diseño que el usuario elija
+  y asi pueda elejir y se guarde 
+
+
+  Puedes hacer webscraping a https://casadecampoeleden.com/ para obtener datos.
+  haz webscraping con /mcp instalado anteriormente, realiza los cambios en la rama mia 
+
+   .-------------------------------------.
+
+  Analiza la app, estamos trabajando por módulos. En el frontend tenemos
+  src/pages/modulosedicion/home/ donde está Bloque1Config que tiene backend
+  completo (api).
+
+  Lee los cambios en /cambios para entender la arquitectura. Cuando entiendas
+  todo, hazme otro módulo:
+
+  vamos a realizar 3 nuevos modulos, el primero sera  "Sobre nosotros", este modulo se encrgara de
+   hablar sobre que funcion cumple esa ong etc , el segundo modulo sera de "Nuestro equipo humano" donde se mostrara 
+   una seccion donde se podra poner foto y el nombre de la persona y el 3 modulo sera Conoce más sobre ... donde se pondra un 
+   video que se tomara con un link de yotube 
+
+
+  Puedes hacer webscraping a https://casadecampoeleden.com/nosotros para obtener datos.
+  haz webscraping con /mcp instalado anteriormente, realiza los cambios en la rama mia 
+
+
+
+  ¡Así de simple! 🎯
+
+  github
+
+  sube todos los cambiaos realizalos al git en el proyecto actualmente a mi rama de trabajo (feature/rodas)
+  haz merge desde dev para actualizar dev a lo nuevo que yo he realizado 
