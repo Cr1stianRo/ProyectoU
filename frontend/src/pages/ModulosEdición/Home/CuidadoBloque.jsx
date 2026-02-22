@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const API_URL = "http://localhost:4000/api/home-config/cuidadod";
 
@@ -16,11 +16,14 @@ const initialForm = {
 export default function CuidadoDiaConfig() {
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const onSave = async () => {
     try {
       await axios.put(API_URL, form);
-      alert("Guardado ✅");
+      setShowSuccess(true);
+      setTimeout(() => navigate("/admin"), 2000);
     } catch (e) {
       alert("No se pudo guardar ❌");
     }
@@ -38,6 +41,35 @@ export default function CuidadoDiaConfig() {
   };
 
   return (
+    <>
+    {showSuccess && (
+      <div style={{
+        position: "fixed", inset: 0, zIndex: 9999,
+        background: "rgba(0,0,0,.45)", backdropFilter: "blur(4px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        animation: "fadeIn .3s ease",
+      }}>
+        <div style={{
+          background: "#fff", borderRadius: "1.5rem", padding: "2.5rem 3rem",
+          textAlign: "center", boxShadow: "0 20px 60px rgba(0,0,0,.2)",
+          animation: "scaleIn .4s ease",
+        }}>
+          <div style={{
+            width: 80, height: 80, borderRadius: "50%", background: "#d4edda",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            margin: "0 auto 1.2rem",
+          }}>
+            <i className="bi bi-check-lg" style={{ fontSize: "2.5rem", color: "#198754" }}></i>
+          </div>
+          <h3 className="fw-bold mb-2" style={{ color: "#5b4636" }}>Guardado exitoso</h3>
+          <p className="text-muted mb-0">Redirigiendo al panel de administración...</p>
+        </div>
+      </div>
+    )}
+    <style>{`
+      @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+      @keyframes scaleIn { from { opacity:0; transform:scale(.8) } to { opacity:1; transform:scale(1) } }
+    `}</style>
     <div className="container py-4">
       <div className="row g-4 align-items-center">
         {/* IZQUIERDA: editor */}
@@ -159,5 +191,6 @@ export default function CuidadoDiaConfig() {
         </div>
       </div>
     </div>
+    </>
   );
 }

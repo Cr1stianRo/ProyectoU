@@ -9,6 +9,7 @@ const DEFAULT_CONFIG = {
   button2Text: "",
   whatsappNumber: "",
   pills: [],
+  heroImages: [],
 };
 
 const getOrCreate = async () => {
@@ -39,7 +40,17 @@ export const updateBloquePrincipal = async (req, res) => {
       button2Text = "",
       whatsappNumber = "",
       pills = [],
+      heroImages = [],
     } = req.body || {};
+
+    const cleanImages = Array.isArray(heroImages)
+      ? heroImages
+          .filter((img) => img && String(img.url || "").trim() !== "")
+          .map((img) => ({
+            url: String(img.url).trim(),
+            alt: String(img.alt || "").trim(),
+          }))
+      : [];
 
     const config = {
       badgeText,
@@ -48,6 +59,7 @@ export const updateBloquePrincipal = async (req, res) => {
       button2Text,
       whatsappNumber: String(whatsappNumber).replace(/\D/g, ""),
       pills: Array.isArray(pills) ? pills.filter((p) => String(p).trim() !== "") : [],
+      heroImages: cleanImages,
     };
 
     const doc = await getOrCreate();

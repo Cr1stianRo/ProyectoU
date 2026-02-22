@@ -52,6 +52,16 @@ export default function AdminPanel() {
       route: "/ValoresConfig",
       purpose: "Mostrar misión, visión y valores institucionales",
     },
+    {
+      id: "galeriahogar",
+      title: "Así es nuestro hogar",
+      description:
+        "Administra la galería de fotos del hogar. Sube imágenes de actividades e instalaciones con captions descriptivos. Se muestran en un grid responsive de 4 columnas.",
+      icon: "bi bi-camera-fill",
+      color: "#2ecc71",
+      route: "/GaleriaHogarConfig",
+      purpose: "Galería de imágenes reales del hogar",
+    },
   ];
 
   return (
@@ -165,7 +175,7 @@ export default function AdminPanel() {
               <div className="fs-1 mb-2" style={{ color: "#8C6A4A" }}>
                 <i className="bi bi-box-seam"></i>
               </div>
-              <h6 className="mb-0 fw-bold">5 Módulos</h6>
+              <h6 className="mb-0 fw-bold">6 Módulos</h6>
               <small className="text-muted">Activos</small>
             </div>
           </div>
