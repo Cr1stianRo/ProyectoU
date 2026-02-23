@@ -101,6 +101,187 @@ function loadFont(fontName) {
   document.head.appendChild(link);
 }
 
+// Fallback order when no sections loaded yet
+const defaultPreviewOrder = [
+  { id: "bloquep-def", type: "bloquep" },
+  { id: "servicios-def", type: "servicios" },
+  { id: "valores-def", type: "valores" },
+  { id: "galeriahogar-def", type: "galeriahogar" },
+];
+
+// Render a mini preview block for each section type
+function renderMiniSection(type, form, headingFontFamily) {
+  switch (type) {
+    case "bloquep":
+      return (
+        <div className="text-center py-4 px-3"
+          style={{ background: `linear-gradient(135deg, ${form.accentColor}, ${form.bgColor})` }}>
+          <div className="d-inline-block p-3 mb-2"
+            style={{
+              background: "rgba(255,255,255,.85)",
+              borderRadius: `${form.borderRadius}px`,
+              backdropFilter: "blur(8px)",
+            }}>
+            <span className="badge mb-1" style={{ background: form.accentColor, color: form.darkColor, fontSize: "0.6rem" }}>
+              Hogar geriatrico
+            </span>
+            <h6 className="fw-bold mb-1" style={{ color: form.primaryColor, fontSize: "0.95rem", fontFamily: headingFontFamily }}>
+              Bienvenidos a nuestro hogar
+            </h6>
+            <p className="mb-2" style={{ color: form.darkColor, fontSize: "0.7rem" }}>
+              Cuidado con amor y profesionalismo
+            </p>
+            <button className="btn btn-sm text-white"
+              style={{ background: form.primaryColor, fontSize: "0.65rem", borderRadius: `${form.buttonRadius}px` }}>
+              <i className="bi bi-whatsapp me-1"></i>WhatsApp
+            </button>
+          </div>
+        </div>
+      );
+    case "servicios":
+      return (
+        <div className="px-3 py-3" style={{ background: form.sectionBg }}>
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Servicios y comodidades
+          </h6>
+          <div className="row g-2">
+            {[{ icon: "bi-sunrise", name: "Cuidado Dia", sub: "8:00-17:00" }, { icon: "bi-house-heart", name: "Permanente", sub: "24/7" }].map((svc) => (
+              <div key={svc.name} className="col-6">
+                <div className="bg-white p-2 text-center shadow-sm" style={{ borderRadius: `${form.borderRadius}px` }}>
+                  <i className={`bi ${svc.icon}`} style={{ color: form.primaryColor, fontSize: "1.2rem" }}></i>
+                  <p className="fw-bold mb-0 mt-1" style={{ color: form.darkColor, fontSize: "0.7rem" }}>{svc.name}</p>
+                  <small className="text-muted" style={{ fontSize: "0.6rem" }}>{svc.sub}</small>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    case "valores":
+      return (
+        <div className="px-3 py-3">
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Nuestros valores
+          </h6>
+          <div className="d-flex gap-2 justify-content-center">
+            {["Dignidad", "Amor", "Compromiso"].map((v) => (
+              <div key={v} className="bg-white p-2 text-center shadow-sm flex-fill"
+                style={{ borderRadius: `${form.borderRadius}px` }}>
+                <i className="bi bi-heart-fill" style={{ color: form.primaryColor, fontSize: "0.9rem" }}></i>
+                <p className="fw-bold mb-0" style={{ color: form.darkColor, fontSize: "0.65rem" }}>{v}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    case "galeriahogar":
+      return (
+        <div className="px-3 py-3" style={{ background: form.sectionBg }}>
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Asi es nuestro hogar
+          </h6>
+          <div className="d-flex gap-1">
+            {[1, 2, 3, 4].map((n) => (
+              <div key={n} className="flex-fill" style={{
+                height: 40, background: form.accentColor,
+                borderRadius: `${Math.min(form.borderRadius, 12)}px`,
+                border: `1px solid ${form.primaryColor}33`,
+              }}></div>
+            ))}
+          </div>
+        </div>
+      );
+    case "sobrenosotros":
+      return (
+        <div className="px-3 py-3">
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Sobre nosotros
+          </h6>
+          <div className="d-flex gap-2 align-items-center">
+            <div className="flex-fill">
+              <div style={{ height: 8, background: form.accentColor, borderRadius: 4, marginBottom: 4 }}></div>
+              <div style={{ height: 8, background: form.accentColor, borderRadius: 4, marginBottom: 4, width: "80%" }}></div>
+              <div style={{ height: 8, background: form.accentColor, borderRadius: 4, width: "60%" }}></div>
+            </div>
+            <div style={{ width: 50, height: 40, background: form.accentColor, borderRadius: `${Math.min(form.borderRadius, 12)}px`, border: `1px solid ${form.primaryColor}33` }}></div>
+          </div>
+        </div>
+      );
+    case "equipo":
+      return (
+        <div className="px-3 py-3" style={{ background: form.sectionBg }}>
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Equipo humano
+          </h6>
+          <div className="d-flex gap-2 justify-content-center">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="text-center">
+                <div style={{ width: 28, height: 28, borderRadius: "50%", background: form.accentColor, margin: "0 auto 2px", border: `1px solid ${form.primaryColor}33` }}></div>
+                <div style={{ height: 4, width: 24, background: form.accentColor, borderRadius: 2, margin: "0 auto" }}></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    case "video":
+      return (
+        <div className="px-3 py-3">
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Video institucional
+          </h6>
+          <div className="d-flex align-items-center justify-content-center" style={{
+            height: 50, background: form.accentColor, borderRadius: `${Math.min(form.borderRadius, 12)}px`,
+            border: `1px solid ${form.primaryColor}33`,
+          }}>
+            <i className="bi bi-play-circle-fill" style={{ fontSize: "1.5rem", color: form.primaryColor }}></i>
+          </div>
+        </div>
+      );
+    case "mapa":
+      return (
+        <div className="px-3 py-3" style={{ background: form.sectionBg }}>
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Ubicacion
+          </h6>
+          <div className="d-flex align-items-center justify-content-center" style={{
+            height: 40, background: form.accentColor, borderRadius: `${Math.min(form.borderRadius, 12)}px`,
+            border: `1px solid ${form.primaryColor}33`,
+          }}>
+            <i className="bi bi-geo-alt-fill" style={{ fontSize: "1.1rem", color: form.primaryColor }}></i>
+          </div>
+        </div>
+      );
+    case "carrusel":
+      return (
+        <div className="px-3 py-3">
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Galeria
+          </h6>
+          <div className="d-flex align-items-center justify-content-center" style={{
+            height: 45, background: form.accentColor, borderRadius: `${Math.min(form.borderRadius, 12)}px`,
+            border: `1px solid ${form.primaryColor}33`,
+          }}>
+            <i className="bi bi-images" style={{ fontSize: "1.2rem", color: form.primaryColor }}></i>
+          </div>
+        </div>
+      );
+    case "cuidadod":
+      return (
+        <div className="px-3 py-3" style={{ background: form.sectionBg }}>
+          <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
+            Cuidado Dia
+          </h6>
+          <div className="bg-white p-2 text-center shadow-sm mx-auto" style={{ borderRadius: `${form.borderRadius}px`, maxWidth: 140 }}>
+            <i className="bi bi-sunrise" style={{ color: form.primaryColor, fontSize: "1rem" }}></i>
+            <p className="fw-bold mb-0" style={{ color: form.darkColor, fontSize: "0.65rem" }}>Programa diurno</p>
+          </div>
+        </div>
+      );
+    default:
+      return null;
+  }
+}
+
 export default function DisenoConfig() {
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState("");
@@ -216,8 +397,10 @@ export default function DisenoConfig() {
       <style>{`
         @keyframes fadeIn { from{opacity:0} to{opacity:1} }
         @keyframes scaleIn { from{opacity:0;transform:scale(.8)} to{opacity:1;transform:scale(1)} }
-        .section-item { transition: all .2s ease; }
+        .section-item { transition: all .2s ease; cursor: grab; }
         .section-item:hover { background: #f8f9fa !important; }
+        .section-item.just-moved { animation: highlightMove .5s ease; }
+        @keyframes highlightMove { 0%{background:#e8f4fd} 100%{background:transparent} }
         .move-btn { width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:none; border-radius:8px; background:#e9ecef; cursor:pointer; transition:all .15s; }
         .move-btn:hover { background:#dee2e6; transform:scale(1.1); }
         .move-btn:disabled { opacity:.3; cursor:not-allowed; transform:none; }
@@ -488,6 +671,11 @@ export default function DisenoConfig() {
           <div className="col-lg-7">
             <p className="text-muted small mb-2">
               <i className="bi bi-eye me-1"></i>Vista previa del sitio
+              {activeTab === "secciones" && (
+                <span className="ms-2 badge bg-info text-dark" style={{ fontSize: "0.65rem" }}>
+                  <i className="bi bi-arrow-down-up me-1"></i>Mueve las secciones y mira el resultado aqui
+                </span>
+              )}
             </p>
 
             <div
@@ -499,7 +687,7 @@ export default function DisenoConfig() {
                 border: "1px solid #dee2e6",
               }}
             >
-              {/* Mini navbar */}
+              {/* Mini navbar - always first */}
               <div className="d-flex align-items-center justify-content-between px-3 py-2"
                 style={{ background: form.darkColor }}>
                 <span className="fw-bold text-white" style={{ fontSize: "0.8rem", fontFamily: headingFontFamily }}>Mi Hogar</span>
@@ -510,82 +698,17 @@ export default function DisenoConfig() {
                 </div>
               </div>
 
-              {/* Mini hero */}
-              <div className="text-center py-4 px-3"
-                style={{ background: `linear-gradient(135deg, ${form.accentColor}, ${form.bgColor})` }}>
-                <div className="d-inline-block p-3 mb-2"
-                  style={{
-                    background: "rgba(255,255,255,.85)",
-                    borderRadius: `${form.borderRadius}px`,
-                    backdropFilter: "blur(8px)",
-                  }}>
-                  <span className="badge mb-1" style={{ background: form.accentColor, color: form.darkColor, fontSize: "0.6rem" }}>
-                    Hogar geriatrico
-                  </span>
-                  <h6 className="fw-bold mb-1" style={{ color: form.primaryColor, fontSize: "0.95rem", fontFamily: headingFontFamily }}>
-                    Bienvenidos a nuestro hogar
-                  </h6>
-                  <p className="mb-2" style={{ color: form.darkColor, fontSize: "0.7rem" }}>
-                    Cuidado con amor y profesionalismo
-                  </p>
-                  <button className="btn btn-sm text-white"
-                    style={{ background: form.primaryColor, fontSize: "0.65rem", borderRadius: `${form.buttonRadius}px` }}>
-                    <i className="bi bi-whatsapp me-1"></i>WhatsApp
-                  </button>
-                </div>
-              </div>
+              {/* Dynamic sections rendered in order */}
+              {(sections.length > 0 ? sections : defaultPreviewOrder).map((s) => {
+                const type = s.type || s;
+                return (
+                  <div key={s.id || type} style={{ transition: "all .3s ease" }}>
+                    {renderMiniSection(type, form, headingFontFamily)}
+                  </div>
+                );
+              })}
 
-              {/* Mini servicios */}
-              <div className="px-3 py-3" style={{ background: form.sectionBg }}>
-                <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
-                  Servicios y comodidades
-                </h6>
-                <div className="row g-2">
-                  {[{ icon: "bi-sunrise", name: "Cuidado Dia", sub: "8:00-17:00" }, { icon: "bi-house-heart", name: "Permanente", sub: "24/7" }].map((svc) => (
-                    <div key={svc.name} className="col-6">
-                      <div className="bg-white p-2 text-center shadow-sm" style={{ borderRadius: `${form.borderRadius}px` }}>
-                        <i className={`bi ${svc.icon}`} style={{ color: form.primaryColor, fontSize: "1.2rem" }}></i>
-                        <p className="fw-bold mb-0 mt-1" style={{ color: form.darkColor, fontSize: "0.7rem" }}>{svc.name}</p>
-                        <small className="text-muted" style={{ fontSize: "0.6rem" }}>{svc.sub}</small>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mini valores */}
-              <div className="px-3 py-3">
-                <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
-                  Nuestros valores
-                </h6>
-                <div className="d-flex gap-2 justify-content-center">
-                  {["Dignidad", "Amor", "Compromiso"].map((v) => (
-                    <div key={v} className="bg-white p-2 text-center shadow-sm flex-fill"
-                      style={{ borderRadius: `${form.borderRadius}px` }}>
-                      <i className="bi bi-heart-fill" style={{ color: form.primaryColor, fontSize: "0.9rem" }}></i>
-                      <p className="fw-bold mb-0" style={{ color: form.darkColor, fontSize: "0.65rem" }}>{v}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mini galeria */}
-              <div className="px-3 py-3" style={{ background: form.sectionBg }}>
-                <h6 className="fw-bold text-center mb-2" style={{ color: form.darkColor, fontSize: "0.8rem", fontFamily: headingFontFamily }}>
-                  Asi es nuestro hogar
-                </h6>
-                <div className="d-flex gap-1">
-                  {[1, 2, 3, 4].map((n) => (
-                    <div key={n} className="flex-fill" style={{
-                      height: 40, background: form.accentColor,
-                      borderRadius: `${Math.min(form.borderRadius, 12)}px`,
-                      border: `1px solid ${form.primaryColor}33`,
-                    }}></div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mini CTA */}
+              {/* Mini CTA - always near bottom */}
               <div className="text-center text-white py-3 px-3" style={{ background: form.primaryColor }}>
                 <p className="fw-bold mb-1" style={{ fontSize: "0.8rem", fontFamily: headingFontFamily }}>Agenda una visita</p>
                 <button className="btn btn-sm btn-light" style={{ fontSize: "0.65rem", color: form.primaryColor, borderRadius: `${form.buttonRadius}px` }}>
@@ -593,7 +716,7 @@ export default function DisenoConfig() {
                 </button>
               </div>
 
-              {/* Mini footer */}
+              {/* Mini footer - always last */}
               <div className="text-center py-2" style={{ background: form.darkColor }}>
                 <small className="text-white-50" style={{ fontSize: "0.6rem" }}>
                   Hogar Geriatrico 2025
