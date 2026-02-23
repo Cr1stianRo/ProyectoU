@@ -31,6 +31,17 @@ function darkenHex(hex, amount = 20) {
   return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
+function loadGoogleFont(fontName) {
+  if (!fontName) return;
+  const id = `gfont-${fontName.replace(/\s+/g, "-")}`;
+  if (document.getElementById(id)) return;
+  const link = document.createElement("link");
+  link.id = id;
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@300;400;500;600;700&display=swap`;
+  document.head.appendChild(link);
+}
+
 export default function ThemeProvider({ children }) {
   const location = useLocation();
   const isHome = location.pathname === "/" || location.pathname === "/Home";
@@ -63,11 +74,22 @@ export default function ThemeProvider({ children }) {
       root.style.setProperty("--bs-btn-hover-border-color", darkenHex(theme.primaryColor));
       root.style.setProperty("--glass-radius", `${theme.borderRadius || 22}px`);
       if (theme.font) {
+        loadGoogleFont(theme.font);
         root.style.setProperty("font-family", `"${theme.font}", system-ui, sans-serif`);
+      }
+      if (theme.headingFont) {
+        loadGoogleFont(theme.headingFont);
+      }
+      if (theme.fontSize) {
+        root.style.setProperty("--font-size-base", theme.fontSize);
+      }
+      if (theme.buttonRadius) {
+        root.style.setProperty("--btn-radius", `${theme.buttonRadius}px`);
       }
     } else {
       // Reset to admin defaults
       Object.entries(ADMIN_DEFAULTS).forEach(([k, v]) => root.style.setProperty(k, v));
+      loadGoogleFont("Poppins");
       root.style.setProperty("font-family", '"Poppins", system-ui, sans-serif');
       root.style.setProperty("--bs-btn-hover-bg", "#7a573b");
       root.style.setProperty("--bs-btn-hover-border-color", "#7a573b");
