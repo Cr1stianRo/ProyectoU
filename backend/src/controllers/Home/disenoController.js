@@ -9,7 +9,10 @@ const DEFAULT_CONFIG = {
   bgColor: "#ffffff",
   sectionBg: "#f8f5f1",
   font: "Poppins",
+  headingFont: "",
   borderRadius: "22",
+  fontSize: "16px",
+  buttonRadius: "22",
 };
 
 const getOrCreate = async (userId) => {
@@ -39,7 +42,10 @@ export const updateDiseno = async (req, res) => {
       bgColor = DEFAULT_CONFIG.bgColor,
       sectionBg = DEFAULT_CONFIG.sectionBg,
       font = DEFAULT_CONFIG.font,
+      headingFont = DEFAULT_CONFIG.headingFont,
       borderRadius = DEFAULT_CONFIG.borderRadius,
+      fontSize = DEFAULT_CONFIG.fontSize,
+      buttonRadius = DEFAULT_CONFIG.buttonRadius,
     } = req.body || {};
 
     const config = {
@@ -49,7 +55,10 @@ export const updateDiseno = async (req, res) => {
       bgColor: String(bgColor).trim(),
       sectionBg: String(sectionBg).trim(),
       font: String(font).trim(),
+      headingFont: String(headingFont || "").trim(),
       borderRadius: String(borderRadius).trim(),
+      fontSize: String(fontSize).trim(),
+      buttonRadius: String(buttonRadius).trim(),
     };
 
     const doc = await getOrCreate(req.userId);
