@@ -1,13 +1,35 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import api from "../api/axios";
 
 export default function AdminPanel() {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
+  const [exporting, setExporting] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
+  };
+
+  const handleExport = async () => {
+    setExporting(true);
+    try {
+      const res = await api.get("/home-config/export", { responseType: "blob" });
+      const url = window.URL.createObjectURL(res.data);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "mi-sitio.zip";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch {
+      alert("Error al exportar el sitio. Verifica que tengas contenido configurado.");
+    } finally {
+      setExporting(false);
+    }
   };
   const modules = [
     {
@@ -259,6 +281,54 @@ export default function AdminPanel() {
               </div>
               <h6 className="mb-0 fw-bold">API REST</h6>
               <small className="text-muted">Backend</small>
+            </div>
+          </div>
+        </div>
+
+        {/* Exportar sitio */}
+        <div className="row mt-4">
+          <div className="col-12">
+            <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
+              <div className="p-3 text-white" style={{ background: "linear-gradient(135deg, #2c3e50, #3498db)" }}>
+                <div className="d-flex align-items-center gap-3">
+                  <div className="fs-1"><i className="bi bi-cloud-download-fill"></i></div>
+                  <div>
+                    <h5 className="mb-0 fw-bold">Exportar mi sitio</h5>
+                    <small className="opacity-75">Descarga tu sitio listo para publicar</small>
+                  </div>
+                </div>
+              </div>
+              <div className="card-body p-4">
+                <p className="text-muted mb-3">
+                  Genera un archivo ZIP con tu sitio completo como HTML, CSS e imagenes.
+                  El resultado es un sitio estatico funcional que puedes subir directamente a
+                  <strong> Netlify</strong>, <strong>Vercel</strong>, <strong>GitHub Pages</strong> o cualquier hosting.
+                </p>
+                <div className="d-flex flex-wrap gap-2 mb-3">
+                  <span className="badge bg-light text-dark border"><i className="bi bi-file-earmark-code me-1"></i>index.html</span>
+                  <span className="badge bg-light text-dark border"><i className="bi bi-filetype-css me-1"></i>styles.css</span>
+                  <span className="badge bg-light text-dark border"><i className="bi bi-images me-1"></i>Imagenes</span>
+                  <span className="badge bg-light text-dark border"><i className="bi bi-bootstrap me-1"></i>Bootstrap CDN</span>
+                </div>
+                <button
+                  onClick={handleExport}
+                  disabled={exporting}
+                  className="btn btn-lg text-white fw-semibold d-inline-flex align-items-center gap-2"
+                  style={{ background: "linear-gradient(135deg, #2c3e50, #3498db)", border: "none" }}
+                >
+                  {exporting ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm"></span>
+                      Generando ZIP...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-download"></i>
+                      Descargar mi sitio (.zip)
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
