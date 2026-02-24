@@ -74,5 +74,7 @@ Analiza la app, estamos trabajando por módulos. En el frontend tenemos
 
   github
 
-  sube todos los cambiaos realizalos al git en el proyecto actualmente a mi rama de trabajo (feature/rodas)
-  haz merge desde dev para actualizar dev a lo nuevo que yo he realizado 
+  sube todos los cambiaos realizalos al git en el proyecto actualmente de  mi rama de trabajo (feature/rodas)
+  luego haz merge desde dev para actualizar dev a lo nuevo que yo he realizado 
+
+-----------------------------------------------------
