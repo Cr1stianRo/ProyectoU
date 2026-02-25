@@ -1,3 +1,5 @@
+// Editor del módulo Video Institucional.
+// Acepta cualquier formato de URL de YouTube y lo convierte automáticamente a embed.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";

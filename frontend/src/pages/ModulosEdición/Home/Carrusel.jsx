@@ -1,3 +1,6 @@
+// Editor del carrusel de galería.
+// Gestiona slides con imagen (URL o upload), título, subtítulo y texto alternativo.
+// Incluye reordenamiento y vista previa interactiva.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";
@@ -70,7 +73,7 @@ export default function CarruselConfig() {
     setActiveIndex((prev) => prev + direction);
   };
 
-  const [uploading, setUploading] = useState(null); // index of slide being uploaded
+  const [uploading, setUploading] = useState(null); // índice del slide que se está subiendo
 
   const handleFileUpload = async (index, file) => {
     if (!file) return;
@@ -88,6 +91,7 @@ export default function CarruselConfig() {
     }
   };
 
+  // Solo los slides con imagen se muestran en la vista previa
   const validSlides = (form.slides || []).filter((s) => s.imageUrl);
 
   return (

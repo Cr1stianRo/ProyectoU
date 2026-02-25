@@ -1,3 +1,5 @@
+// Editor del módulo Misión, Visión y Valores institucionales.
+// CRUD dinámico de valores con ícono, título y descripción.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";

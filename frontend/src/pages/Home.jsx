@@ -1,3 +1,5 @@
+// Página Home pública del hogar geriátrico.
+// Carga las secciones dinámicamente desde la API y las renderiza según su tipo y orden.
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
@@ -8,6 +10,7 @@ export default function Home() {
   const [sections, setSections] = useState([]);
   const [error, setError] = useState("");
 
+  // Carga todas las secciones de la página y las ordena por su campo "order"
   useEffect(() => {
     api
       .get("/home-config/page")
@@ -28,6 +31,7 @@ export default function Home() {
     return bloquep?.config || {};
   }, [sections]);
 
+  // Genera el enlace de WhatsApp con mensaje predefinido
   const whatsappHref = useMemo(() => {
     const number = String(bloquepConfig.whatsappNumber || "").replace(/\D/g, "");
     if (!number) return "#";
@@ -41,6 +45,7 @@ export default function Home() {
       : [];
   }, [bloquepConfig.pills]);
 
+  // Si no hay imágenes configuradas, usa imágenes por defecto como fallback
   const heroImages = useMemo(() => {
     return Array.isArray(bloquepConfig.heroImages) && bloquepConfig.heroImages.length > 0
       ? bloquepConfig.heroImages.filter((img) => img.url)
@@ -506,6 +511,7 @@ export default function Home() {
               {config.youtubeUrl ? (
                 <div className="mx-auto" style={{ maxWidth: 800 }}>
                   <div className="ratio ratio-16x9 rounded-4 overflow-hidden shadow">
+                    {/* Convierte cualquier formato de URL de YouTube a embed */}
                     <iframe
                       src={(() => {
                         const url = config.youtubeUrl;

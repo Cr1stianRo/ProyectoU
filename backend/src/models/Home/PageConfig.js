@@ -1,5 +1,7 @@
+// Modelo de configuración de página — almacena el orden y config de cada sección del sitio por usuario
 import mongoose from "mongoose";
 
+// Sub-esquema para cada sección (sin _id propio, se identifica por su campo id)
 const SectionSchema = new mongoose.Schema(
   {
     id: { type: String, required: true },

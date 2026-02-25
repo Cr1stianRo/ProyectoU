@@ -1,3 +1,5 @@
+// Controlador de la sección de mapa/ubicación.
+// Gestiona URLs de Google Maps, Waze, iframe embed y textos de botones.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "mapa";
@@ -18,6 +20,7 @@ const getOrCreate = async (userId) => {
   return doc;
 };
 
+// Retorna la configuración del mapa de ubicación
 export const getMapa = async (req, res) => {
   try {
     if (!req.userId) return res.json(DEFAULT_CONFIG);
@@ -30,6 +33,7 @@ export const getMapa = async (req, res) => {
   }
 };
 
+// Actualiza la configuración de mapa y enlaces de navegación
 export const updateMapa = async (req, res) => {
   try {
     const {

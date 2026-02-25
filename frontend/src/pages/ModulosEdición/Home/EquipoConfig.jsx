@@ -1,3 +1,5 @@
+// Editor del módulo Equipo Humano.
+// Permite agregar miembros con nombre, cargo y foto (URL o upload).
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";

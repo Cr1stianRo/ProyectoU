@@ -78,3 +78,149 @@ Analiza la app, estamos trabajando por módulos. En el frontend tenemos
   luego haz merge desde dev para actualizar dev a lo nuevo que yo he realizado 
 
 -----------------------------------------------------
+  Analiza la app, estamos trabajando por módulos. En el frontend tenemos
+    src/pages/modulosedicion/home/ donde está Bloque1Config que tiene backend
+    completo (api).
+
+    Lee los cambios en /cambios y en todo el proyecto para entender la arquitectura. Cuando entiendas
+    todo,
+
+    neceisto que mires bien el modulo de disenoconfig y en la seccion de orden de secciones haz que cuando el usuario
+    mueva las flechas en la vista previa del sitio las secciones se muevan y el vea como va quedando
+
+  Puedes hacer webscraping a https://casadecampoeleden.com/ para obtener datos.
+  haz webscraping con /mcp instalado anteriormente, realiza los cambios en la rama mia (feature/rodas)
+
+  ¡Así de simple! 🎯
+
+  
+  .-------------------------------------.
+
+
+
+ Analiza la app, estamos trabajando por módulos. En el frontend tenemos
+    src/pages/modulosedicion/home/ donde está Bloque1Config que tiene backend
+    completo (api).
+  Lee los cambios en /cambios y en todo el proyecto para entender la arquitectura. Cuando entiendas
+    todo,
+
+  Implementa una funcionalidad en el panel de control que permita al usuario exportar su sitio completo como una versión estática 
+  lista para desplegar. Agrega un botón visible “Exportar mi sitio” dentro del panel, el cual genere automáticamente un archivo ZIP que contenga los archivos HTML, 
+  CSS y JS ya renderizados con la plantilla seleccionada y el contenido actual guardado de la plantilla que realzio. La exportación debe tomar la configuración activa del usuario 
+  y producir un sitio totalmente funcional sin dependencias del backend, optimizado para ser desplegado directamente en plataformas como Netlify, Vercel o GitHub Pages etc. El resultado debe ser limpio, portable y estructurado correctamente 
+  (index.html, assets, rutas internas funcionando).
+
+
+
+  ----------------------------
+
+  Analiza la app, estamos trabajando por módulos. En el frontend tenemos
+    src/pages/modulosedicion/home/ donde está Bloque1Config que tiene backend
+    completo (api).
+  Lee los cambios en /cambios y en todo el proyecto para entender la arquitectura. Cuando entiendas
+    todo, Analiza completamente el proyecto antes de documentarlo para comprender su funcionamiento total.
+
+Luego documenta el código carpeta por carpeta o las que sean necesarias para comentar si no es muy necesario no lo hagas 
+, agregando comentarios claros y profesionales dentro del código.
+
+Los comentarios deben:
+
+Explicar qué hace cada sección de forma breve y precisa.
+
+Usar un estilo técnico y profesional.
+
+Ser fáciles de entender.
+
+Mantener un tono natural, como si yo mismo los hubiera escrito.
+
+Ejemplo de estilo:
+% Este segmento crea el botón de registro y valida los campos obligatorios.
+
+Además:
+
+Mantén la documentación concisa pero completa.
+
+No elimines ni modifiques la lógica del código.
+
+Finalmente:
+
+Crea un archivo readme2.txt en la raíz del proyecto.
+
+Debe incluir:
+
+Descripción general del sistema
+
+Arquitectura y estructura de carpetas
+
+Tecnologías utilizadas
+
+Flujo de funcionamiento
+
+Instrucciones de instalación y ejecución
+
+Dependencias necesarias
+
+etc, pero habla como yo
+
+Buenas prácticas para mantenimiento
+
+El archivo debe estar muy bien estructurado y profesional.
+
+
+.--------------------------------
+
+analiza el proyecto archvio por archivo para que lo entiendas muy ben , cuando lo entiendas necesito que 
+Crees un documento en Word (.docx) que funcione como guía de uso del sistema.
+
+El documento debe:
+
+Explicar cada módulo o sección del sistema (por ejemplo: Panel de control, gestión de usuarios, reportes, etc.).
+
+Describir qué hace cada botón y opción disponible.
+
+Indicar para qué sirve cada función dentro del flujo del sistema.
+
+Estar organizado por secciones claras.
+
+Usar un lenguaje sencillo, profesional y fácil de entender. y que lo escribas como lo escribiria yo no tan tecnico 
+
+Incluir títulos, subtítulos y listas para facilitar la lectura.
+
+El objetivo es que cualquier usuario pueda entender cómo usar el sistema sin capacitación previa.
+
+
+
+
+
+.------------------------------
+Analiza el documento Word ubicado en el archivo “plantilla-articulo-inv-ing (1)” y comprende exactamente la estructura y los requisitos que exige. 
+
+plantilla-articulo-inv-ing (1)
+
+Luego analiza a profundidad todo el proyecto para entender su propósito, alcance y funcionamiento. hasta que no los analices muy bien no continues, 
+
+luego Con base en esa información:
+
+Completa o edita el documento siguiendo exactamente la misma estructura, orden y formato que exige la guía igual formato normas etc.
+
+Sustituye el contenido con la información real del proyecto o crea otro word igual como sea mas facil.
+
+Cumple estrictamente con cada ítem solicitado.
+
+Redacta el contenido de forma clara, coherente y académica.
+
+Importante:
+
+Debe parecer redactado por nosotros, no por una IA.
+
+Usa lenguaje natural, técnico y formal.
+
+Evita frases genéricas o patrones típicos de IA ya que van hacer prueba si esta hecho por ia.
+
+Mantén coherencia, fluidez y precisión conceptual.
+
+No inventes información; todo debe derivarse del proyecto.
+
+si pide referencia  encuentralas tal cual como pide el archivo osea al 100% con lo que pide.
+
+El resultado debe cumplir perfectamente con lo solicitado en la guía y estar listo para entrega académica.

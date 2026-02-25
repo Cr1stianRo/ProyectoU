@@ -1,3 +1,5 @@
+// Editor del módulo Servicios y comodidades.
+// Permite gestionar tarjetas de servicio y diferenciales (highlights) con vista previa en tiempo real.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";

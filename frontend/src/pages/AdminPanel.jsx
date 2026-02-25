@@ -1,3 +1,6 @@
+// Panel de administración principal.
+// Muestra todos los módulos editables como tarjetas con acceso directo a cada editor.
+// Incluye exportación del sitio como ZIP estático.
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -13,6 +16,7 @@ export default function AdminPanel() {
     navigate("/login");
   };
 
+  // Descarga un ZIP con el sitio exportado como HTML estático
   const handleExport = async () => {
     setExporting(true);
     try {
@@ -31,6 +35,7 @@ export default function AdminPanel() {
       setExporting(false);
     }
   };
+  // Definición de los módulos editables con su metadata para renderizar las tarjetas
   const modules = [
     {
       id: "bloquep",

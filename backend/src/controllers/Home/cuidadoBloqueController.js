@@ -1,7 +1,10 @@
+// Controlador del bloque "Cuidado Día".
+// Gestiona icono, colores, título, subtítulo y descripción del servicio diurno.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "cuidadod";
 
+// Valores por defecto del bloque de cuidado diurno
 const DEFAULT_CONFIG = {
   iconClass: "bi bi-sunrise",
   iconColor: "#8C6A4A",
@@ -12,6 +15,7 @@ const DEFAULT_CONFIG = {
     "Programa diurno para mantener actividad física, mental y social, con alimentación y acompañamiento profesional en un entorno seguro.",
 };
 
+// Regex para validar colores hexadecimales (#RRGGBB)
 const hexColorRegex = /^#[0-9A-Fa-f]{6}$/;
 
 const getOrCreate = async (userId) => {
@@ -20,6 +24,7 @@ const getOrCreate = async (userId) => {
   return doc;
 };
 
+// Retorna la configuración del bloque de cuidado diurno
 export const getCuidadoDia = async (req, res) => {
   try {
     if (!req.userId) return res.json(DEFAULT_CONFIG);
@@ -32,6 +37,7 @@ export const getCuidadoDia = async (req, res) => {
   }
 };
 
+// Actualiza el bloque: valida colores hex y usa defaults si son inválidos
 export const updateCuidadoDia = async (req, res) => {
   try {
     const {

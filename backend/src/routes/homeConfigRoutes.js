@@ -1,3 +1,4 @@
+// Rutas de configuración del Home — GET públicos con optionalAuth, PUT protegidos con verifyToken
 import { Router } from "express";
 import { verifyToken, optionalAuth } from "../middleware/authMiddleware.js";
 import { getHomeConfig, updateHomeConfig } from "../controllers/Home/homeConfigController.js";

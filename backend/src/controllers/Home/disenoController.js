@@ -1,7 +1,10 @@
+// Controlador del módulo de diseño y tema visual.
+// Gestiona colores, tipografías, border-radius y tamaño de fuente del sitio.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "diseno";
 
+// Tema visual por defecto (paleta café, fuente Poppins)
 const DEFAULT_CONFIG = {
   primaryColor: "#8C6A4A",
   darkColor: "#5b4636",
@@ -21,6 +24,7 @@ const getOrCreate = async (userId) => {
   return doc;
 };
 
+// Retorna la configuración de diseño actual del usuario
 export const getDiseno = async (req, res) => {
   try {
     if (!req.userId) return res.json(DEFAULT_CONFIG);
@@ -33,6 +37,7 @@ export const getDiseno = async (req, res) => {
   }
 };
 
+// Actualiza las variables de diseño del tema (colores, fuentes, radios)
 export const updateDiseno = async (req, res) => {
   try {
     const {

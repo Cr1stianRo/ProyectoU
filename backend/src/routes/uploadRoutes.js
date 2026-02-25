@@ -1,3 +1,4 @@
+// Ruta de subida de imágenes — almacena en disco con nombre único, máximo 5 MB
 import { Router } from "express";
 import multer from "multer";
 import path from "path";
@@ -5,6 +6,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Configuración de almacenamiento: nombre único basado en timestamp + random
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "../../uploads"),
   filename: (_req, file, cb) => {
@@ -14,6 +16,7 @@ const storage = multer.diskStorage({
   },
 });
 
+// Solo se permiten formatos de imagen comunes
 const ALLOWED_MIMES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
 const upload = multer({

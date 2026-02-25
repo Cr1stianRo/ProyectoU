@@ -1,5 +1,7 @@
+// Middlewares de autenticación JWT — verifyToken bloquea, optionalAuth permite acceso público
 import jwt from "jsonwebtoken";
 
+// Middleware obligatorio: rechaza la petición si no hay token válido
 export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -16,6 +18,7 @@ export const verifyToken = (req, res, next) => {
   }
 };
 
+// Middleware opcional: intenta extraer userId del token o del query param ?userId=
 export const optionalAuth = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith("Bearer ")) {

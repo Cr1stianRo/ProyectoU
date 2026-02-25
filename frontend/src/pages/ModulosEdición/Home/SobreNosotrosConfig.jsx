@@ -1,3 +1,5 @@
+// Editor del módulo "Sobre Nosotros".
+// Permite editar descripción, imagen, filosofía institucional y pilares fundamentales.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";
