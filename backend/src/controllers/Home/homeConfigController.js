@@ -1,5 +1,8 @@
+// Controlador de configuración general del Home (modelo legacy HomeConfig).
+// Maneja título, subtítulo, descripción, imagen hero y texto CTA.
 import HomeConfig from "../../models/Home/HomeConfig.js";
 
+// Obtiene la config del home; crea un documento por defecto si no existe
 export const getHomeConfig = async (req, res) => {
   try {
     if (!req.userId) return res.json({ title: "Dreams", subtitle: "Bienvenido", description: "Este es el home", heroImageUrl: "", ctaText: "Empezar" });
@@ -11,6 +14,7 @@ export const getHomeConfig = async (req, res) => {
   }
 };
 
+// Actualiza solo los campos permitidos (whitelist) para evitar escrituras no autorizadas
 export const updateHomeConfig = async (req, res) => {
   try {
     const allowed = ["title", "subtitle", "description", "heroImageUrl", "ctaText"];

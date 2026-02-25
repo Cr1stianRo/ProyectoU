@@ -1,3 +1,4 @@
+// Rutas de autenticación — registro e inicio de sesión (públicas, sin token)
 import express from "express";
 import { register, login } from "../controllers/authController.js";
 

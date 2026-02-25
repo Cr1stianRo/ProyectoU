@@ -1,3 +1,5 @@
+// Editor de colores, tipografía, componentes y orden de secciones del sitio.
+// Incluye paletas predefinidas, vista previa en tiempo real y reordenamiento drag de secciones.
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";
@@ -34,6 +36,7 @@ const PALETTES = [
   { name: "Terracota", primaryColor: "#C4704A", darkColor: "#7A3F28", accentColor: "#F0D8C8", bgColor: "#ffffff", sectionBg: "#fdf5ef" },
 ];
 
+// Etiquetas legibles para cada tipo de sección en el ordenador
 const SECTION_LABELS = {
   bloquep: "Hero Principal",
   carrusel: "Carrusel / Galeria",
@@ -325,6 +328,7 @@ export default function DisenoConfig() {
     }));
   };
 
+  // Mueve una sección arriba o abajo y recalcula los índices de orden
   const moveSection = useCallback((idx, direction) => {
     setSections((prev) => {
       const arr = [...prev];
@@ -335,10 +339,11 @@ export default function DisenoConfig() {
     });
   }, []);
 
+  // Guarda el tema de diseño y también persiste el nuevo orden de secciones
   const onSave = async () => {
     try {
       await api.put(API_URL, form);
-      // Also save section order
+      // También guarda el orden de secciones
       if (sections.length > 0) {
         // Re-include diseno section and merge with reordered sections
         const pageRes = await api.get(PAGE_URL);

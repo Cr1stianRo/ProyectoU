@@ -1,8 +1,10 @@
+// Controlador de autenticación — registro con creación de PageConfig por defecto e inicio de sesión con JWT
 import User from "../models/User.js";
 import PageConfig from "../models/Home/PageConfig.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+// Secciones que se crean automáticamente al registrar un usuario nuevo (multi-tenant)
 const defaultSections = [
   {
     id: "bloquep-1", type: "bloquep", order: 0,
@@ -62,6 +64,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ msg: "Contraseña incorrecta" });
     }
 
+    // Token con expiración de 7 días — contiene solo el id del usuario
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d"
     });

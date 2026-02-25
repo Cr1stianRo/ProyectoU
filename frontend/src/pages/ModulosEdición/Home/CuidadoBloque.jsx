@@ -1,3 +1,5 @@
+// Editor del módulo Cuidado Día.
+// Configura ícono, colores, título, subtítulo y descripción del bloque de cuidado diurno.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";

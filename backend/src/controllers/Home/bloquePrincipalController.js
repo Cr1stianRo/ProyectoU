@@ -1,7 +1,11 @@
+// Controlador del bloque principal (hero) de la página de inicio.
+// Gestiona textos, imágenes, pills y número de WhatsApp del banner principal.
 import PageConfig from "../../models/Home/PageConfig.js";
 
+// Identificador de sección dentro del documento PageConfig
 const TYPE = "bloquep";
 
+// Configuración por defecto cuando el usuario aún no ha personalizado
 const DEFAULT_CONFIG = {
   badgeText: "",
   heroTitle: "",
@@ -12,12 +16,14 @@ const DEFAULT_CONFIG = {
   heroImages: [],
 };
 
+// Obtiene o crea el documento PageConfig del usuario (patrón getOrCreate)
 const getOrCreate = async (userId) => {
   let doc = await PageConfig.findOne({ userId });
   if (!doc) doc = await PageConfig.create({ userId, sections: [] });
   return doc;
 };
 
+// Retorna la configuración actual del bloque principal
 export const getBloquePrincipal = async (req, res) => {
   try {
     if (!req.userId) return res.json(DEFAULT_CONFIG);
@@ -30,6 +36,7 @@ export const getBloquePrincipal = async (req, res) => {
   }
 };
 
+// Actualiza el bloque principal: sanitiza imágenes, limpia número de WhatsApp y persiste
 export const updateBloquePrincipal = async (req, res) => {
   try {
     const {
@@ -42,6 +49,7 @@ export const updateBloquePrincipal = async (req, res) => {
       heroImages = [],
     } = req.body || {};
 
+    // Filtra imágenes vacías y normaliza campos url/alt
     const cleanImages = Array.isArray(heroImages)
       ? heroImages
           .filter((img) => img && String(img.url || "").trim() !== "")
@@ -56,7 +64,7 @@ export const updateBloquePrincipal = async (req, res) => {
       heroTitle,
       heroDescription,
       button2Text,
-      whatsappNumber: String(whatsappNumber).replace(/\D/g, ""),
+      whatsappNumber: String(whatsappNumber).replace(/\D/g, ""), // Solo dígitos
       pills: Array.isArray(pills) ? pills.filter((p) => String(p).trim() !== "") : [],
       heroImages: cleanImages,
     };
@@ -64,12 +72,14 @@ export const updateBloquePrincipal = async (req, res) => {
     const doc = await getOrCreate(req.userId);
     const idx = doc.sections.findIndex((s) => s.type === TYPE);
 
+    // Si la sección ya existe la actualiza; si no, la crea con orden 0
     if (idx >= 0) {
       doc.sections[idx].config = config;
     } else {
       doc.sections.push({ id: `${TYPE}-1`, type: TYPE, order: 0, config });
     }
 
+    // markModified es necesario porque sections es un campo Mixed de Mongoose
     doc.markModified("sections");
     await doc.save();
 

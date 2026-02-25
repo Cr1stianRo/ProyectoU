@@ -1,3 +1,5 @@
+// Editor del bloque principal (Hero) de la página Home.
+// Permite configurar título, descripción, botón WhatsApp, píldoras informativas e imágenes del carrusel hero.
 import { useEffect, useState } from "react";
 import api from "../../../api/axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -91,6 +93,7 @@ export default function HomeSettings() {
     });
   };
 
+  // Sube una imagen al servidor y actualiza la URL en el slide correspondiente
   const handleHeroUpload = async (index, file) => {
     if (!file) return;
     setUploading(true);

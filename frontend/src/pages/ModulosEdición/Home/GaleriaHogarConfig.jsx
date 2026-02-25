@@ -1,3 +1,6 @@
+// Editor de la galería "Así es nuestro hogar".
+// Gestiona imágenes con caption, texto alternativo y upload al servidor.
+// Se renderizan en un grid responsive de 4 columnas.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";

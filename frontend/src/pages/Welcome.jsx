@@ -1,3 +1,5 @@
+// Página de bienvenida / landing del gestor de contenidos.
+// Muestra las opciones de iniciar sesión o crear cuenta.
 import { Link } from "react-router-dom";
 
 export default function Welcome() {

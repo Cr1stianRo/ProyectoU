@@ -1,10 +1,12 @@
+// ThemeProvider: aplica dinámicamente los colores y fuentes del sitio.
+// En la ruta Home carga el tema personalizado desde la API; en otras rutas usa los colores por defecto del admin.
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import api from "../api/axios";
 
 const API_URL = "/home-config/diseno";
 
-// Default admin colors (always used outside Home)
+// Colores por defecto del panel admin (se usan fuera del Home)
 const ADMIN_DEFAULTS = {
   "--cafe": "#8C6A4A",
   "--cafe-oscuro": "#5b4636",
@@ -17,6 +19,7 @@ const ADMIN_DEFAULTS = {
   "--glass-radius": "22px",
 };
 
+// Convierte hex a formato RGB separado por comas (para variables CSS como --bs-primary-rgb)
 function hexToRgb(hex) {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
@@ -24,6 +27,7 @@ function hexToRgb(hex) {
   return `${r},${g},${b}`;
 }
 
+// Oscurece un color hex restando un valor fijo a cada canal RGB
 function darkenHex(hex, amount = 20) {
   let r = Math.max(0, parseInt(hex.slice(1, 3), 16) - amount);
   let g = Math.max(0, parseInt(hex.slice(3, 5), 16) - amount);
@@ -31,6 +35,7 @@ function darkenHex(hex, amount = 20) {
   return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
+// Inyecta dinámicamente un <link> de Google Fonts en el <head> si no existe ya
 function loadGoogleFont(fontName) {
   if (!fontName) return;
   const id = `gfont-${fontName.replace(/\s+/g, "-")}`;

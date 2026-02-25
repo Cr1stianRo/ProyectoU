@@ -1,3 +1,4 @@
+// Modelo de usuario — incluye preferencias para persistir estado del panel admin
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({

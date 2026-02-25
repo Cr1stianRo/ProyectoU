@@ -1,3 +1,5 @@
+// Editor del módulo Mapa y Ubicación.
+// Configura URLs de Google Maps, Waze y el iframe embebido con vista previa.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";

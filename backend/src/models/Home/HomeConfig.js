@@ -1,3 +1,4 @@
+// Modelo de configuración general del home — textos hero e imagen principal por usuario
 import mongoose from "mongoose";
 
 const homeConfigSchema = new mongoose.Schema(

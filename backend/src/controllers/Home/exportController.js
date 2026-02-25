@@ -1,3 +1,5 @@
+// Controlador de exportación del sitio completo como archivo ZIP.
+// Genera index.html + CSS + imágenes descargadas a partir de la configuración del usuario.
 import archiver from "archiver";
 import https from "https";
 import http from "http";
@@ -11,6 +13,7 @@ const DEFAULT_DESIGN = {
   headingFont: "", borderRadius: "22", fontSize: "16px", buttonRadius: "22",
 };
 
+// Escapa caracteres HTML para prevenir inyección en el markup generado
 function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 
 /** Download a URL into a Buffer (follows redirects once) */
@@ -32,11 +35,13 @@ function downloadBuffer(url) {
   });
 }
 
+// Extrae la extensión de imagen de una URL; por defecto .jpg
 function ext(url) {
   const m = url.match(/\.(jpe?g|png|webp|gif)/i);
   return m ? m[0].toLowerCase() : ".jpg";
 }
 
+// Convierte cualquier formato de URL de YouTube a su versión embed
 function youtubeEmbed(url) {
   if (!url) return "";
   if (url.includes("/embed/")) return url;
@@ -237,9 +242,9 @@ function renderSection(section, whatsHref) {
   }
 }
 
-/* ─── collect image URLs from all sections ─── */
+/* ─── Recolecta URLs de imagen de todas las secciones para descargarlas ─── */
 function collectImages(sections, bloquepCfg) {
-  const list = []; // { url, key }
+  const list = []; // { url, key, section, field, index }
   // hero images
   (bloquepCfg.heroImages || []).forEach((img, i) => {
     if (img.url) list.push({ url: img.url, key: `hero-${i}`, section: "bloquep", field: "heroImages", index: i });
@@ -268,7 +273,7 @@ function collectImages(sections, bloquepCfg) {
   return list;
 }
 
-/* ─── main export handler ─── */
+/* ─── Handler principal: genera y envía el ZIP con el sitio estático ─── */
 export const exportSite = async (req, res) => {
   try {
     const doc = await PageConfig.findOne({ userId: req.userId });
@@ -286,7 +291,7 @@ export const exportSite = async (req, res) => {
       ? `https://wa.me/${waNum}?text=${encodeURIComponent("Hola, quiero agendar una visita y conocer los servicios.")}`
       : "#";
 
-    // Collect and download images
+    // Descarga las imágenes en paralelo y las guarda en un Map para el ZIP
     const imgList = collectImages(sections, bloquepCfg);
     const imgBuffers = new Map();
 
@@ -316,7 +321,7 @@ export const exportSite = async (req, res) => {
       heroImages.push({ url: "https://placehold.co/1280x720/E8D8C8/5b4636?text=Hogar+Geriatrico", alt: "Hogar geriátrico" });
     }
 
-    // Build sections HTML (excluding bloquep and diseno)
+    // Genera el HTML de cada sección (excepto hero y diseño que se tratan aparte)
     const bodyParts = sections
       .filter(s => s.type !== "bloquep" && s.type !== "diseno")
       .map(s => renderSection(s, whatsHref))
@@ -429,7 +434,7 @@ a:hover { text-decoration: underline; }
 @media (max-width: 576px) { .glass { backdrop-filter: blur(5px) saturate(125%); } }
 `;
 
-    // ZIP it
+    // Empaqueta HTML, CSS e imágenes en un archivo ZIP y lo envía como respuesta
     res.setHeader("Content-Type", "application/zip");
     res.setHeader("Content-Disposition", "attachment; filename=mi-sitio.zip");
 
