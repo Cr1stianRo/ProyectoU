@@ -2,10 +2,10 @@ import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "video";
 
+// Configuración inicial vacía: el usuario completará los datos desde el editor
 const DEFAULT_CONFIG = {
-  sectionTitle: "Conoce más sobre nosotros",
-  sectionSubtitle:
-    "Te invitamos a descubrir nuestro entorno, actividades y la alegría que se vive cada día en nuestro hogar.",
+  sectionTitle: "",
+  sectionSubtitle: "",
   youtubeUrl: "",
 };
 

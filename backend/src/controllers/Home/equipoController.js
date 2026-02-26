@@ -4,18 +4,11 @@ import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "equipo";
 
-// Configuración por defecto con un miembro de ejemplo
+// Configuración inicial vacía: el usuario agregará miembros desde el editor
 const DEFAULT_CONFIG = {
-  sectionTitle: "Nuestro equipo humano",
-  sectionSubtitle:
-    "La fortaleza de nuestro hogar está en su gente. Contamos con un equipo interdisciplinario que combina conocimiento, vocación y sensibilidad humana.",
-  members: [
-    {
-      name: "Nombre del miembro",
-      role: "Cargo / Profesión",
-      photoUrl: "",
-    },
-  ],
+  sectionTitle: "",
+  sectionSubtitle: "",
+  members: [],
 };
 
 const getOrCreate = async (userId) => {

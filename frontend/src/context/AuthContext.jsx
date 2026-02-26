@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : null;
   });
   const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [loggingOut, setLoggingOut] = useState(false);
 
   const isAuthenticated = !!token;
 
@@ -19,9 +20,11 @@ export function AuthProvider({ children }) {
     setToken(tokenValue);
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", tokenValue);
+    setLoggingOut(false);
   };
 
   const logout = () => {
+    setLoggingOut(true);
     setUser(null);
     setToken(null);
     localStorage.removeItem("user");
@@ -29,7 +32,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isAuthenticated, loggingOut, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

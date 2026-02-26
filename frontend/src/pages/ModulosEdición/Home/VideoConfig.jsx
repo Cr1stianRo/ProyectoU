@@ -6,8 +6,9 @@ import api from "../../../api/axios";
 
 const API_URL = "/home-config/video";
 
+// Estado inicial vacío: los datos se cargan desde la API o el usuario los completa
 const initialForm = {
-  sectionTitle: "Conoce más sobre nosotros",
+  sectionTitle: "",
   sectionSubtitle: "",
   youtubeUrl: "",
 };
@@ -92,7 +93,7 @@ export default function VideoConfig() {
 
       <div className="container py-4">
         <h2 className="mb-3">
-          <i className="bi bi-play-btn-fill me-2"></i>Conoce más sobre nosotros
+          <i className="bi bi-play-btn-fill me-2"></i>Video Institucional
         </h2>
 
         {error && <div className="alert alert-danger py-2">{error}</div>}
@@ -102,19 +103,23 @@ export default function VideoConfig() {
           <div className="col-lg-5">
             <div className="card border-0 shadow-sm rounded-4">
               <div className="card-body">
+                {/* Título visible de la sección de video en la página */}
                 <label className="form-label fw-bold">Título de la sección</label>
                 <input
                   className="form-control mb-3"
                   value={form.sectionTitle}
                   onChange={(e) => setField("sectionTitle", e.target.value)}
+                  placeholder="Aquí puedes escribir el título, ej: Conoce más sobre nosotros"
                 />
 
+                {/* Texto introductorio que aparece debajo del título */}
                 <label className="form-label fw-bold">Subtítulo</label>
                 <textarea
                   className="form-control mb-3"
                   rows={2}
                   value={form.sectionSubtitle}
                   onChange={(e) => setField("sectionSubtitle", e.target.value)}
+                  placeholder="Escribe una invitación para que el visitante vea el video"
                 />
 
                 <label className="form-label fw-bold">Link de YouTube</label>
@@ -145,7 +150,7 @@ export default function VideoConfig() {
             <div className="border rounded-4 p-4 bg-white shadow-sm">
               <div className="text-center mb-4">
                 <h3 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
-                  {form.sectionTitle || "Conoce más sobre nosotros"}
+                  {form.sectionTitle || ""}
                 </h3>
                 <p className="text-muted">{form.sectionSubtitle}</p>
               </div>

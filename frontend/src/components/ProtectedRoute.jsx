@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import api from "../api/axios";
 
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loggingOut } = useAuth();
   const location = useLocation();
 
   // Guarda la última ruta visitada en el backend para restaurarla al hacer login
@@ -16,8 +16,13 @@ export default function ProtectedRoute({ children }) {
     }
   }, [location.pathname, isAuthenticated]);
 
-  if (!isAuthenticated) {
+  // Si el usuario está cerrando sesión, no redirigir a /login (el logout ya navega a /)
+  if (!isAuthenticated && !loggingOut) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (!isAuthenticated && loggingOut) {
+    return <Navigate to="/" replace />;
   }
 
   return children;
