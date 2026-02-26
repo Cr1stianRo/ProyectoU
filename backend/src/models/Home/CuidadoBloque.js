@@ -1,3 +1,4 @@
+// Modelo del bloque "Cuidado Día" — configuración visual y textos de la modalidad diurna
 import mongoose from "mongoose";
 
 const CuidadoDiaSchema = new mongoose.Schema(

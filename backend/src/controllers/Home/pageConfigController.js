@@ -1,6 +1,8 @@
+// Controlador maestro de PageConfig.
+// Maneja la lectura y escritura completa del array de secciones del sitio.
 import PageConfig from "../../models/Home/PageConfig.js";
 
-/** Secciones por defecto que se crean la primera vez */
+// Secciones iniciales que se crean con cada nuevo documento de usuario
 const defaultSections = [
   {
     id: "bloquep-1",
@@ -37,16 +39,17 @@ const defaultSections = [
   },
 ];
 
-const getOrCreate = async () => {
-  let doc = await PageConfig.findOne();
-  if (!doc) doc = await PageConfig.create({ sections: defaultSections });
+const getOrCreate = async (userId) => {
+  let doc = await PageConfig.findOne({ userId });
+  if (!doc) doc = await PageConfig.create({ userId, sections: defaultSections });
   return doc;
 };
 
-/** GET /api/home-config/page — devuelve todas las secciones ordenadas */
+// Retorna todas las secciones ordenadas por el campo order
 export const getPage = async (req, res) => {
   try {
-    const doc = await getOrCreate();
+    if (!req.userId) return res.json({ sections: [] });
+    const doc = await getOrCreate(req.userId);
     const sorted = [...doc.sections].sort((a, b) => a.order - b.order);
     return res.json({ sections: sorted });
   } catch (err) {
@@ -54,7 +57,7 @@ export const getPage = async (req, res) => {
   }
 };
 
-/** PUT /api/home-config/page — reemplaza el array completo de secciones */
+// Reemplaza completamente el array de secciones (upsert si no existe el doc)
 export const updatePage = async (req, res) => {
   try {
     const { sections } = req.body || {};
@@ -62,9 +65,9 @@ export const updatePage = async (req, res) => {
       return res.status(400).json({ message: "sections debe ser un array" });
     }
     const doc = await PageConfig.findOneAndUpdate(
-      {},
+      { userId: req.userId },
       { sections },
-      { new: true, upsert: true }
+      { new: true, upsert: true, setDefaultsOnInsert: true }
     ).lean();
     return res.json(doc);
   } catch (err) {

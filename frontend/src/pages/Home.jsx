@@ -1,17 +1,19 @@
+// Página Home pública del hogar geriátrico.
+// Carga las secciones dinámicamente desde la API y las renderiza según su tipo y orden.
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 
 const URLROOT = "/";
-const API_URL = "http://localhost:4000/api/home-config/page";
 
 export default function Home() {
   const [sections, setSections] = useState([]);
   const [error, setError] = useState("");
 
+  // Carga todas las secciones de la página y las ordena por su campo "order"
   useEffect(() => {
-    axios
-      .get(API_URL)
+    api
+      .get("/home-config/page")
       .then((res) => {
         const sortedSections = (res.data.sections || []).sort(
           (a, b) => a.order - b.order
@@ -29,6 +31,7 @@ export default function Home() {
     return bloquep?.config || {};
   }, [sections]);
 
+  // Genera el enlace de WhatsApp con mensaje predefinido
   const whatsappHref = useMemo(() => {
     const number = String(bloquepConfig.whatsappNumber || "").replace(/\D/g, "");
     if (!number) return "#";
@@ -42,6 +45,16 @@ export default function Home() {
       : [];
   }, [bloquepConfig.pills]);
 
+  // Si no hay imágenes configuradas, usa imágenes por defecto como fallback
+  const heroImages = useMemo(() => {
+    return Array.isArray(bloquepConfig.heroImages) && bloquepConfig.heroImages.length > 0
+      ? bloquepConfig.heroImages.filter((img) => img.url)
+      : [
+          { url: `${URLROOT}web/ancianato_inicio-1280.webp`, alt: "Hogar geriátrico: vista principal" },
+          { url: `${URLROOT}web/quienes-somos-1280.webp`, alt: "Familias y residentes compartiendo" },
+        ];
+  }, [bloquepConfig.heroImages]);
+
   // Función para renderizar cada sección según su tipo
   const renderSection = (section) => {
     const { type, config, id } = section;
@@ -52,7 +65,7 @@ export default function Home() {
           <section key={id} className="py-5">
             <div className="container">
               <div className="text-center mb-4">
-                <h2 className="fw-bold" style={{ color: "#5b4636" }}>
+                <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
                   Galería
                 </h2>
                 <p className="text-muted">Imágenes de nuestras instalaciones.</p>
@@ -132,173 +145,77 @@ export default function Home() {
           </section>
         );
 
-      case "cuidadod":
+      case "servicios":
         return (
           <section key={id} id="servicios-destacados" className="py-5 bg-light">
             <div className="container">
               <div className="text-center mb-4">
-                <h2 className="fw-bold" style={{ color: "#5b4636" }}>
-                  Servicios y comodidades
+                <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
+                  {config.sectionTitle || "Servicios y comodidades"}
                 </h2>
                 <p className="text-muted">
-                  Modalidades claras para las necesidades de tu familia.
+                  {config.sectionSubtitle || "Modalidades claras para las necesidades de tu familia."}
                 </p>
               </div>
 
+              {/* Tarjetas de servicios dinámicas */}
               <div className="row g-4">
-                <div className="col-md-6">
-                  <div className="card h-100 border-0 shadow-sm rounded-4 text-center">
-                    <div className="card-body p-4 d-flex flex-column align-items-center justify-content-between">
-                      <div>
-                        <div
-                          className="mb-3"
-                          style={{ color: config.iconColor || "#8C6A4A" }}
-                        >
-                          <i
-                            className={config.iconClass || "bi bi-sunrise fs-1"}
-                          ></i>
+                {(config.services || []).map((svc, idx) => (
+                  <div key={idx} className={`col-md-${(config.services || []).length === 1 ? "8 mx-auto" : "6"}`}>
+                    <div className="card h-100 border-0 shadow-sm rounded-4 text-center">
+                      <div className="card-body p-4 d-flex flex-column align-items-center justify-content-between">
+                        <div>
+                          <div className="mb-3" style={{ color: "var(--cafe)" }}>
+                            <i className={`${svc.icon || "bi bi-star"} fs-1`}></i>
+                          </div>
+                          <h5 className="fw-bold mb-1" style={{ color: "var(--cafe-oscuro)" }}>
+                            {svc.title}
+                          </h5>
+                          <small className="text-muted d-block mb-3">
+                            {svc.subtitle}
+                          </small>
                         </div>
-                        <h5
-                          className="fw-bold mb-1"
-                          style={{ color: config.titleColor || "#5b4636" }}
-                        >
-                          {config.title || "Cuidado Día"}
-                        </h5>
-                        <small className="text-muted d-block mb-3">
-                          {config.subtitle || "8:00–17:00 • sin contrato • pago por día"}
-                        </small>
-                      </div>
 
-                      <p className="text-muted mb-3">
-                        {config.description ||
-                          "Programa diurno para mantener actividad física, mental y social."}
-                      </p>
+                        <p className="text-muted mb-3">{svc.description}</p>
 
-                      <div className="d-flex gap-2 justify-content-center">
-                        <Link to="/servicios/cuidado-dia" className="btn btn-primary">
-                          Ver detalle
-                        </Link>
-                        <a
-                          href={whatsappHref}
-                          className={`btn btn-outline-cafe btn-whatsapp ${
-                            !bloquepConfig.whatsappNumber ? "disabled" : ""
-                          }`}
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          <i className="bi bi-whatsapp me-1"></i> WhatsApp
-                        </a>
+                        <div className="d-flex gap-2 justify-content-center">
+                          <a
+                            href={whatsappHref}
+                            className={`btn btn-outline-cafe btn-whatsapp ${
+                              !bloquepConfig.whatsappNumber ? "disabled" : ""
+                            }`}
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            <i className="bi bi-whatsapp me-1"></i> WhatsApp
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="card h-100 border-0 shadow-sm rounded-4 text-center">
-                    <div className="card-body p-4 d-flex flex-column align-items-center justify-content-between">
-                      <div>
-                        <div className="mb-3" style={{ color: "#8C6A4A" }}>
-                          <i className="bi bi-house-heart fs-1"></i>
-                        </div>
-                        <h5 className="fw-bold mb-1" style={{ color: "#5b4636" }}>
-                          Cuidado Permanente
-                        </h5>
-                        <small className="text-muted d-block mb-3">
-                          Residencia completa • 5 tiempos de comida
-                        </small>
-                      </div>
-
-                      <p className="text-muted mb-3">
-                        Hogar geriátrico interno con cuidado integral 24/7,
-                        habitaciones confortables, supervisión continua y actividades
-                        para una vida tranquila y acompañada.
-                      </p>
-
-                      <div className="d-flex gap-2 justify-content-center">
-                        <Link
-                          to="/servicios/cuidado-permanente"
-                          className="btn btn-primary"
-                        >
-                          Ver detalle
-                        </Link>
-                        <a
-                          href={whatsappHref}
-                          className={`btn btn-outline-cafe btn-whatsapp ${
-                            !bloquepConfig.whatsappNumber ? "disabled" : ""
-                          }`}
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          <i className="bi bi-whatsapp me-1"></i> WhatsApp
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
 
-              {/* Mini franja de confianza */}
-              <div className="row g-4 mt-4 justify-content-center text-center">
-                <div className="col-md-4">
-                  <div className="card card-feature h-100">
-                    <div className="card-body">
-                      <h6
-                        className="text-uppercase fw-bold mb-2"
-                        style={{ color: "#8C6A4A" }}
-                      >
-                        Diferencial
-                      </h6>
-                      <h5 className="card-title" style={{ color: "#5b4636" }}>
-                        Envejecimiento activo
-                      </h5>
-                      <p className="card-text">
-                        Fisioterapia y deportología (2×/sem), psicología (1×/sem) y
-                        apoyo universitario.
-                      </p>
+              {/* Franja de confianza dinámica */}
+              {(config.highlights || []).length > 0 && (
+                <div className="row g-4 mt-4 justify-content-center text-center">
+                  {(config.highlights || []).map((hl, idx) => (
+                    <div key={idx} className="col-md-4">
+                      <div className="card card-feature h-100">
+                        <div className="card-body">
+                          <h6 className="text-uppercase fw-bold mb-2" style={{ color: "var(--cafe)" }}>
+                            {hl.badge}
+                          </h6>
+                          <h5 className="card-title" style={{ color: "var(--cafe-oscuro)" }}>
+                            {hl.title}
+                          </h5>
+                          <p className="card-text">{hl.description}</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-
-                <div className="col-md-4">
-                  <div className="card card-feature h-100">
-                    <div className="card-body">
-                      <h6
-                        className="text-uppercase fw-bold mb-2"
-                        style={{ color: "#8C6A4A" }}
-                      >
-                        Respeto
-                      </h6>
-                      <h5 className="card-title" style={{ color: "#5b4636" }}>
-                        Cuidado con dignidad
-                      </h5>
-                      <p className="card-text">
-                        Lenguaje profesional y trato humano. Adultos mayores, nunca
-                        diminutivos.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-md-4">
-                  <div className="card card-feature h-100">
-                    <div className="card-body">
-                      <h6
-                        className="text-uppercase fw-bold mb-2"
-                        style={{ color: "#8C6A4A" }}
-                      >
-                        Cercanía
-                      </h6>
-                      <h5 className="card-title" style={{ color: "#5b4636" }}>
-                        Comunicación diaria
-                      </h5>
-                      <p className="card-text">
-                        Fotos y videos reales para las familias vía WhatsApp
-                        institucional.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </section>
         );
@@ -309,7 +226,7 @@ export default function Home() {
             <div className="container">
               <div className="row g-4 align-items-center">
                 <div className="col-lg-6">
-                  <h3 className="fw-bold mb-3" style={{ color: "#5b4636" }}>
+                  <h3 className="fw-bold mb-3" style={{ color: "var(--cafe-oscuro)" }}>
                     {config.title || "Visítanos"}
                   </h3>
                   <p className="text-muted mb-4">
@@ -369,14 +286,14 @@ export default function Home() {
 
       case "valores":
         return (
-          <section key={id} className="py-5" style={{ background: "#f8f5f1" }}>
+          <section key={id} className="py-5" style={{ background: "var(--section-bg)" }}>
             <div className="container">
               {/* Misión y Visión */}
               <div className="row g-4 mb-5">
                 <div className="col-md-6">
                   <div className="card border-0 shadow-sm rounded-4 h-100">
                     <div className="card-body p-4">
-                      <h5 className="fw-bold mb-3" style={{ color: "#8C6A4A" }}>
+                      <h5 className="fw-bold mb-3" style={{ color: "var(--cafe)" }}>
                         <i className="bi bi-bullseye me-2"></i>Misión
                       </h5>
                       <p className="text-muted mb-0">
@@ -388,7 +305,7 @@ export default function Home() {
                 <div className="col-md-6">
                   <div className="card border-0 shadow-sm rounded-4 h-100">
                     <div className="card-body p-4">
-                      <h5 className="fw-bold mb-3" style={{ color: "#8C6A4A" }}>
+                      <h5 className="fw-bold mb-3" style={{ color: "var(--cafe)" }}>
                         <i className="bi bi-eye-fill me-2"></i>Visión
                       </h5>
                       <p className="text-muted mb-0">
@@ -400,7 +317,7 @@ export default function Home() {
               </div>
 
               {/* Valores */}
-              <h3 className="fw-bold text-center mb-4" style={{ color: "#5b4636" }}>
+              <h3 className="fw-bold text-center mb-4" style={{ color: "var(--cafe-oscuro)" }}>
                 {config.sectionTitle || "Nuestros valores"}
               </h3>
               <div className="row g-4 justify-content-center">
@@ -408,10 +325,10 @@ export default function Home() {
                   <div key={idx} className="col-6 col-md-4 col-lg">
                     <div className="card border-0 shadow-sm rounded-4 text-center h-100">
                       <div className="card-body p-4">
-                        <div className="fs-1 mb-3" style={{ color: "#8C6A4A" }}>
+                        <div className="fs-1 mb-3" style={{ color: "var(--cafe)" }}>
                           <i className={valor.icon || "bi bi-heart-fill"}></i>
                         </div>
-                        <h6 className="fw-bold" style={{ color: "#5b4636" }}>
+                        <h6 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
                           {valor.title}
                         </h6>
                         <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
@@ -422,6 +339,199 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
+          </section>
+        );
+
+      case "galeriahogar":
+        return (
+          <section key={id} className="py-5">
+            <div className="container">
+              <div className="text-center mb-4">
+                <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
+                  {config.title || "Así es nuestro hogar"}
+                </h2>
+                <p className="text-muted">
+                  {config.subtitle || "Imágenes reales de actividades e instalaciones."}
+                </p>
+              </div>
+
+              {config.images && config.images.length > 0 ? (
+                <div className="row g-3">
+                  {config.images.map((img, idx) => (
+                    <div className="col-6 col-lg-3" key={idx}>
+                      <div className="position-relative rounded overflow-hidden shadow-sm"
+                        style={{ aspectRatio: "3/2" }}>
+                        <img
+                          className="w-100 h-100"
+                          src={img.url}
+                          alt={img.alt || "Galería"}
+                          loading="lazy"
+                          style={{ objectFit: "cover", display: "block" }}
+                        />
+                        {img.caption && (
+                          <div className="position-absolute bottom-0 start-0 end-0 text-white text-center py-1"
+                            style={{
+                              background: "linear-gradient(transparent, rgba(0,0,0,.6))",
+                              fontSize: "0.75rem",
+                              fontWeight: 600,
+                            }}>
+                            {img.caption}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted text-center">No hay imágenes disponibles</p>
+              )}
+
+            </div>
+          </section>
+        );
+
+      case "sobrenosotros":
+        return (
+          <section key={id} className="py-5">
+            <div className="container">
+              <h2 className="fw-bold mb-4" style={{ color: "var(--cafe-oscuro)" }}>
+                {config.sectionTitle || "Sobre nosotros"}
+              </h2>
+
+              <div className="row g-4 align-items-center mb-5">
+                <div className={config.imageUrl ? "col-lg-7" : "col-12"}>
+                  <p className="text-muted" style={{ fontSize: "1.1rem", lineHeight: 1.8 }}>
+                    {config.description || "Sin descripción."}
+                  </p>
+                </div>
+                {config.imageUrl && (
+                  <div className="col-lg-5">
+                    <img
+                      src={config.imageUrl}
+                      alt={config.imageAlt || "Sobre nosotros"}
+                      className="w-100 rounded-4 shadow"
+                      style={{ objectFit: "cover", maxHeight: 320 }}
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {config.philosophyTitle && (
+                <div className="text-center mb-4">
+                  <h3 className="fw-bold" style={{ color: "var(--cafe)" }}>
+                    {config.philosophyTitle}
+                  </h3>
+                  <p className="text-muted mx-auto" style={{ maxWidth: 700 }}>
+                    {config.philosophyDescription}
+                  </p>
+                </div>
+              )}
+
+              {(config.pillars || []).length > 0 && (
+                <div className="row g-4 justify-content-center">
+                  {config.pillars.map((p, idx) => (
+                    <div key={idx} className="col-md-4">
+                      <div className="card border-0 shadow-sm rounded-4 text-center h-100">
+                        <div className="card-body p-4">
+                          <div className="fs-1 mb-3" style={{ color: "var(--cafe)" }}>
+                            <i className={p.icon || "bi bi-star"}></i>
+                          </div>
+                          <h6 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>{p.title}</h6>
+                          <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>{p.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        );
+
+      case "equipo":
+        return (
+          <section key={id} className="py-5" style={{ background: "var(--section-bg)" }}>
+            <div className="container">
+              <div className="text-center mb-4">
+                <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
+                  {config.sectionTitle || "Nuestro equipo humano"}
+                </h2>
+                <p className="text-muted mx-auto" style={{ maxWidth: 600 }}>
+                  {config.sectionSubtitle}
+                </p>
+              </div>
+
+              <div className="row g-4 justify-content-center">
+                {(config.members || []).map((m, idx) => (
+                  <div key={idx} className="col-6 col-md-4 col-lg-3">
+                    <div className="card border-0 shadow-sm rounded-4 text-center h-100">
+                      <div className="card-body p-4">
+                        {m.photoUrl ? (
+                          <img
+                            src={m.photoUrl}
+                            alt={m.name}
+                            className="rounded-circle shadow mb-3"
+                            style={{ width: 100, height: 100, objectFit: "cover" }}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div
+                            className="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-3"
+                            style={{ width: 100, height: 100 }}
+                          >
+                            <i className="bi bi-person fs-1 text-muted"></i>
+                          </div>
+                        )}
+                        <h6 className="fw-bold mb-1" style={{ color: "var(--cafe-oscuro)" }}>{m.name}</h6>
+                        <small className="text-muted">{m.role}</small>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+
+      case "video":
+        return (
+          <section key={id} className="py-5">
+            <div className="container">
+              <div className="text-center mb-4">
+                <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
+                  {config.sectionTitle || "Conoce más sobre nosotros"}
+                </h2>
+                <p className="text-muted mx-auto" style={{ maxWidth: 600 }}>
+                  {config.sectionSubtitle}
+                </p>
+              </div>
+
+              {config.youtubeUrl ? (
+                <div className="mx-auto" style={{ maxWidth: 800 }}>
+                  <div className="ratio ratio-16x9 rounded-4 overflow-hidden shadow">
+                    {/* Convierte cualquier formato de URL de YouTube a embed */}
+                    <iframe
+                      src={(() => {
+                        const url = config.youtubeUrl;
+                        if (url.includes("/embed/")) return url;
+                        const short = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+                        if (short) return `https://www.youtube.com/embed/${short[1]}`;
+                        const full = url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+                        if (full) return `https://www.youtube.com/embed/${full[1]}`;
+                        return url;
+                      })()}
+                      title="Video institucional"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                    ></iframe>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-muted text-center">No hay video configurado.</p>
+              )}
             </div>
           </section>
         );
@@ -449,57 +559,35 @@ export default function Home() {
           data-bs-pause="hover"
           aria-label="Galería principal"
         >
-          <div className="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#heroCarousel"
-              data-bs-slide-to="0"
-              className="active"
-              aria-current="true"
-              aria-label="Imagen 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#heroCarousel"
-              data-bs-slide-to="1"
-              aria-label="Imagen 2"
-            ></button>
-          </div>
+          {heroImages.length > 1 && (
+            <div className="carousel-indicators">
+              {heroImages.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to={idx}
+                  className={idx === 0 ? "active" : ""}
+                  aria-current={idx === 0 ? "true" : undefined}
+                  aria-label={`Imagen ${idx + 1}`}
+                ></button>
+              ))}
+            </div>
+          )}
 
           <div className="carousel-inner">
-            <div className="carousel-item active">
-              <picture className="hero-picture">
-                <source
-                  type="image/webp"
-                  srcSet={`${URLROOT}web/ancianato_inicio-1280.webp`}
-                />
+            {heroImages.map((img, idx) => (
+              <div key={idx} className={`carousel-item ${idx === 0 ? "active" : ""}`}>
                 <img
                   className="hero-img"
-                  src={`${URLROOT}web/ancianato_inicio-1280.webp`}
-                  alt="Hogar geriátrico: vista principal"
-                  loading="eager"
-                  fetchPriority="high"
+                  src={img.url}
+                  alt={img.alt || `Hero ${idx + 1}`}
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  fetchPriority={idx === 0 ? "high" : undefined}
                   decoding="async"
                 />
-              </picture>
-            </div>
-
-            <div className="carousel-item">
-              <picture className="hero-picture">
-                <source
-                  type="image/webp"
-                  srcSet={`${URLROOT}web/quienes-somos-1280.webp`}
-                />
-                <img
-                  className="hero-img"
-                  src={`${URLROOT}web/quienes-somos-1280.webp`}
-                  alt="Familias y residentes compartiendo"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </picture>
-            </div>
+              </div>
+            ))}
           </div>
 
           <button
@@ -566,7 +654,7 @@ export default function Home() {
               >
                 <i
                   className="bi bi-chevron-double-down fs-2"
-                  style={{ color: "#8C6A4A" }}
+                  style={{ color: "var(--cafe)" }}
                 ></i>
               </a>
             </div>
@@ -579,60 +667,19 @@ export default function Home() {
         .filter((s) => s.type !== "bloquep")
         .map((section) => renderSection(section))}
 
-      {/* GALERÍA */}
-      <section className="py-5">
-        <div className="container">
-          <div className="text-center mb-4">
-            <h2 className="fw-bold" style={{ color: "#5b4636" }}>
-              Así es nuestro hogar
-            </h2>
-            <p className="text-muted">
-              Imágenes reales de actividades e instalaciones.
-            </p>
-          </div>
-
-          <div className="row g-3">
-            {["galeria1.webp", "galeria2.webp", "galeria3.webp", "galeria4.webp"].map(
-              (img) => (
-                <div className="col-6 col-lg-3" key={img}>
-                  <img
-                    className="img-fluid rounded shadow-sm"
-                    src={`${URLROOT}web/${img}`}
-                    alt="Galería"
-                    loading="lazy"
-                  />
-                </div>
-              )
-            )}
-          </div>
-
-          <div className="text-center mt-4">
-            <Link to="/actividades" className="btn btn-outline-primary">
-              Ver más actividades
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* GALERÍA "Así es nuestro hogar" — ahora se renderiza dinámicamente desde el módulo galeriahogar */}
 
       {/* CTA FINAL (HARDCODEADA - PENDIENTE DE MÓDULO) */}
-      <section className="py-5" style={{ background: "#8C6A4A" }}>
+      <section className="py-5" style={{ background: "var(--cafe)" }}>
         <div className="container d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 text-white">
           <div>
             <h3 className="fw-bold mb-1">¿Listo para agendar una visita?</h3>
             <p className="mb-0">
-              Escríbenos y te contamos disponibilidad para Cuidado Día o Cuidado
-              Permanente.
+              Escríbenos y te contamos nuestros planes,
             </p>
           </div>
 
           <div className="d-flex gap-2">
-            <Link
-              to="/contacto"
-              className="btn btn-light btn-lg"
-              style={{ color: "#8C6A4A" }}
-            >
-              Contacto
-            </Link>
 
             <a
               href={whatsappHref}
@@ -648,6 +695,35 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Botón flotante para ir al Admin */}
+      <Link
+        to="/admin"
+        className="btn shadow-lg d-flex align-items-center justify-content-center"
+        title="Panel de administración"
+        style={{
+          position: "fixed",
+          bottom: "2rem",
+          right: "2rem",
+          width: "56px",
+          height: "56px",
+          borderRadius: "50%",
+          backgroundColor: "var(--cafe-oscuro)",
+          color: "#fff",
+          fontSize: "1.5rem",
+          zIndex: 1050,
+          transition: "transform 0.2s, background-color 0.2s",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.backgroundColor = "var(--cafe)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.backgroundColor = "var(--cafe-oscuro)";
+        }}
+      >
+        <i className="bi bi-gear-fill"></i>
+      </Link>
     </>
   );
 }

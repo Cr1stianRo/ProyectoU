@@ -1,3 +1,4 @@
+// Punto de entrada del servidor — carga variables de entorno e inicia Express
 import dotenv from "dotenv";
 dotenv.config();
 import app from "./app.js";

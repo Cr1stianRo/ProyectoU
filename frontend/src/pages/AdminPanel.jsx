@@ -1,6 +1,41 @@
-import { Link } from "react-router-dom";
+// Panel de administración principal.
+// Muestra todos los módulos editables como tarjetas con acceso directo a cada editor.
+// Incluye exportación del sitio como ZIP estático.
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import api from "../api/axios";
 
 export default function AdminPanel() {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+  const [exporting, setExporting] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  // Descarga un ZIP con el sitio exportado como HTML estático
+  const handleExport = async () => {
+    setExporting(true);
+    try {
+      const res = await api.get("/home-config/export", { responseType: "blob" });
+      const url = window.URL.createObjectURL(res.data);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "mi-sitio.zip";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch {
+      alert("Error al exportar el sitio. Verifica que tengas contenido configurado.");
+    } finally {
+      setExporting(false);
+    }
+  };
+  // Definición de los módulos editables con su metadata para renderizar las tarjetas
   const modules = [
     {
       id: "bloquep",
@@ -23,14 +58,14 @@ export default function AdminPanel() {
       purpose: "Mostrar imágenes de instalaciones y actividades",
     },
     {
-      id: "cuidadod",
-      title: "Cuidado Día",
+      id: "servicios",
+      title: "Servicios y comodidades",
       description:
-        "Configura la tarjeta del servicio 'Cuidado Día'. Personaliza el ícono, colores, título, subtítulo y descripción del servicio. Esta sección aparece en el bloque de servicios destacados.",
-      icon: "bi bi-sunrise",
+        "Administra todos los servicios del hogar (Cuidado Día, Cuidado Permanente, etc.) y la franja de diferenciales. Agrega, edita o elimina servicios con sus íconos, descripciones y botones.",
+      icon: "bi bi-grid-1x2-fill",
       color: "#FF8C00",
-      route: "/CuidadoBloque",
-      purpose: "Presentar el servicio de cuidado diurno",
+      route: "/ServiciosConfig",
+      purpose: "Presentar servicios y diferenciales del hogar",
     },
     {
       id: "mapa",
@@ -52,6 +87,56 @@ export default function AdminPanel() {
       route: "/ValoresConfig",
       purpose: "Mostrar misión, visión y valores institucionales",
     },
+    {
+      id: "diseno",
+      title: "Colores y Diseño",
+      description:
+        "Personaliza la apariencia de todo el sitio. Elige entre paletas predefinidas o crea tu combinación de colores. Cambia la fuente y el redondeo de las tarjetas. Vista previa en tiempo real.",
+      icon: "bi bi-palette-fill",
+      color: "#9B59B6",
+      route: "/DisenoConfig",
+      purpose: "Personalizar colores, fuente y estilo del sitio",
+    },
+    {
+      id: "sobrenosotros",
+      title: "Sobre Nosotros",
+      description:
+        "Administra la sección 'Sobre nosotros'. Edita la descripción de la organización, imagen representativa, filosofía institucional y los pilares fundamentales del hogar.",
+      icon: "bi bi-info-circle-fill",
+      color: "#3498db",
+      route: "/SobreNosotrosConfig",
+      purpose: "Describir la función y filosofía de la organización",
+    },
+    {
+      id: "equipo",
+      title: "Nuestro Equipo Humano",
+      description:
+        "Administra la sección del equipo de trabajo. Agrega miembros con su foto, nombre y cargo profesional. Se muestra en un grid de tarjetas con fotos circulares.",
+      icon: "bi bi-people-fill",
+      color: "#1abc9c",
+      route: "/EquipoConfig",
+      purpose: "Mostrar el equipo interdisciplinario del hogar",
+    },
+    {
+      id: "video",
+      title: "Conoce más sobre nosotros",
+      description:
+        "Administra la sección de video institucional. Pega un link de YouTube y se mostrará embebido en la página. Ideal para mostrar instalaciones, actividades y testimonios.",
+      icon: "bi bi-play-btn-fill",
+      color: "#e67e22",
+      route: "/VideoConfig",
+      purpose: "Video institucional de YouTube",
+    },
+    {
+      id: "galeriahogar",
+      title: "Así es nuestro hogar",
+      description:
+        "Administra la galería de fotos del hogar. Sube imágenes de actividades e instalaciones con captions descriptivos. Se muestran en un grid responsive de 4 columnas.",
+      icon: "bi bi-camera-fill",
+      color: "#2ecc71",
+      route: "/GaleriaHogarConfig",
+      purpose: "Galería de imágenes reales del hogar",
+    },
   ];
 
   return (
@@ -68,10 +153,17 @@ export default function AdminPanel() {
                 Gestiona los módulos editables de la página Home
               </p>
             </div>
-            <Link to="/" className="btn btn-outline-secondary">
-              <i className="bi bi-arrow-left me-2"></i>
-              Volver al sitio
-            </Link>
+            <div className="d-flex gap-2 align-items-center">
+              {user && <span className="text-muted me-2">{user.name}</span>}
+              <Link to="/" className="btn btn-outline-secondary">
+                <i className="bi bi-arrow-left me-2"></i>
+                Volver al sitio
+              </Link>
+              <button onClick={handleLogout} className="btn btn-outline-danger">
+                <i className="bi bi-box-arrow-right me-2"></i>
+                Cerrar sesión
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -165,7 +257,7 @@ export default function AdminPanel() {
               <div className="fs-1 mb-2" style={{ color: "#8C6A4A" }}>
                 <i className="bi bi-box-seam"></i>
               </div>
-              <h6 className="mb-0 fw-bold">5 Módulos</h6>
+              <h6 className="mb-0 fw-bold">10 Módulos</h6>
               <small className="text-muted">Activos</small>
             </div>
           </div>
@@ -194,6 +286,54 @@ export default function AdminPanel() {
               </div>
               <h6 className="mb-0 fw-bold">API REST</h6>
               <small className="text-muted">Backend</small>
+            </div>
+          </div>
+        </div>
+
+        {/* Exportar sitio */}
+        <div className="row mt-4">
+          <div className="col-12">
+            <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
+              <div className="p-3 text-white" style={{ background: "linear-gradient(135deg, #2c3e50, #3498db)" }}>
+                <div className="d-flex align-items-center gap-3">
+                  <div className="fs-1"><i className="bi bi-cloud-download-fill"></i></div>
+                  <div>
+                    <h5 className="mb-0 fw-bold">Exportar mi sitio</h5>
+                    <small className="opacity-75">Descarga tu sitio listo para publicar</small>
+                  </div>
+                </div>
+              </div>
+              <div className="card-body p-4">
+                <p className="text-muted mb-3">
+                  Genera un archivo ZIP con tu sitio completo como HTML, CSS e imagenes.
+                  El resultado es un sitio estatico funcional que puedes subir directamente a
+                  <strong> Netlify</strong>, <strong>Vercel</strong>, <strong>GitHub Pages</strong> o cualquier hosting.
+                </p>
+                <div className="d-flex flex-wrap gap-2 mb-3">
+                  <span className="badge bg-light text-dark border"><i className="bi bi-file-earmark-code me-1"></i>index.html</span>
+                  <span className="badge bg-light text-dark border"><i className="bi bi-filetype-css me-1"></i>styles.css</span>
+                  <span className="badge bg-light text-dark border"><i className="bi bi-images me-1"></i>Imagenes</span>
+                  <span className="badge bg-light text-dark border"><i className="bi bi-bootstrap me-1"></i>Bootstrap CDN</span>
+                </div>
+                <button
+                  onClick={handleExport}
+                  disabled={exporting}
+                  className="btn btn-lg text-white fw-semibold d-inline-flex align-items-center gap-2"
+                  style={{ background: "linear-gradient(135deg, #2c3e50, #3498db)", border: "none" }}
+                >
+                  {exporting ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm"></span>
+                      Generando ZIP...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-download"></i>
+                      Descargar mi sitio (.zip)
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>

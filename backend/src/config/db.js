@@ -1,3 +1,4 @@
+// Conexión a MongoDB — finaliza el proceso si no puede conectarse
 import mongoose from "mongoose";
 
 const connectDB = async () => {

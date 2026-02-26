@@ -1,36 +1,39 @@
+// Controlador de la sección de mapa/ubicación.
+// Gestiona URLs de Google Maps, Waze, iframe embed y textos de botones.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "mapa";
 
-const getOrCreate = async () => {
-  let doc = await PageConfig.findOne();
-  if (!doc) doc = await PageConfig.create({ sections: [] });
+const DEFAULT_CONFIG = {
+  title: "",
+  description: "",
+  googleMapsUrl: "",
+  wazeUrl: "",
+  embedUrl: "",
+  buttonText1: "",
+  buttonText2: "",
+};
+
+const getOrCreate = async (userId) => {
+  let doc = await PageConfig.findOne({ userId });
+  if (!doc) doc = await PageConfig.create({ userId, sections: [] });
   return doc;
 };
 
-/** GET /api/home-config/mapa */
+// Retorna la configuración del mapa de ubicación
 export const getMapa = async (req, res) => {
   try {
-    const doc = await getOrCreate();
+    if (!req.userId) return res.json(DEFAULT_CONFIG);
+    const doc = await getOrCreate(req.userId);
     const section = doc.sections.find((s) => s.type === TYPE);
-    return res.status(200).json(
-      section?.config ?? {
-        title: "",
-        description: "",
-        googleMapsUrl: "",
-        wazeUrl: "",
-        embedUrl: "",
-        buttonText1: "",
-        buttonText2: "",
-      }
-    );
+    return res.status(200).json(section?.config ?? DEFAULT_CONFIG);
   } catch (error) {
     console.error("getMapa error:", error);
     return res.status(500).json({ message: "Error obteniendo Mapa" });
   }
 };
 
-/** PUT /api/home-config/mapa */
+// Actualiza la configuración de mapa y enlaces de navegación
 export const updateMapa = async (req, res) => {
   try {
     const {
@@ -53,7 +56,7 @@ export const updateMapa = async (req, res) => {
       buttonText2: String(buttonText2 || "").trim(),
     };
 
-    const doc = await getOrCreate();
+    const doc = await getOrCreate(req.userId);
     const idx = doc.sections.findIndex((s) => s.type === TYPE);
 
     if (idx >= 0) {
