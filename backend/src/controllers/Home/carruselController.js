@@ -1,13 +1,17 @@
+// Controlador del carrusel de imágenes de la galería.
+// Permite obtener y actualizar los slides con sus textos e imágenes.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "carrusel";
 
+// Patrón getOrCreate: garantiza que siempre exista un documento para el usuario
 const getOrCreate = async (userId) => {
   let doc = await PageConfig.findOne({ userId });
   if (!doc) doc = await PageConfig.create({ userId, sections: [] });
   return doc;
 };
 
+// Retorna los slides del carrusel o un array vacío si no hay configuración
 export const getCarrusel = async (req, res) => {
   try {
     if (!req.userId) return res.json({ slides: [] });
@@ -20,10 +24,12 @@ export const getCarrusel = async (req, res) => {
   }
 };
 
+// Actualiza los slides del carrusel: descarta entradas sin URL y sanitiza campos
 export const updateCarrusel = async (req, res) => {
   try {
     const { slides = [] } = req.body || {};
 
+    // Filtra slides sin imagen y normaliza los campos de texto
     const cleanSlides = Array.isArray(slides)
       ? slides
           .filter((s) => s && String(s.imageUrl || "").trim() !== "")

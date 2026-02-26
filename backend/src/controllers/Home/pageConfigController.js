@@ -1,5 +1,8 @@
+// Controlador maestro de PageConfig.
+// Maneja la lectura y escritura completa del array de secciones del sitio.
 import PageConfig from "../../models/Home/PageConfig.js";
 
+// Secciones iniciales que se crean con cada nuevo documento de usuario
 const defaultSections = [
   {
     id: "bloquep-1",
@@ -27,11 +30,10 @@ const defaultSections = [
     config: {
       iconClass: "bi bi-sunrise",
       iconColor: "#8C6A4A",
-      title: "Cuidado Día",
+      title: "",
       titleColor: "#5b4636",
-      subtitle: "8:00–17:00 • sin contrato • pago por día",
-      description:
-        "Programa diurno para mantener actividad física, mental y social, con alimentación y acompañamiento profesional en un entorno seguro.",
+      subtitle: "",
+      description: "",
     },
   },
 ];
@@ -42,6 +44,7 @@ const getOrCreate = async (userId) => {
   return doc;
 };
 
+// Retorna todas las secciones ordenadas por el campo order
 export const getPage = async (req, res) => {
   try {
     if (!req.userId) return res.json({ sections: [] });
@@ -53,6 +56,7 @@ export const getPage = async (req, res) => {
   }
 };
 
+// Reemplaza completamente el array de secciones (upsert si no existe el doc)
 export const updatePage = async (req, res) => {
   try {
     const { sections } = req.body || {};

@@ -1,18 +1,14 @@
+// Controlador de la sección "Equipo Humano".
+// Administra los miembros del equipo con nombre, cargo y foto.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "equipo";
 
+// Configuración inicial vacía: el usuario agregará miembros desde el editor
 const DEFAULT_CONFIG = {
-  sectionTitle: "Nuestro equipo humano",
-  sectionSubtitle:
-    "La fortaleza de nuestro hogar está en su gente. Contamos con un equipo interdisciplinario que combina conocimiento, vocación y sensibilidad humana.",
-  members: [
-    {
-      name: "Nombre del miembro",
-      role: "Cargo / Profesión",
-      photoUrl: "",
-    },
-  ],
+  sectionTitle: "",
+  sectionSubtitle: "",
+  members: [],
 };
 
 const getOrCreate = async (userId) => {
@@ -21,6 +17,7 @@ const getOrCreate = async (userId) => {
   return doc;
 };
 
+// Retorna la lista de miembros del equipo
 export const getEquipo = async (req, res) => {
   try {
     if (!req.userId) return res.json(DEFAULT_CONFIG);
@@ -33,6 +30,7 @@ export const getEquipo = async (req, res) => {
   }
 };
 
+// Actualiza el equipo: descarta miembros sin nombre y sanitiza campos
 export const updateEquipo = async (req, res) => {
   try {
     const {
@@ -41,6 +39,7 @@ export const updateEquipo = async (req, res) => {
       members = [],
     } = req.body || {};
 
+    // Filtra miembros sin nombre para evitar tarjetas vacías
     const cleanMembers = Array.isArray(members)
       ? members
           .filter((m) => m && String(m.name || "").trim() !== "")

@@ -1,3 +1,4 @@
+// Modelo del bloque "Cuidado Día" — configuración visual y textos de la modalidad diurna
 import mongoose from "mongoose";
 
 const CuidadoDiaSchema = new mongoose.Schema(
@@ -14,7 +15,7 @@ const CuidadoDiaSchema = new mongoose.Schema(
 
     title: {
       type: String,
-      default: "Cuidado Día",
+      default: "",
     },
 
     titleColor: {
@@ -24,12 +25,12 @@ const CuidadoDiaSchema = new mongoose.Schema(
 
     subtitle: {
       type: String,
-      default: "8:00–17:00 • sin contrato • pago por día",
+      default: "",
     },
 
     description: {
       type: String,
-      default: "Programa diurno para mantener actividad física, mental y social, con alimentación y acompañamiento profesional en un entorno seguro.",
+      default: "",
     },
   },
   { timestamps: true }

@@ -1,3 +1,5 @@
+// Punto de entrada de la aplicación React.
+// Envuelve la app con los providers globales: Router, Auth y Theme.
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";

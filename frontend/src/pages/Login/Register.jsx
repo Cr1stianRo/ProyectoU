@@ -1,3 +1,5 @@
+// Formulario de registro de nuevos usuarios.
+// Valida campos localmente antes de enviar al backend y redirige al login tras registrar.
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../api/axios";
@@ -12,6 +14,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Validación local: campos obligatorios, formato email, largo mínimo y coincidencia de contraseñas
   const validate = () => {
     if (!name || !email || !password || !confirmPassword) {
       return "Completa todos los campos.";

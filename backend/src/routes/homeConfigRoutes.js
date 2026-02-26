@@ -1,3 +1,4 @@
+// Rutas de configuración del Home — GET públicos con optionalAuth, PUT protegidos con verifyToken
 import { Router } from "express";
 import { verifyToken, optionalAuth } from "../middleware/authMiddleware.js";
 import { getHomeConfig, updateHomeConfig } from "../controllers/Home/homeConfigController.js";
@@ -13,6 +14,7 @@ import { getDiseno, updateDiseno } from "../controllers/Home/disenoController.js
 import { getSobreNosotros, updateSobreNosotros } from "../controllers/Home/sobreNosotrosController.js";
 import { getEquipo, updateEquipo } from "../controllers/Home/equipoController.js";
 import { getVideo, updateVideo } from "../controllers/Home/videoController.js";
+import { exportSite } from "../controllers/Home/exportController.js";
 
 const router = Router();
 
@@ -57,5 +59,7 @@ router.put("/equipo", verifyToken, updateEquipo);
 
 router.get("/video", optionalAuth, getVideo);
 router.put("/video", verifyToken, updateVideo);
+
+router.get("/export", verifyToken, exportSite);
 
 export default router;

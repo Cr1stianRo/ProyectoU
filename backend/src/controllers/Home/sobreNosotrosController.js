@@ -2,35 +2,15 @@ import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "sobrenosotros";
 
+// Configuración inicial vacía: el usuario completará los datos desde el editor
 const DEFAULT_CONFIG = {
-  sectionTitle: "Sobre nosotros",
-  description:
-    "Somos un hogar geriátrico dedicado a brindar una atención integral, humana y profesional a adultos mayores. Contamos con un equipo interdisciplinario altamente capacitado y con instalaciones diseñadas para ofrecer bienestar, seguridad y calidad de vida.",
+  sectionTitle: "",
+  description: "",
   imageUrl: "",
-  imageAlt: "Sobre nosotros",
-  philosophyTitle: "Nuestra filosofía",
-  philosophyDescription:
-    "Entendemos que el bienestar de un adulto mayor va mucho más allá del cuidado físico. Nuestro propósito es preservar la autonomía, la alegría y la dignidad, fomentando el sentido de pertenencia y la participación social.",
-  pillars: [
-    {
-      title: "Acompañamiento integral",
-      description:
-        "Nuestro modelo combina atención médica, terapéutica y emocional, asegurando un equilibrio entre cuerpo, mente y espíritu.",
-      icon: "bi bi-heart-pulse",
-    },
-    {
-      title: "Envejecimiento activo",
-      description:
-        "Fomentamos la participación diaria en actividades físicas, recreativas, artísticas y sociales que estimulan la mente y fortalecen los vínculos.",
-      icon: "bi bi-people",
-    },
-    {
-      title: "Apoyo familiar",
-      description:
-        "Compartimos avances, fotos y momentos diarios con familiares mediante comunicación constante en nuestros canales oficiales.",
-      icon: "bi bi-house-heart",
-    },
-  ],
+  imageAlt: "",
+  philosophyTitle: "",
+  philosophyDescription: "",
+  pillars: [],
 };
 
 const getOrCreate = async (userId) => {
