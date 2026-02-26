@@ -1,17 +1,21 @@
+// Controlador del carrusel de imágenes de la galería.
+// Permite obtener y actualizar los slides con sus textos e imágenes.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "carrusel";
 
-const getOrCreate = async () => {
-  let doc = await PageConfig.findOne();
-  if (!doc) doc = await PageConfig.create({ sections: [] });
+// Patrón getOrCreate: garantiza que siempre exista un documento para el usuario
+const getOrCreate = async (userId) => {
+  let doc = await PageConfig.findOne({ userId });
+  if (!doc) doc = await PageConfig.create({ userId, sections: [] });
   return doc;
 };
 
-/** GET /api/home-config/carrusel */
+// Retorna los slides del carrusel o un array vacío si no hay configuración
 export const getCarrusel = async (req, res) => {
   try {
-    const doc = await getOrCreate();
+    if (!req.userId) return res.json({ slides: [] });
+    const doc = await getOrCreate(req.userId);
     const section = doc.sections.find((s) => s.type === TYPE);
     return res.status(200).json(section?.config ?? { slides: [] });
   } catch (error) {
@@ -20,11 +24,12 @@ export const getCarrusel = async (req, res) => {
   }
 };
 
-/** PUT /api/home-config/carrusel */
+// Actualiza los slides del carrusel: descarta entradas sin URL y sanitiza campos
 export const updateCarrusel = async (req, res) => {
   try {
     const { slides = [] } = req.body || {};
 
+    // Filtra slides sin imagen y normaliza los campos de texto
     const cleanSlides = Array.isArray(slides)
       ? slides
           .filter((s) => s && String(s.imageUrl || "").trim() !== "")
@@ -38,7 +43,7 @@ export const updateCarrusel = async (req, res) => {
 
     const config = { slides: cleanSlides };
 
-    const doc = await getOrCreate();
+    const doc = await getOrCreate(req.userId);
     const idx = doc.sections.findIndex((s) => s.type === TYPE);
 
     if (idx >= 0) {

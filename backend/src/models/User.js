@@ -1,3 +1,4 @@
+// Modelo de usuario — incluye preferencias para persistir estado del panel admin
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -13,6 +14,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  preferences: {
+    lastVisitedRoute: { type: String, default: "/admin" },
+    lastEditedAt: { type: Date, default: null }
   }
 }, { timestamps: true });
 
