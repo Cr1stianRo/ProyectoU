@@ -2,8 +2,9 @@ import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "valores";
 
+// Configuración inicial vacía: el usuario completará los datos desde el editor
 const DEFAULT_CONFIG = {
-  sectionTitle: "Nuestros valores",
+  sectionTitle: "",
   mision: "",
   vision: "",
   valores: [],
@@ -30,7 +31,7 @@ export const getValores = async (req, res) => {
 export const updateValores = async (req, res) => {
   try {
     const {
-      sectionTitle = "Nuestros valores",
+      sectionTitle = "",
       mision = "",
       vision = "",
       valores = [],

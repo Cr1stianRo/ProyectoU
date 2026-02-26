@@ -124,8 +124,8 @@ function serviciosHtml(cfg, whatsHref) {
     <p class="card-text">${esc(hl.description)}</p></div></div></div>`).join("");
 
   return `<section id="servicios-destacados" class="py-5 bg-light"><div class="container">
-  <div class="text-center mb-4"><h2 class="fw-bold" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "Servicios y comodidades")}</h2>
-  <p class="text-muted">${esc(cfg.sectionSubtitle || "Modalidades claras para las necesidades de tu familia.")}</p></div>
+  <div class="text-center mb-4"><h2 class="fw-bold" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "")}</h2>
+  <p class="text-muted">${esc(cfg.sectionSubtitle || "")}</p></div>
   <div class="row g-4">${svcs}</div>
   ${hls ? `<div class="row g-4 mt-4 justify-content-center text-center">${hls}</div>` : ""}
 </div></section>`;
@@ -141,12 +141,12 @@ function valoresHtml(cfg) {
   <div class="row g-4 mb-5">
     <div class="col-md-6"><div class="card border-0 shadow-sm rounded-4 h-100"><div class="card-body p-4">
       <h5 class="fw-bold mb-3" style="color:var(--cafe)"><i class="bi bi-bullseye me-2"></i>Misión</h5>
-      <p class="text-muted mb-0">${esc(cfg.mision || "Sin misión configurada.")}</p></div></div></div>
+      <p class="text-muted mb-0">${esc(cfg.mision || "")}</p></div></div></div>
     <div class="col-md-6"><div class="card border-0 shadow-sm rounded-4 h-100"><div class="card-body p-4">
       <h5 class="fw-bold mb-3" style="color:var(--cafe)"><i class="bi bi-eye-fill me-2"></i>Visión</h5>
-      <p class="text-muted mb-0">${esc(cfg.vision || "Sin visión configurada.")}</p></div></div></div>
+      <p class="text-muted mb-0">${esc(cfg.vision || "")}</p></div></div></div>
   </div>
-  <h3 class="fw-bold text-center mb-4" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "Nuestros valores")}</h3>
+  <h3 class="fw-bold text-center mb-4" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "")}</h3>
   <div class="row g-4 justify-content-center">${vals}</div>
 </div></section>`;
 }
@@ -158,8 +158,8 @@ function galeriaHtml(cfg) {
   </div></div>`).join("");
   if (!imgs) return "";
   return `<section class="py-5"><div class="container">
-  <div class="text-center mb-4"><h2 class="fw-bold" style="color:var(--cafe-oscuro)">${esc(cfg.title || "Así es nuestro hogar")}</h2>
-  <p class="text-muted">${esc(cfg.subtitle || "Imágenes reales de actividades e instalaciones.")}</p></div>
+  <div class="text-center mb-4"><h2 class="fw-bold" style="color:var(--cafe-oscuro)">${esc(cfg.title || "")}</h2>
+  <p class="text-muted">${esc(cfg.subtitle || "")}</p></div>
   <div class="row g-3">${imgs}</div></div></section>`;
 }
 
@@ -170,10 +170,10 @@ function sobreNosotrosHtml(cfg) {
     <p class="text-muted mb-0" style="font-size:.9rem">${esc(p.description)}</p></div></div></div>`).join("");
 
   return `<section class="py-5"><div class="container">
-  <h2 class="fw-bold mb-4" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "Sobre nosotros")}</h2>
+  <h2 class="fw-bold mb-4" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "")}</h2>
   <div class="row g-4 align-items-center mb-5">
-    <div class="${cfg.imageUrl ? "col-lg-7" : "col-12"}"><p class="text-muted" style="font-size:1.1rem;line-height:1.8">${esc(cfg.description || "Sin descripción.")}</p></div>
-    ${cfg.imageUrl ? `<div class="col-lg-5"><img src="${esc(cfg.localImageUrl || cfg.imageUrl)}" alt="${esc(cfg.imageAlt || "Sobre nosotros")}" class="w-100 rounded-4 shadow" style="object-fit:cover;max-height:320px" loading="lazy"></div>` : ""}
+    <div class="${cfg.imageUrl ? "col-lg-7" : "col-12"}"><p class="text-muted" style="font-size:1.1rem;line-height:1.8">${esc(cfg.description || "")}</p></div>
+    ${cfg.imageUrl ? `<div class="col-lg-5"><img src="${esc(cfg.localImageUrl || cfg.imageUrl)}" alt="${esc(cfg.imageAlt || "")}" class="w-100 rounded-4 shadow" style="object-fit:cover;max-height:320px" loading="lazy"></div>` : ""}
   </div>
   ${cfg.philosophyTitle ? `<div class="text-center mb-4"><h3 class="fw-bold" style="color:var(--cafe)">${esc(cfg.philosophyTitle)}</h3><p class="text-muted mx-auto" style="max-width:700px">${esc(cfg.philosophyDescription)}</p></div>` : ""}
   ${pillars ? `<div class="row g-4 justify-content-center">${pillars}</div>` : ""}
@@ -187,7 +187,7 @@ function equipoHtml(cfg) {
     <small class="text-muted">${esc(m.role)}</small></div></div></div>`).join("");
 
   return `<section class="py-5" style="background:var(--section-bg)"><div class="container">
-  <div class="text-center mb-4"><h2 class="fw-bold" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "Nuestro equipo humano")}</h2>
+  <div class="text-center mb-4"><h2 class="fw-bold" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "")}</h2>
   <p class="text-muted mx-auto" style="max-width:600px">${esc(cfg.sectionSubtitle || "")}</p></div>
   <div class="row g-4 justify-content-center">${members}</div></div></section>`;
 }
@@ -196,7 +196,7 @@ function videoHtml(cfg) {
   const embed = youtubeEmbed(cfg.youtubeUrl);
   if (!embed) return "";
   return `<section class="py-5"><div class="container">
-  <div class="text-center mb-4"><h2 class="fw-bold" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "Conoce más sobre nosotros")}</h2>
+  <div class="text-center mb-4"><h2 class="fw-bold" style="color:var(--cafe-oscuro)">${esc(cfg.sectionTitle || "")}</h2>
   <p class="text-muted mx-auto" style="max-width:600px">${esc(cfg.sectionSubtitle || "")}</p></div>
   <div class="mx-auto" style="max-width:800px"><div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow">
     <iframe src="${esc(embed)}" title="Video institucional" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
@@ -206,11 +206,11 @@ function videoHtml(cfg) {
 function mapaHtml(cfg) {
   return `<section class="py-5"><div class="container"><div class="row g-4 align-items-center">
   <div class="col-lg-6">
-    <h3 class="fw-bold mb-3" style="color:var(--cafe-oscuro)">${esc(cfg.title || "Visítanos")}</h3>
-    <p class="text-muted mb-4">${esc(cfg.description || "Coordina tu visita y conoce nuestras instalaciones.")}</p>
+    <h3 class="fw-bold mb-3" style="color:var(--cafe-oscuro)">${esc(cfg.title || "")}</h3>
+    <p class="text-muted mb-4">${esc(cfg.description || "")}</p>
     <div class="d-flex flex-wrap gap-3">
-      ${cfg.googleMapsUrl ? `<a href="${esc(cfg.googleMapsUrl)}" class="btn btn-outline-primary" target="_blank" rel="noopener">${esc(cfg.buttonText1 || "Ver en Google Maps")}</a>` : ""}
-      ${cfg.wazeUrl ? `<a href="${esc(cfg.wazeUrl)}" class="btn btn-outline-secondary" target="_blank" rel="noopener">${esc(cfg.buttonText2 || "Abrir en Waze")}</a>` : ""}
+      ${cfg.googleMapsUrl ? `<a href="${esc(cfg.googleMapsUrl)}" class="btn btn-outline-primary" target="_blank" rel="noopener">${esc(cfg.buttonText1 || "Google Maps")}</a>` : ""}
+      ${cfg.wazeUrl ? `<a href="${esc(cfg.wazeUrl)}" class="btn btn-outline-secondary" target="_blank" rel="noopener">${esc(cfg.buttonText2 || "Waze")}</a>` : ""}
     </div>
   </div>
   <div class="col-lg-6"><div class="ratio ratio-16x9 rounded shadow overflow-hidden">
@@ -218,11 +218,13 @@ function mapaHtml(cfg) {
   </div></div></div></div></section>`;
 }
 
-function ctaHtml(whatsHref) {
+// CTA final: solo se genera si hay número de WhatsApp configurado
+function ctaHtml(whatsHref, bloquepConfig) {
+  if (!whatsHref || whatsHref === "#") return "";
   return `<section class="py-5" style="background:var(--cafe)">
   <div class="container d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 text-white">
-    <div><h3 class="fw-bold mb-1">¿Listo para agendar una visita?</h3><p class="mb-0">Escríbenos y te contamos nuestros planes,</p></div>
-    <a href="${esc(whatsHref)}" class="btn btn-outline-light btn-lg btn-whatsapp" target="_blank" rel="noopener"><i class="bi bi-whatsapp me-2"></i> WhatsApp</a>
+    <div><h3 class="fw-bold mb-1">${esc(bloquepConfig?.ctaTitle || "")}</h3><p class="mb-0">${esc(bloquepConfig?.ctaDescription || "")}</p></div>
+    <a href="${esc(whatsHref)}" class="btn btn-outline-light btn-lg btn-whatsapp" target="_blank" rel="noopener"><i class="bi bi-whatsapp me-2"></i>${esc(bloquepConfig?.button2Text || "WhatsApp")}</a>
   </div></section>`;
 }
 

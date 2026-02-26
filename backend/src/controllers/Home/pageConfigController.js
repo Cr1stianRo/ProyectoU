@@ -30,11 +30,10 @@ const defaultSections = [
     config: {
       iconClass: "bi bi-sunrise",
       iconColor: "#8C6A4A",
-      title: "Cuidado Día",
+      title: "",
       titleColor: "#5b4636",
-      subtitle: "8:00–17:00 • sin contrato • pago por día",
-      description:
-        "Programa diurno para mantener actividad física, mental y social, con alimentación y acompañamiento profesional en un entorno seguro.",
+      subtitle: "",
+      description: "",
     },
   },
 ];

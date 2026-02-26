@@ -4,11 +4,12 @@ import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "galeriahogar";
 
+// Configuración inicial vacía: el usuario completará los datos desde el editor
 const DEFAULT_CONFIG = {
-  title: "Así es nuestro hogar",
-  subtitle: "Imágenes reales de actividades e instalaciones.",
-  buttonText: "Ver más actividades",
-  buttonLink: "/actividades",
+  title: "",
+  subtitle: "",
+  buttonText: "",
+  buttonLink: "",
   images: [],
 };
 
