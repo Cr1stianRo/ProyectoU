@@ -1,3 +1,6 @@
+// Componente raíz que define todas las rutas de la aplicación.
+// Las rutas públicas (Home, Login, Register) no requieren autenticación.
+// Las rutas de administración están protegidas con ProtectedRoute.
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Login/Register.jsx";
@@ -5,6 +8,8 @@ import Welcome from "./pages/Welcome.jsx";
 import Home from "./pages/Home.jsx"
 import AdminPanel from "./pages/AdminPanel.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+
+// Módulos de edición del Home (solo accesibles para admins autenticados)
 import ServiciosConfig from "./pages/ModulosEdición/Home/ServiciosConfig.jsx"
 import Bloque1Config from "./pages/ModulosEdición/Home/Bloque1Config.jsx"
 import Carrusel from "./pages/ModulosEdición/Home/Carrusel.jsx"
@@ -19,11 +24,14 @@ import VideoConfig from "./pages/ModulosEdición/Home/VideoConfig.jsx"
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      {/* Rutas públicas */}
+      <Route path="/" element={<Welcome />} />
       <Route path="/Home" element={<Home />} />
       <Route path="/welcome" element={<Welcome />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+
+      {/* Rutas protegidas: panel de admin y editores de módulos */}
       <Route path="/admin" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
       <Route path="/Bloque1Config" element={<ProtectedRoute><Bloque1Config /></ProtectedRoute>} />
       <Route path="/ServiciosConfig" element={<ProtectedRoute><ServiciosConfig /></ProtectedRoute>} />

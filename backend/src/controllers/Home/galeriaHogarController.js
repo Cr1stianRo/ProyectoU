@@ -1,12 +1,15 @@
+// Controlador de la galería de imágenes del hogar.
+// Administra título, subtítulo, botón y la lista de imágenes con caption.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "galeriahogar";
 
+// Configuración inicial vacía: el usuario completará los datos desde el editor
 const DEFAULT_CONFIG = {
-  title: "Así es nuestro hogar",
-  subtitle: "Imágenes reales de actividades e instalaciones.",
-  buttonText: "Ver más actividades",
-  buttonLink: "/actividades",
+  title: "",
+  subtitle: "",
+  buttonText: "",
+  buttonLink: "",
   images: [],
 };
 
@@ -16,6 +19,7 @@ const getOrCreate = async (userId) => {
   return doc;
 };
 
+// Retorna la configuración de la galería del hogar
 export const getGaleriaHogar = async (req, res) => {
   try {
     if (!req.userId) return res.json(DEFAULT_CONFIG);
@@ -28,6 +32,7 @@ export const getGaleriaHogar = async (req, res) => {
   }
 };
 
+// Actualiza la galería: filtra imágenes sin URL y sanitiza url/alt/caption
 export const updateGaleriaHogar = async (req, res) => {
   try {
     const {

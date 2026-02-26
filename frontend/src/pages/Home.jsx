@@ -1,3 +1,5 @@
+// Página Home pública del hogar geriátrico.
+// Carga las secciones dinámicamente desde la API y las renderiza según su tipo y orden.
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
@@ -8,6 +10,7 @@ export default function Home() {
   const [sections, setSections] = useState([]);
   const [error, setError] = useState("");
 
+  // Carga todas las secciones de la página y las ordena por su campo "order"
   useEffect(() => {
     api
       .get("/home-config/page")
@@ -28,6 +31,7 @@ export default function Home() {
     return bloquep?.config || {};
   }, [sections]);
 
+  // Genera el enlace de WhatsApp con mensaje predefinido
   const whatsappHref = useMemo(() => {
     const number = String(bloquepConfig.whatsappNumber || "").replace(/\D/g, "");
     if (!number) return "#";
@@ -41,6 +45,7 @@ export default function Home() {
       : [];
   }, [bloquepConfig.pills]);
 
+  // Si no hay imágenes configuradas, usa imágenes por defecto como fallback
   const heroImages = useMemo(() => {
     return Array.isArray(bloquepConfig.heroImages) && bloquepConfig.heroImages.length > 0
       ? bloquepConfig.heroImages.filter((img) => img.url)
@@ -61,9 +66,9 @@ export default function Home() {
             <div className="container">
               <div className="text-center mb-4">
                 <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
-                  Galería
+                  {config.title || ""}
                 </h2>
-                <p className="text-muted">Imágenes de nuestras instalaciones.</p>
+                <p className="text-muted">{config.subtitle || ""}</p>
               </div>
 
               {config.slides && config.slides.length > 0 ? (
@@ -146,10 +151,10 @@ export default function Home() {
             <div className="container">
               <div className="text-center mb-4">
                 <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
-                  {config.sectionTitle || "Servicios y comodidades"}
+                  {config.sectionTitle || ""}
                 </h2>
                 <p className="text-muted">
-                  {config.sectionSubtitle || "Modalidades claras para las necesidades de tu familia."}
+                  {config.sectionSubtitle || ""}
                 </p>
               </div>
 
@@ -222,11 +227,10 @@ export default function Home() {
               <div className="row g-4 align-items-center">
                 <div className="col-lg-6">
                   <h3 className="fw-bold mb-3" style={{ color: "var(--cafe-oscuro)" }}>
-                    {config.title || "Visítanos"}
+                    {config.title || ""}
                   </h3>
                   <p className="text-muted mb-4">
-                    {config.description ||
-                      "Coordina tu visita y conoce nuestras instalaciones."}
+                    {config.description || ""}
                   </p>
 
                   <div className="d-flex flex-wrap gap-3">
@@ -239,7 +243,7 @@ export default function Home() {
                       rel="noopener noreferrer"
                       onClick={(e) => !config.googleMapsUrl && e.preventDefault()}
                     >
-                      {config.buttonText1 || "Ver en Google Maps"}
+                      {config.buttonText1 || "Google Maps"}
                     </a>
                     <a
                       href={config.wazeUrl || "#"}
@@ -250,7 +254,7 @@ export default function Home() {
                       rel="noopener noreferrer"
                       onClick={(e) => !config.wazeUrl && e.preventDefault()}
                     >
-                      {config.buttonText2 || "Abrir en Waze"}
+                      {config.buttonText2 || "Waze"}
                     </a>
                   </div>
                 </div>
@@ -292,7 +296,7 @@ export default function Home() {
                         <i className="bi bi-bullseye me-2"></i>Misión
                       </h5>
                       <p className="text-muted mb-0">
-                        {config.mision || "Sin misión configurada."}
+                        {config.mision || ""}
                       </p>
                     </div>
                   </div>
@@ -304,7 +308,7 @@ export default function Home() {
                         <i className="bi bi-eye-fill me-2"></i>Visión
                       </h5>
                       <p className="text-muted mb-0">
-                        {config.vision || "Sin visión configurada."}
+                        {config.vision || ""}
                       </p>
                     </div>
                   </div>
@@ -313,7 +317,7 @@ export default function Home() {
 
               {/* Valores */}
               <h3 className="fw-bold text-center mb-4" style={{ color: "var(--cafe-oscuro)" }}>
-                {config.sectionTitle || "Nuestros valores"}
+                {config.sectionTitle || ""}
               </h3>
               <div className="row g-4 justify-content-center">
                 {(config.valores || []).map((valor, idx) => (
@@ -344,10 +348,10 @@ export default function Home() {
             <div className="container">
               <div className="text-center mb-4">
                 <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
-                  {config.title || "Así es nuestro hogar"}
+                  {config.title || ""}
                 </h2>
                 <p className="text-muted">
-                  {config.subtitle || "Imágenes reales de actividades e instalaciones."}
+                  {config.subtitle || ""}
                 </p>
               </div>
 
@@ -391,20 +395,20 @@ export default function Home() {
           <section key={id} className="py-5">
             <div className="container">
               <h2 className="fw-bold mb-4" style={{ color: "var(--cafe-oscuro)" }}>
-                {config.sectionTitle || "Sobre nosotros"}
+                {config.sectionTitle || ""}
               </h2>
 
               <div className="row g-4 align-items-center mb-5">
                 <div className={config.imageUrl ? "col-lg-7" : "col-12"}>
                   <p className="text-muted" style={{ fontSize: "1.1rem", lineHeight: 1.8 }}>
-                    {config.description || "Sin descripción."}
+                    {config.description || ""}
                   </p>
                 </div>
                 {config.imageUrl && (
                   <div className="col-lg-5">
                     <img
                       src={config.imageUrl}
-                      alt={config.imageAlt || "Sobre nosotros"}
+                      alt={config.imageAlt || ""}
                       className="w-100 rounded-4 shadow"
                       style={{ objectFit: "cover", maxHeight: 320 }}
                       loading="lazy"
@@ -451,7 +455,7 @@ export default function Home() {
             <div className="container">
               <div className="text-center mb-4">
                 <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
-                  {config.sectionTitle || "Nuestro equipo humano"}
+                  {config.sectionTitle || ""}
                 </h2>
                 <p className="text-muted mx-auto" style={{ maxWidth: 600 }}>
                   {config.sectionSubtitle}
@@ -496,7 +500,7 @@ export default function Home() {
             <div className="container">
               <div className="text-center mb-4">
                 <h2 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
-                  {config.sectionTitle || "Conoce más sobre nosotros"}
+                  {config.sectionTitle || ""}
                 </h2>
                 <p className="text-muted mx-auto" style={{ maxWidth: 600 }}>
                   {config.sectionSubtitle}
@@ -506,6 +510,7 @@ export default function Home() {
               {config.youtubeUrl ? (
                 <div className="mx-auto" style={{ maxWidth: 800 }}>
                   <div className="ratio ratio-16x9 rounded-4 overflow-hidden shadow">
+                    {/* Convierte cualquier formato de URL de YouTube a embed */}
                     <iframe
                       src={(() => {
                         const url = config.youtubeUrl;
@@ -661,34 +666,28 @@ export default function Home() {
         .filter((s) => s.type !== "bloquep")
         .map((section) => renderSection(section))}
 
-      {/* GALERÍA "Así es nuestro hogar" — ahora se renderiza dinámicamente desde el módulo galeriahogar */}
-
-      {/* CTA FINAL (HARDCODEADA - PENDIENTE DE MÓDULO) */}
-      <section className="py-5" style={{ background: "var(--cafe)" }}>
-        <div className="container d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 text-white">
-          <div>
-            <h3 className="fw-bold mb-1">¿Listo para agendar una visita?</h3>
-            <p className="mb-0">
-              Escríbenos y te contamos nuestros planes,
-            </p>
+      {/* CTA final: solo se muestra si el usuario configuró WhatsApp */}
+      {String(bloquepConfig.whatsappNumber || "").trim() && (
+        <section className="py-5" style={{ background: "var(--cafe)" }}>
+          <div className="container d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 text-white">
+            <div>
+              <h3 className="fw-bold mb-1">{bloquepConfig.ctaTitle || "Estamos para ayudarte"}</h3>
+              <p className="mb-0">{bloquepConfig.ctaDescription || "Cont\u00e1ctanos y con gusto resolveremos todas tus dudas. Tu familia merece la mejor atenci\u00f3n."}</p>
+            </div>
+            <div className="d-flex gap-2">
+              <a
+                href={whatsappHref}
+                className="btn btn-outline-light btn-lg btn-whatsapp"
+                target="_blank"
+                rel="noopener"
+              >
+                <i className="bi bi-whatsapp me-2"></i>
+                {bloquepConfig.button2Text || "WhatsApp"}
+              </a>
+            </div>
           </div>
-
-          <div className="d-flex gap-2">
-
-            <a
-              href={whatsappHref}
-              className={`btn btn-outline-light btn-lg btn-whatsapp ${
-                String(bloquepConfig.whatsappNumber || "").trim() ? "" : "disabled"
-              }`}
-              target="_blank"
-              rel="noopener"
-              aria-disabled={!String(bloquepConfig.whatsappNumber || "").trim()}
-            >
-              <i className="bi bi-whatsapp me-2"></i> WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
       {/* Botón flotante para ir al Admin */}
       <Link
         to="/admin"

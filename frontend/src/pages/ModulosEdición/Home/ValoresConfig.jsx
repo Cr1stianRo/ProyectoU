@@ -1,3 +1,5 @@
+// Editor del módulo Misión, Visión y Valores institucionales.
+// CRUD dinámico de valores con ícono, título y descripción.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";
@@ -17,41 +19,12 @@ const ICON_OPTIONS = [
   { value: "bi bi-gem", label: "Gema" },
 ];
 
+// Estado inicial vacío: los datos se cargan desde la API o el usuario los completa
 const initialForm = {
-  sectionTitle: "Nuestros valores",
-  mision:
-    "Brindar atención integral, cálida y profesional a los adultos mayores mediante servicios de cuidado permanente y cuidado día, asegurando bienestar físico, emocional y social. Promovemos un ambiente de dignidad, respeto y calidad humana que favorece la salud, la conexión social y la calidad de vida de nuestros residentes y sus familias.",
-  vision:
-    "Ser el hogar geriátrico referente en la ciudad de Pereira por la excelencia en la atención integral al adulto mayor, destacándonos por nuestro enfoque humano, la calidad de nuestros servicios y la constante innovación en programas de cuidado, bienestar y envejecimiento activo.",
-  valores: [
-    {
-      title: "Dignidad",
-      description: "Tratamos a cada residente con el máximo respeto.",
-      icon: "bi bi-shield-check",
-    },
-    {
-      title: "Amor y calidad humana",
-      description: "Somos más que cuidadores; somos compañía y apoyo.",
-      icon: "bi bi-heart-fill",
-    },
-    {
-      title: "Compromiso",
-      description: "Trabajamos con vocación y responsabilidad.",
-      icon: "bi bi-hand-thumbs-up-fill",
-    },
-    {
-      title: "Profesionalismo",
-      description:
-        "Nuestro equipo está preparado para brindar la mejor atención.",
-      icon: "bi bi-award-fill",
-    },
-    {
-      title: "Calidez",
-      description:
-        "Nuestras instalaciones y nuestro trato generan un verdadero hogar.",
-      icon: "bi bi-house-heart-fill",
-    },
-  ],
+  sectionTitle: "",
+  mision: "",
+  vision: "",
+  valores: [],
 };
 
 export default function ValoresConfig() {
@@ -149,30 +122,33 @@ export default function ValoresConfig() {
 
           <div className="card border-0 shadow-sm rounded-4">
             <div className="card-body">
+              {/* Título visible de la sección en la página pública */}
               <label className="form-label">Título de la sección</label>
               <input
                 className="form-control mb-3"
                 value={form.sectionTitle || ""}
                 onChange={(e) => setField("sectionTitle", e.target.value)}
-                placeholder="Ej: Nuestros valores"
+                placeholder="Aquí puedes escribir el título, ej: Nuestros valores"
               />
 
+              {/* Texto de la misión institucional del hogar */}
               <label className="form-label">Misión</label>
               <textarea
                 className="form-control mb-3"
                 rows={4}
                 value={form.mision || ""}
                 onChange={(e) => setField("mision", e.target.value)}
-                placeholder="Misión de la institución..."
+                placeholder="Escribe la misión de tu hogar geriátrico: su propósito, a quién atiende y cómo lo hace"
               />
 
+              {/* Texto de la visión a futuro del hogar */}
               <label className="form-label">Visión</label>
               <textarea
                 className="form-control mb-3"
                 rows={4}
                 value={form.vision || ""}
                 onChange={(e) => setField("vision", e.target.value)}
-                placeholder="Visión de la institución..."
+                placeholder="Escribe la visión de tu hogar: hacia dónde se dirige y qué aspira lograr"
               />
 
               <hr className="my-3" />
@@ -207,13 +183,15 @@ export default function ValoresConfig() {
                       </button>
                     </div>
 
+                    {/* Nombre corto del valor institucional */}
                     <input
                       className="form-control mb-2"
                       value={valor.title || ""}
                       onChange={(e) => setValor(idx, "title", e.target.value)}
-                      placeholder="Nombre del valor"
+                      placeholder="Aquí puedes escribir el nombre del valor, ej: Respeto"
                     />
 
+                    {/* Breve explicación de qué significa este valor para el hogar */}
                     <textarea
                       className="form-control mb-2"
                       rows={2}
@@ -221,7 +199,7 @@ export default function ValoresConfig() {
                       onChange={(e) =>
                         setValor(idx, "description", e.target.value)
                       }
-                      placeholder="Descripción del valor"
+                      placeholder="Describe brevemente qué representa este valor en tu hogar"
                     />
 
                     <select
@@ -263,7 +241,7 @@ export default function ValoresConfig() {
                       <i className="bi bi-bullseye me-2"></i>Misión
                     </h5>
                     <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
-                      {form.mision || "Sin misión configurada"}
+                      {form.mision || ""}
                     </p>
                   </div>
                 </div>
@@ -279,7 +257,7 @@ export default function ValoresConfig() {
                       <i className="bi bi-eye-fill me-2"></i>Visión
                     </h5>
                     <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
-                      {form.vision || "Sin visión configurada"}
+                      {form.vision || ""}
                     </p>
                   </div>
                 </div>
@@ -294,7 +272,7 @@ export default function ValoresConfig() {
                 className="fw-bold text-center mb-4"
                 style={{ color: "#5b4636" }}
               >
-                {form.sectionTitle || "Nuestros valores"}
+                {form.sectionTitle || ""}
               </h3>
 
               <div className="row g-3">
@@ -310,13 +288,13 @@ export default function ValoresConfig() {
                         <i className={valor.icon || "bi bi-heart-fill"}></i>
                       </div>
                       <h6 className="fw-bold" style={{ color: "#5b4636" }}>
-                        {valor.title || "Sin título"}
+                        {valor.title || ""}
                       </h6>
                       <p
                         className="text-muted mb-0"
                         style={{ fontSize: "0.85rem" }}
                       >
-                        {valor.description || "Sin descripción"}
+                        {valor.description || ""}
                       </p>
                     </div>
                   </div>

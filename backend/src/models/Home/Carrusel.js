@@ -1,3 +1,4 @@
+// Modelo del carrusel de imágenes — cada slide tiene imagen, título y subtítulo
 import mongoose from "mongoose";
 
 const SlideSchema = new mongoose.Schema(

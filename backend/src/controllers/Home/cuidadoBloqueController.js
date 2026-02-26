@@ -1,17 +1,20 @@
+// Controlador del bloque "Cuidado Día".
+// Gestiona icono, colores, título, subtítulo y descripción del servicio diurno.
 import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "cuidadod";
 
+// Configuración inicial con colores por defecto; textos vacíos para que el usuario los complete
 const DEFAULT_CONFIG = {
   iconClass: "bi bi-sunrise",
   iconColor: "#8C6A4A",
-  title: "Cuidado Día",
+  title: "",
   titleColor: "#5b4636",
-  subtitle: "8:00–17:00 • sin contrato • pago por día",
-  description:
-    "Programa diurno para mantener actividad física, mental y social, con alimentación y acompañamiento profesional en un entorno seguro.",
+  subtitle: "",
+  description: "",
 };
 
+// Regex para validar colores hexadecimales (#RRGGBB)
 const hexColorRegex = /^#[0-9A-Fa-f]{6}$/;
 
 const getOrCreate = async (userId) => {
@@ -20,6 +23,7 @@ const getOrCreate = async (userId) => {
   return doc;
 };
 
+// Retorna la configuración del bloque de cuidado diurno
 export const getCuidadoDia = async (req, res) => {
   try {
     if (!req.userId) return res.json(DEFAULT_CONFIG);
@@ -32,15 +36,16 @@ export const getCuidadoDia = async (req, res) => {
   }
 };
 
+// Actualiza el bloque: valida colores hex y usa defaults si son inválidos
 export const updateCuidadoDia = async (req, res) => {
   try {
     const {
       iconClass = DEFAULT_CONFIG.iconClass,
       iconColor = DEFAULT_CONFIG.iconColor,
-      title = DEFAULT_CONFIG.title,
+      title = "",
       titleColor = DEFAULT_CONFIG.titleColor,
-      subtitle = DEFAULT_CONFIG.subtitle,
-      description = DEFAULT_CONFIG.description,
+      subtitle = "",
+      description = "",
     } = req.body || {};
 
     const config = {

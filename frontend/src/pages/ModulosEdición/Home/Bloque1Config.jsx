@@ -1,3 +1,5 @@
+// Editor del bloque principal (Hero) de la página Home.
+// Permite configurar título, descripción, botón WhatsApp, píldoras informativas e imágenes del carrusel hero.
 import { useEffect, useState } from "react";
 import api from "../../../api/axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -91,6 +93,7 @@ export default function HomeSettings() {
     });
   };
 
+  // Sube una imagen al servidor y actualiza la URL en el slide correspondiente
   const handleHeroUpload = async (index, file) => {
     if (!file) return;
     setUploading(true);
@@ -159,19 +162,23 @@ export default function HomeSettings() {
                 placeholder="Ej: Hogar geriátrico • Pereira"
               />
 
+              {/* Título principal visible en el banner hero */}
               <label className="form-label">Título principal</label>
               <input
                 className="form-control mb-3"
                 value={form.heroTitle || ""}
                 onChange={(e) => setField("heroTitle", e.target.value)}
+                placeholder="Aquí puedes escribir el título principal de tu hogar"
               />
 
+              {/* Descripción breve que acompaña al título en el hero */}
               <label className="form-label">Descripción</label>
               <textarea
                 className="form-control mb-3"
                 rows={4}
                 value={form.heroDescription || ""}
                 onChange={(e) => setField("heroDescription", e.target.value)}
+                placeholder="Escribe una breve descripción de tu hogar geriátrico y los servicios que ofreces"
               />
 
               <div className="row g-2 mt-2">
@@ -179,11 +186,13 @@ export default function HomeSettings() {
 
 
                 <div className="col-6">
-                  <label className="form-label">Título botón 2</label>
+                  {/* Texto que aparecerá en el botón de contacto por WhatsApp */}
+                  <label className="form-label">Título botón WhatsApp</label>
                   <input
                     className="form-control"
                     value={form.button2Text || ""}
                     onChange={(e) => setField("button2Text", e.target.value)}
+                    placeholder="Ej: Agenda tu visita"
                   />
                 </div>
 

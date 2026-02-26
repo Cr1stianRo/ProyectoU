@@ -1,3 +1,5 @@
+// Editor del módulo Mapa y Ubicación.
+// Configura URLs de Google Maps, Waze y el iframe embebido con vista previa.
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";
@@ -83,21 +85,23 @@ export default function MapaConfig() {
 
           <div className="card border-0 shadow-sm rounded-4">
             <div className="card-body">
+              {/* Título visible de la sección de ubicación */}
               <label className="form-label">Título de la sección</label>
               <input
                 className="form-control mb-3"
                 value={form.title || ""}
                 onChange={(e) => setField("title", e.target.value)}
-                placeholder="Ej: Visítanos"
+                placeholder="Aquí puedes escribir el título, ej: Visítanos"
               />
 
+              {/* Texto que invita al visitante a acercarse al hogar */}
               <label className="form-label">Descripción</label>
               <textarea
                 className="form-control mb-3"
                 rows={3}
                 value={form.description || ""}
                 onChange={(e) => setField("description", e.target.value)}
-                placeholder="Ej: Coordina tu visita y conoce nuestras instalaciones."
+                placeholder="Escribe la dirección o una invitación para visitar el hogar"
               />
 
               <hr className="my-3" />
@@ -164,10 +168,10 @@ export default function MapaConfig() {
               <div className="row g-4 align-items-center">
                 <div className="col-lg-12">
                   <h3 className="fw-bold mb-3" style={{ color: "#5b4636" }}>
-                    {form.title || "Título del mapa"}
+                    {form.title || ""}
                   </h3>
                   <p className="text-muted mb-4">
-                    {form.description || "Descripción del mapa"}
+                    {form.description || ""}
                   </p>
 
                   <div className="d-flex flex-wrap gap-3 mb-4">
@@ -180,7 +184,7 @@ export default function MapaConfig() {
                       rel="noopener noreferrer"
                       onClick={(e) => !form.googleMapsUrl && e.preventDefault()}
                     >
-                      {form.buttonText1 || "Ver en Google Maps"}
+                      {form.buttonText1 || "Google Maps"}
                     </a>
                     <a
                       href={form.wazeUrl || "#"}
@@ -191,7 +195,7 @@ export default function MapaConfig() {
                       rel="noopener noreferrer"
                       onClick={(e) => !form.wazeUrl && e.preventDefault()}
                     >
-                      {form.buttonText2 || "Abrir en Waze"}
+                      {form.buttonText2 || "Waze"}
                     </a>
                   </div>
                 </div>

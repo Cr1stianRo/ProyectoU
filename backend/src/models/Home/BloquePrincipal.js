@@ -1,3 +1,4 @@
+// Modelo del bloque hero principal — textos, botón CTA y pills destacados
 import mongoose from "mongoose";
 
 const BloquePrincipalSchema = new mongoose.Schema(

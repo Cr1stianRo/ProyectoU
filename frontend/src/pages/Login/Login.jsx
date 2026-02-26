@@ -1,3 +1,5 @@
+// Formulario de inicio de sesión.
+// Autentica contra la API, guarda el JWT en el contexto y redirige a la última ruta visitada.
 import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -13,6 +15,7 @@ export default function Login() {
   const location = useLocation();
   const { login } = useAuth();
 
+  // Mensaje de éxito enviado desde Register tras crear la cuenta
   const successMsg = location.state?.success || "";
 
   const handleSubmit = async (e) => {
@@ -31,6 +34,7 @@ export default function Login() {
 
       login(user, token);
 
+      // Restaura la última ruta del admin o redirige al panel por defecto
       const lastRoute = user.preferences?.lastVisitedRoute || "/admin";
       navigate(lastRoute, { replace: true });
     } catch (err) {

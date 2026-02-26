@@ -1,3 +1,4 @@
+// Rutas de usuario — lectura y actualización de preferencias del panel admin
 import { Router } from "express";
 import { verifyToken } from "../middleware/authMiddleware.js";
 import User from "../models/User.js";
@@ -19,6 +20,7 @@ router.get("/preferences", verifyToken, async (req, res) => {
 router.put("/preferences", verifyToken, async (req, res) => {
   try {
     const { lastVisitedRoute, lastEditedAt } = req.body;
+    // Solo actualiza los campos que vienen en el body (actualización parcial)
     const update = {};
     if (lastVisitedRoute !== undefined) update["preferences.lastVisitedRoute"] = lastVisitedRoute;
     if (lastEditedAt !== undefined) update["preferences.lastEditedAt"] = lastEditedAt;
