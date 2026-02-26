@@ -25,7 +25,7 @@ export default function App() {
   return (
     <Routes>
       {/* Rutas públicas */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Welcome />} />
       <Route path="/Home" element={<Home />} />
       <Route path="/welcome" element={<Welcome />} />
       <Route path="/login" element={<Login />} />

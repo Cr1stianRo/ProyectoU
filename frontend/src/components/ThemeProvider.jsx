@@ -49,7 +49,7 @@ function loadGoogleFont(fontName) {
 
 export default function ThemeProvider({ children }) {
   const location = useLocation();
-  const isHome = location.pathname === "/" || location.pathname === "/Home";
+  const isHome = location.pathname === "/Home";
   const [theme, setTheme] = useState(null);
 
   // Reload theme from DB every time we enter Home

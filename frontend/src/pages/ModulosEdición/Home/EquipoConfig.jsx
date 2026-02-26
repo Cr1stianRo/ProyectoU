@@ -7,8 +7,9 @@ import api from "../../../api/axios";
 const API_URL = "/home-config/equipo";
 const UPLOAD_URL = "/upload";
 
+// Estado inicial vacío: los datos se cargan desde la API o el usuario los completa
 const initialForm = {
-  sectionTitle: "Nuestro equipo humano",
+  sectionTitle: "",
   sectionSubtitle: "",
   members: [],
 };
@@ -115,19 +116,23 @@ export default function EquipoConfig() {
           <div className="col-lg-6">
             <div className="card border-0 shadow-sm rounded-4">
               <div className="card-body">
+                {/* Título visible de la sección de equipo en la página */}
                 <label className="form-label fw-bold">Título de la sección</label>
                 <input
                   className="form-control mb-3"
                   value={form.sectionTitle}
                   onChange={(e) => setField("sectionTitle", e.target.value)}
+                  placeholder="Aquí puedes escribir el título, ej: Nuestro equipo humano"
                 />
 
+                {/* Texto introductorio que acompaña a la sección de equipo */}
                 <label className="form-label fw-bold">Subtítulo</label>
                 <textarea
                   className="form-control mb-3"
                   rows={2}
                   value={form.sectionSubtitle}
                   onChange={(e) => setField("sectionSubtitle", e.target.value)}
+                  placeholder="Escribe una breve presentación del equipo de trabajo"
                 />
 
                 <hr />
@@ -169,7 +174,7 @@ export default function EquipoConfig() {
                     <div className="d-flex gap-2 mb-2">
                       <input
                         className="form-control"
-                        placeholder="URL de la foto"
+                        placeholder="Pega aquí la URL de la foto o usa el botón Subir"
                         value={m.photoUrl}
                         onChange={(e) => setMemberField(idx, "photoUrl", e.target.value)}
                       />
@@ -179,15 +184,17 @@ export default function EquipoConfig() {
                       </label>
                     </div>
 
+                    {/* Nombre completo del profesional o colaborador */}
                     <input
                       className="form-control mb-2"
-                      placeholder="Nombre completo"
+                      placeholder="Aquí puedes escribir el nombre completo"
                       value={m.name}
                       onChange={(e) => setMemberField(idx, "name", e.target.value)}
                     />
+                    {/* Cargo o profesión que desempeña en el hogar */}
                     <input
                       className="form-control"
-                      placeholder="Cargo / Profesión"
+                      placeholder="Escribe el cargo o profesión, ej: Fisioterapeuta"
                       value={m.role}
                       onChange={(e) => setMemberField(idx, "role", e.target.value)}
                     />
@@ -211,7 +218,7 @@ export default function EquipoConfig() {
             <div className="border rounded-4 p-4 bg-white shadow-sm">
               <div className="text-center mb-4">
                 <h3 className="fw-bold" style={{ color: "var(--cafe-oscuro)" }}>
-                  {form.sectionTitle || "Nuestro equipo humano"}
+                  {form.sectionTitle || ""}
                 </h3>
                 <p className="text-muted">{form.sectionSubtitle}</p>
               </div>
@@ -235,8 +242,8 @@ export default function EquipoConfig() {
                           <i className="bi bi-person fs-1 text-muted"></i>
                         </div>
                       )}
-                      <h6 className="fw-bold mb-0" style={{ color: "var(--cafe-oscuro)" }}>{m.name || "Nombre"}</h6>
-                      <small className="text-muted">{m.role || "Cargo"}</small>
+                      <h6 className="fw-bold mb-0" style={{ color: "var(--cafe-oscuro)" }}>{m.name || ""}</h6>
+                      <small className="text-muted">{m.role || ""}</small>
                     </div>
                   </div>
                 ))}

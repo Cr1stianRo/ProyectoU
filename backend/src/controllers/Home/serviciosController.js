@@ -2,49 +2,12 @@ import PageConfig from "../../models/Home/PageConfig.js";
 
 const TYPE = "servicios";
 
+// Configuración inicial vacía: el usuario completará los datos desde el editor
 const DEFAULT_CONFIG = {
-  sectionTitle: "Servicios y comodidades",
-  sectionSubtitle: "Modalidades claras para las necesidades de tu familia.",
-  services: [
-    {
-      icon: "bi bi-sunrise",
-      title: "Cuidado Día",
-      subtitle: "8:00–17:00 • sin contrato • pago por día",
-      description:
-        "Programa diurno para mantener actividad física, mental y social, con alimentación y acompañamiento profesional en un entorno seguro.",
-      buttonText: "Ver detalle",
-      buttonLink: "/servicios/cuidado-dia",
-    },
-    {
-      icon: "bi bi-house-heart",
-      title: "Cuidado Permanente",
-      subtitle: "Residencia completa • 5 tiempos de comida",
-      description:
-        "Hogar geriátrico interno con cuidado integral 24/7, habitaciones confortables, supervisión continua y actividades para una vida tranquila y acompañada.",
-      buttonText: "Ver detalle",
-      buttonLink: "/servicios/cuidado-permanente",
-    },
-  ],
-  highlights: [
-    {
-      badge: "Diferencial",
-      title: "Envejecimiento activo",
-      description:
-        "Fisioterapia y deportología (2×/sem), psicología (1×/sem) y apoyo universitario.",
-    },
-    {
-      badge: "Respeto",
-      title: "Cuidado con dignidad",
-      description:
-        "Lenguaje profesional y trato humano. Adultos mayores, nunca diminutivos.",
-    },
-    {
-      badge: "Cercanía",
-      title: "Comunicación diaria",
-      description:
-        "Fotos y videos reales para las familias vía WhatsApp institucional.",
-    },
-  ],
+  sectionTitle: "",
+  sectionSubtitle: "",
+  services: [],
+  highlights: [],
 };
 
 const getOrCreate = async (userId) => {

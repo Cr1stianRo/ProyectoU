@@ -128,11 +128,13 @@ export default function CuidadoDiaConfig() {
                 onChange={(e) => setField("iconColor", e.target.value)}
               />
 
+              {/* Título principal del bloque de cuidado */}
               <label className="form-label">Título</label>
               <input
                 className="form-control mb-3"
                 value={form.title || ""}
                 onChange={(e) => setField("title", e.target.value)}
+                placeholder="Aquí puedes escribir el título, ej: Cuidado Día"
               />
 
               <label className="form-label">Color del título</label>
@@ -151,12 +153,14 @@ export default function CuidadoDiaConfig() {
                 placeholder="Ej: 8:00–17:00 • sin contrato • pago por día"
               />
 
+              {/* Descripción detallada del servicio de cuidado */}
               <label className="form-label">Descripción</label>
               <textarea
                 className="form-control mb-3"
                 rows={4}
                 value={form.description || ""}
                 onChange={(e) => setField("description", e.target.value)}
+                placeholder="Describe en qué consiste este servicio de cuidado y qué beneficios ofrece"
               />
 
               <hr className="my-3" />
