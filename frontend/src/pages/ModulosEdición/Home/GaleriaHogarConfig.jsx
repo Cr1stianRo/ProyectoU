@@ -7,11 +7,12 @@ import api from "../../../api/axios";
 
 const API_URL = "/home-config/galeriahogar";
 
+// Estado inicial vacío: los datos se cargan desde la API o el usuario los completa
 const initialForm = {
-  title: "Así es nuestro hogar",
-  subtitle: "Imágenes reales de actividades e instalaciones.",
-  buttonText: "Ver más actividades",
-  buttonLink: "/actividades",
+  title: "",
+  subtitle: "",
+  buttonText: "",
+  buttonLink: "",
   images: [],
 };
 
@@ -146,7 +147,7 @@ export default function GaleriaHogarConfig() {
           <div className="col-lg-5">
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h2 className="mb-0">
-                <i className="bi bi-camera-fill me-2"></i>Así es nuestro hogar
+                <i className="bi bi-camera-fill me-2"></i>Galería del Hogar
               </h2>
             </div>
 
@@ -154,20 +155,22 @@ export default function GaleriaHogarConfig() {
 
             <div className="card border-0 shadow-sm rounded-4">
               <div className="card-body">
+                {/* Título visible de la galería en la página pública */}
                 <label className="form-label">Título de la sección</label>
                 <input
                   className="form-control mb-3"
                   value={form.title || ""}
                   onChange={(e) => setField("title", e.target.value)}
-                  placeholder="Ej: Así es nuestro hogar"
+                  placeholder="Aquí puedes escribir el título de la galería"
                 />
 
+                {/* Subtítulo descriptivo que acompaña a la galería */}
                 <label className="form-label">Subtítulo</label>
                 <input
                   className="form-control mb-3"
                   value={form.subtitle || ""}
                   onChange={(e) => setField("subtitle", e.target.value)}
-                  placeholder="Ej: Imágenes reales de actividades..."
+                  placeholder="Escribe una descripción breve de las imágenes"
                 />
 
                 <hr className="my-3" />
@@ -317,10 +320,10 @@ export default function GaleriaHogarConfig() {
               <div className="card-body p-4">
                 <div className="text-center mb-4">
                   <h2 className="fw-bold" style={{ color: "#5b4636" }}>
-                    {form.title || "Título de la sección"}
+                    {form.title || ""}
                   </h2>
                   <p className="text-muted">
-                    {form.subtitle || "Subtítulo de la sección"}
+                    {form.subtitle || ""}
                   </p>
                 </div>
 

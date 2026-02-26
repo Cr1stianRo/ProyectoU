@@ -14,8 +14,8 @@ const defaultSections = [
   {
     id: "servicios-1", type: "servicios", order: 2,
     config: {
-      sectionTitle: "Servicios y comodidades",
-      sectionSubtitle: "Modalidades claras para las necesidades de tu familia.",
+      sectionTitle: "",
+      sectionSubtitle: "",
       services: [], highlights: [],
     },
   },

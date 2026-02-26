@@ -13,7 +13,6 @@ export default function AdminPanel() {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
   };
 
   // Descarga un ZIP con el sitio exportado como HTML estático
@@ -155,7 +154,7 @@ export default function AdminPanel() {
             </div>
             <div className="d-flex gap-2 align-items-center">
               {user && <span className="text-muted me-2">{user.name}</span>}
-              <Link to="/" className="btn btn-outline-secondary">
+              <Link to="/Home" className="btn btn-outline-secondary">
                 <i className="bi bi-arrow-left me-2"></i>
                 Volver al sitio
               </Link>

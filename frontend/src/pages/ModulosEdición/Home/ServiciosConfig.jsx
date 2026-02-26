@@ -36,9 +36,10 @@ const newService = () => ({
 
 const newHighlight = () => ({ badge: "", title: "", description: "" });
 
+// Estado inicial vacío: los datos se cargan desde la API o el usuario los completa
 const initialForm = {
-  sectionTitle: "Servicios y comodidades",
-  sectionSubtitle: "Modalidades claras para las necesidades de tu familia.",
+  sectionTitle: "",
+  sectionSubtitle: "",
   services: [],
   highlights: [],
 };
@@ -161,18 +162,22 @@ export default function ServiciosConfig() {
 
             <div className="card border-0 shadow-sm rounded-4">
               <div className="card-body">
+                {/* Título visible de la sección de servicios en la página */}
                 <label className="form-label">Título de la sección</label>
                 <input
                   className="form-control mb-3"
                   value={form.sectionTitle || ""}
                   onChange={(e) => setField("sectionTitle", e.target.value)}
+                  placeholder="Aquí puedes escribir el título de esta sección"
                 />
 
+                {/* Subtítulo complementario que aparece debajo del título */}
                 <label className="form-label">Subtítulo</label>
                 <input
                   className="form-control mb-3"
                   value={form.sectionSubtitle || ""}
                   onChange={(e) => setField("sectionSubtitle", e.target.value)}
+                  placeholder="Escribe una frase que describa tus servicios"
                 />
 
                 <hr className="my-3" />
@@ -256,12 +261,14 @@ export default function ServiciosConfig() {
                             placeholder="Ej: 8:00–17:00 • sin contrato"
                           />
 
+                          {/* Descripción detallada del servicio */}
                           <label className="form-label">Descripción</label>
                           <textarea
                             className="form-control mb-2"
                             rows={3}
                             value={svc.description || ""}
                             onChange={(e) => setServiceField(idx, "description", e.target.value)}
+                            placeholder="Describe en qué consiste este servicio y qué incluye"
                           />
 
                         </div>
@@ -313,12 +320,14 @@ export default function ServiciosConfig() {
                             placeholder="Ej: Envejecimiento activo"
                           />
 
+                          {/* Descripción del diferencial o ventaja competitiva */}
                           <label className="form-label">Descripción</label>
                           <textarea
                             className="form-control"
                             rows={2}
                             value={hl.description || ""}
                             onChange={(e) => setHighlightField(idx, "description", e.target.value)}
+                            placeholder="Explica brevemente este diferencial de tu hogar"
                           />
                         </div>
                       ))}
@@ -343,10 +352,10 @@ export default function ServiciosConfig() {
               <div className="card-body p-4" style={{ background: "#f8f9fa" }}>
                 <div className="text-center mb-4">
                   <h2 className="fw-bold" style={{ color: "#5b4636" }}>
-                    {form.sectionTitle || "Título"}
+                    {form.sectionTitle || ""}
                   </h2>
                   <p className="text-muted">
-                    {form.sectionSubtitle || "Subtítulo"}
+                    {form.sectionSubtitle || ""}
                   </p>
                 </div>
 
@@ -360,7 +369,7 @@ export default function ServiciosConfig() {
                             <i className={`${svc.icon || "bi bi-star"} fs-1`}></i>
                           </div>
                           <h6 className="fw-bold mb-1" style={{ color: "#5b4636" }}>
-                            {svc.title || "Sin título"}
+                            {svc.title || ""}
                           </h6>
                           <small className="text-muted d-block mb-2">
                             {svc.subtitle || ""}
@@ -382,10 +391,10 @@ export default function ServiciosConfig() {
                         <div className="card h-100 border-0 shadow-sm text-center">
                           <div className="card-body p-3">
                             <h6 className="text-uppercase fw-bold mb-1" style={{ color: "#8C6A4A", fontSize: "0.7rem" }}>
-                              {hl.badge || "Etiqueta"}
+                              {hl.badge || ""}
                             </h6>
                             <h6 className="fw-bold mb-1" style={{ color: "#5b4636", fontSize: "0.9rem" }}>
-                              {hl.title || "Título"}
+                              {hl.title || ""}
                             </h6>
                             <p className="text-muted mb-0" style={{ fontSize: "0.8rem" }}>
                               {hl.description || ""}

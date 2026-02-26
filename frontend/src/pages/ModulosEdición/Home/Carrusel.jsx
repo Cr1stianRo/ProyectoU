@@ -234,30 +234,33 @@ export default function CarruselConfig() {
                     </div>
                   )}
 
+                  {/* Título que se superpone en la imagen del slide */}
                   <label className="form-label">Título (opcional)</label>
                   <input
                     className="form-control mb-2"
                     value={slide.title || ""}
                     onChange={(e) => setSlideField(idx, "title", e.target.value)}
-                    placeholder="Ej: Nuestras instalaciones"
+                    placeholder="Aquí puedes escribir un título para esta imagen"
                     onClick={(e) => e.stopPropagation()}
                   />
 
+                  {/* Subtítulo complementario que aparece debajo del título */}
                   <label className="form-label">Subtítulo (opcional)</label>
                   <input
                     className="form-control mb-2"
                     value={slide.subtitle || ""}
                     onChange={(e) => setSlideField(idx, "subtitle", e.target.value)}
-                    placeholder="Ej: Ambientes cálidos y seguros"
+                    placeholder="Escribe una frase breve que acompañe al título"
                     onClick={(e) => e.stopPropagation()}
                   />
 
+                  {/* Texto alternativo para lectores de pantalla (accesibilidad) */}
                   <label className="form-label">Texto alternativo (accesibilidad)</label>
                   <input
                     className="form-control"
                     value={slide.altText || ""}
                     onChange={(e) => setSlideField(idx, "altText", e.target.value)}
-                    placeholder="Descripción breve de la imagen"
+                    placeholder="Describe brevemente qué muestra la imagen"
                     onClick={(e) => e.stopPropagation()}
                   />
                 </div>

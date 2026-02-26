@@ -7,12 +7,13 @@ import api from "../../../api/axios";
 const API_URL = "/home-config/sobrenosotros";
 const UPLOAD_URL = "/upload";
 
+// Estado inicial vacío: los datos se cargan desde la API o el usuario los completa
 const initialForm = {
-  sectionTitle: "Sobre nosotros",
+  sectionTitle: "",
   description: "",
   imageUrl: "",
-  imageAlt: "Sobre nosotros",
-  philosophyTitle: "Nuestra filosofía",
+  imageAlt: "",
+  philosophyTitle: "",
   philosophyDescription: "",
   pillars: [],
 };
@@ -119,26 +120,30 @@ export default function SobreNosotrosConfig() {
           <div className="col-lg-6">
             <div className="card border-0 shadow-sm rounded-4">
               <div className="card-body">
+                {/* Título visible en la página pública */}
                 <label className="form-label fw-bold">Título de la sección</label>
                 <input
                   className="form-control mb-3"
                   value={form.sectionTitle}
                   onChange={(e) => setField("sectionTitle", e.target.value)}
+                  placeholder="Aquí puedes escribir el título, ej: Sobre nosotros"
                 />
 
+                {/* Texto principal que describe al hogar geriátrico */}
                 <label className="form-label fw-bold">Descripción principal</label>
                 <textarea
                   className="form-control mb-3"
                   rows={4}
                   value={form.description}
                   onChange={(e) => setField("description", e.target.value)}
+                  placeholder="Escribe quiénes son, qué hacen y qué los diferencia como hogar geriátrico"
                 />
 
                 <label className="form-label fw-bold">Imagen de la sección</label>
                 <div className="d-flex gap-2 mb-1">
                   <input
                     className="form-control"
-                    placeholder="URL de la imagen"
+                    placeholder="Pega aquí la URL de la imagen o usa el botón Subir"
                     value={form.imageUrl}
                     onChange={(e) => setField("imageUrl", e.target.value)}
                   />
@@ -149,26 +154,30 @@ export default function SobreNosotrosConfig() {
                 </div>
                 <input
                   className="form-control mb-3"
-                  placeholder="Texto alternativo"
+                  placeholder="Describe la imagen para accesibilidad, ej: Fachada del hogar"
                   value={form.imageAlt}
                   onChange={(e) => setField("imageAlt", e.target.value)}
                 />
 
                 <hr />
 
+                {/* Título de la subsección de filosofía institucional */}
                 <label className="form-label fw-bold">Título de filosofía</label>
                 <input
                   className="form-control mb-3"
                   value={form.philosophyTitle}
                   onChange={(e) => setField("philosophyTitle", e.target.value)}
+                  placeholder="Aquí puedes escribir el título, ej: Nuestra filosofía"
                 />
 
+                {/* Texto que explica la filosofía o enfoque del hogar */}
                 <label className="form-label fw-bold">Descripción de filosofía</label>
                 <textarea
                   className="form-control mb-3"
                   rows={3}
                   value={form.philosophyDescription}
                   onChange={(e) => setField("philosophyDescription", e.target.value)}
+                  placeholder="Describe la filosofía de cuidado y atención que guía a tu hogar"
                 />
 
                 <hr />
@@ -188,22 +197,25 @@ export default function SobreNosotrosConfig() {
                     >
                       <i className="bi bi-trash"></i>
                     </button>
+                    {/* Clase del ícono Bootstrap Icons para este pilar */}
                     <input
                       className="form-control mb-2"
-                      placeholder="Ícono Bootstrap (ej: bi bi-heart-pulse)"
+                      placeholder="Ícono Bootstrap, ej: bi bi-heart-pulse"
                       value={p.icon}
                       onChange={(e) => setPillarField(idx, "icon", e.target.value)}
                     />
+                    {/* Nombre corto del pilar institucional */}
                     <input
                       className="form-control mb-2"
-                      placeholder="Título del pilar"
+                      placeholder="Aquí puedes escribir el nombre del pilar"
                       value={p.title}
                       onChange={(e) => setPillarField(idx, "title", e.target.value)}
                     />
+                    {/* Explicación breve de este pilar */}
                     <textarea
                       className="form-control"
                       rows={2}
-                      placeholder="Descripción"
+                      placeholder="Describe brevemente en qué consiste este pilar"
                       value={p.description}
                       onChange={(e) => setPillarField(idx, "description", e.target.value)}
                     />
@@ -226,11 +238,11 @@ export default function SobreNosotrosConfig() {
             </p>
             <div className="border rounded-4 p-4 bg-white shadow-sm">
               <h3 className="fw-bold mb-3" style={{ color: "var(--cafe-oscuro)" }}>
-                {form.sectionTitle || "Sobre nosotros"}
+                {form.sectionTitle || ""}
               </h3>
               <div className="row g-3 align-items-center mb-4">
                 <div className={form.imageUrl ? "col-md-7" : "col-12"}>
-                  <p className="text-muted">{form.description || "Sin descripción."}</p>
+                  <p className="text-muted">{form.description || ""}</p>
                 </div>
                 {form.imageUrl && (
                   <div className="col-md-5">

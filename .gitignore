@@ -51,3 +51,8 @@ tests-examples/
 
 # Carpeta de cambios (documentación local, no se sube al repo)
 /cambios/
+
+
+
+#backend
+/backend/uploads
