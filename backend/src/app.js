@@ -13,7 +13,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 // Middlewares globales
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://cr1stianro.github.io'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Servir imágenes subidas como archivos estáticos
