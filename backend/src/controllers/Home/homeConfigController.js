@@ -5,7 +5,7 @@ import HomeConfig from "../../models/Home/HomeConfig.js";
 // Obtiene la config del home; crea un documento por defecto si no existe
 export const getHomeConfig = async (req, res) => {
   try {
-    if (!req.userId) return res.json({ title: "Dreams", subtitle: "Bienvenido", description: "Este es el home", heroImageUrl: "", ctaText: "Empezar" });
+    if (!req.userId) return res.json({ title: "HogarWeb", subtitle: "Bienvenido", description: "Este es el home", heroImageUrl: "", ctaText: "Empezar" });
     let config = await HomeConfig.findOne({ userId: req.userId });
     if (!config) config = await HomeConfig.create({ userId: req.userId });
     res.json(config);

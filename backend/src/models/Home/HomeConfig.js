@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const homeConfigSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
-    title: { type: String, default: "Dreams" },
+    title: { type: String, default: "HogarWeb" },
     subtitle: { type: String, default: "Bienvenido" },
     description: { type: String, default: "Este es el home" },
     heroImageUrl: { type: String, default: "" },
