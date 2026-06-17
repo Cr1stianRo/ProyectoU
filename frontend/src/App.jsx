@@ -1,6 +1,7 @@
 // Componente raíz que define todas las rutas de la aplicación.
 // Las rutas públicas (Home, Login, Register) no requieren autenticación.
 // Las rutas de administración están protegidas con ProtectedRoute.
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Login/Register.jsx";
@@ -22,6 +23,33 @@ import EquipoConfig from "./pages/ModulosEdición/Home/EquipoConfig.jsx"
 import VideoConfig from "./pages/ModulosEdición/Home/VideoConfig.jsx"
 
 export default function App() {
+  // Warm-up del backend al cargar la aplicación
+  useEffect(() => {
+    const backendUrl = import.meta.env.VITE_API_URL || 'https://proyectou-backend.onrender.com';
+    const healthEndpoint = `${backendUrl}/api/auth/health`;
+
+    console.log('🚀 Despertando backend:', healthEndpoint);
+
+    // Método 1: Fetch request
+    fetch(healthEndpoint, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache'
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('✅ Backend respondió:', data);
+    })
+    .catch(err => {
+      console.log('⚠️ Backend despertando... (esto es normal)');
+    });
+
+    // Método 2: Image fallback (por si CORS falla)
+    const img = new Image();
+    img.src = healthEndpoint + '?warmup=' + Date.now();
+    setTimeout(() => { img.src = ''; }, 100);
+  }, []);
+
   return (
     <Routes>
       {/* Rutas públicas */}
