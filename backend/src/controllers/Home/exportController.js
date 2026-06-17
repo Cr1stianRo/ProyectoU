@@ -223,7 +223,7 @@ function ctaHtml(whatsHref, bloquepConfig) {
   if (!whatsHref || whatsHref === "#") return "";
   return `<section class="py-5" style="background:var(--cafe)">
   <div class="container d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 text-white">
-    <div><h3 class="fw-bold mb-1">${esc(bloquepConfig?.ctaTitle || "")}</h3><p class="mb-0">${esc(bloquepConfig?.ctaDescription || "")}</p></div>
+    <div><h3 class="fw-bold mb-1">${esc(bloquepConfig?.ctaTitle || "Estamos para ayudarte")}</h3><p class="mb-0">${esc(bloquepConfig?.ctaDescription || "Contáctanos y con gusto resolveremos todas tus dudas. Tu familia merece la mejor atención.")}</p></div>
     <a href="${esc(whatsHref)}" class="btn btn-outline-light btn-lg btn-whatsapp" target="_blank" rel="noopener"><i class="bi bi-whatsapp me-2"></i>${esc(bloquepConfig?.button2Text || "WhatsApp")}</a>
   </div></section>`;
 }
@@ -351,7 +351,7 @@ ${heroHtml(bloquepCfg, heroImages, whatsHref)}
 
 ${bodyParts.join("\n\n")}
 
-${ctaHtml(whatsHref)}
+${ctaHtml(whatsHref, bloquepCfg)}
 
 <footer class="text-center py-4" style="background:var(--cafe-oscuro)">
   <small class="text-white-50">&copy; ${new Date().getFullYear()} ${esc(bloquepCfg.heroTitle || "Hogar Geriátrico")}. Todos los derechos reservados.</small>
